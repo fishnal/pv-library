@@ -222,5 +222,4 @@ public class UndirectedGraph<T> extends Graph<T> {
 		
 		return mat.getValue(oi, ti) > 0;
 	}
-
 }

@@ -236,6 +236,12 @@ public class Fraction {
         }
 	}
 
+	/**
+	 * Simplifies a decimal given a precision value. Larger precision values sacrifice time for accuracy.
+	 * @param decimal - the decimal to simplify.
+	 * @param precision - the precision value
+	 * @return  the simplified decimal using the given precision value.
+	 */
 	private static long[] simplifyDecimal(double decimal, long precision) {
         long bestDen = 1;
         long bestNum = 0;

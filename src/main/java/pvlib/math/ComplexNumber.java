@@ -278,6 +278,13 @@ public class ComplexNumber extends Number implements Comparable<Number> {
 		return new ComplexNumber(this);
 	}
 
+	/**
+	 * Checks if this and another ComplexNumber are equal by comparing both the real and complex
+	 * parts of both numbers.
+	 * @param obj - the other ComplexNumber.
+	 * @return true if the this and the other ComplexNumber have equal parts.
+	 * @see #compareTo(Number)
+	 */
 	@Override
 	public boolean equals(Object obj) {
 	    return this.compareTo((Number) obj) == 0;
@@ -285,39 +292,62 @@ public class ComplexNumber extends Number implements Comparable<Number> {
 
 	@Override
 	public String toString() {
-		String real = "";
-		if (this.a != 0.0)
-			if (this.a == java.lang.Math.floor(this.a))
-				real += (int) this.a;
-			else
-				real += this.a;
+		String realStr = (this.a != 0.0 ? (this.a == (int) this.a) ? (int) this.a : this.a : "") + "";
+		String complexStr = (this.b != 0.0 ? (this.b == (int) this.b) ? (int) this.b : this.b : "") + "";
+		boolean re = realStr.isEmpty(); // real is empty
+		boolean ie = complexStr.isEmpty(); // complex is empty
 
-		String imaginary = "";
-		if (this.b != 0.0)
-			if (this.b == java.lang.Math.floor(this.b))
-				imaginary += (int) this.b;
-			else
-				imaginary += this.b;
-
-		String s = "";
-		if (real.isEmpty() && imaginary.isEmpty())
-			s += "0";
-		else if (real.isEmpty() ^ imaginary.isEmpty()) {
-			if (real.isEmpty())
-				s += imaginary + "i";
-			else
-				s += real;
+		if (re && ie) {
+			return "0";
 		} else {
-			s += real;
-
-			if (this.b < 0)
-				s += imaginary;
-			else
-				s += "+" + imaginary;
-
-			s += "i";
+			return (re ^ ie ? re ? this.b < 0 ? complexStr.equals("-1") ? "-i" : complexStr + "i" :
+					complexStr.equals("1") ? "i" : complexStr + "i" : realStr : realStr + (this.b < 0 ?
+					complexStr.equals("-1") ? "-i" : complexStr + "i" : complexStr.equals("1") ? "+i" :
+					"+" + complexStr + "i"
+			));
 		}
 
-		return s;
+		// Keeping this comment block to make it easier to understand how the above ternary operator statements
+		// work out
+		/*StringBuilder s = new StringBuilder();
+		if (re && ie) {
+			return "0";
+		} else if (re ^ ie) {
+			if (re) {
+				if (this.b < 0) {
+					if (complexStr.equals("-1")) {
+						s.append("-i");
+					} else {
+						s.append(complexStr + "i");
+					}
+				} else {
+					if (complexStr.equals("1")) {
+						s.append("i");
+					} else {
+						s.append(complexStr + "i");
+					}
+				}
+			} else {
+				s.append(real);
+			}
+		} else {
+			s.append(realStr);
+
+			if (this.b < 0) {
+				if (complexStr.equals("-1")) {
+					s.append("-i");
+				} else {
+					s.append(complexStr + "i");
+				}
+			} else {
+				if (complexStr.equals("1")) {
+					s.append("+i");
+				} else {
+					s.append("+").append(complexStr).append("i");
+				}
+			}
+		}
+
+		return s.toString();*/
 	}
 }

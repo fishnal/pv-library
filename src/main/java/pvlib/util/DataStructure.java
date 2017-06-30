@@ -157,7 +157,8 @@ public interface DataStructure<E> {
 
 	/**
 	 * Constructs an array copy of the elements inside this data structure,
-	 * casting each element to the type defined by <b>T</b>
+	 * casting each element to the type defined by <b>T</b>. Not intended to be
+	 * overridden.
 	 * 
 	 * @param arr
 	 *            - the initial array for data storage; modified to fit the

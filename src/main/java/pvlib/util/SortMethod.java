@@ -219,7 +219,9 @@ public enum SortMethod {
 	}),
 
 	/**
-	 * Shell Sorting algorithm.
+	 * Shell Sorting algorithm. Uses a gap sequence of <code>(3^k - 1) / 2 <= ceil(n / 3)</code>.
+	 * Number of gaps is determined by solving for k, and n represents the size of
+	 * the data structure.
 	 */
 	SHELL(arg -> {
 		// retrieve the structure

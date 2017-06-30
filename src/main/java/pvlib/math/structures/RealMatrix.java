@@ -409,12 +409,12 @@ public final class RealMatrix extends NumberMatrix<Double> {
 		if (this.height == 0 || this.width == 0)
 			return "empty";
 		
-		String s = "";
-		String[] strArr = new String[this.height];
+		StringBuilder s = new StringBuilder();
+		StringBuilder[] strArr = new StringBuilder[this.height];
 
 		int longestLength = 0;
 		for (int r = 0; r < this.height; r++) {
-			strArr[r] = "";
+			strArr[r] = new StringBuilder();
 			for (int c = 0; c < this.width; c++) {
 				Number d = this.getValue(r, c);
 				Fraction f = new Fraction(d.doubleValue(), 1);
@@ -429,12 +429,12 @@ public final class RealMatrix extends NumberMatrix<Double> {
 					longestLength = d.toString().length();
 				}
 
-				strArr[r] += (displayFractions ? f : d) + (c == this.width - 1 ? "" : "!");
+				strArr[r].append(displayFractions ? f : d + (c == this.width - 1 ? "" : "!"));
 			}
 		}
 
-		for (String s2 : strArr) {
-			while (s2.contains("!")) {
+		for (StringBuilder s2 : strArr) {
+			while (s2.indexOf("!") >= 0) {
 				int lim = s2.lastIndexOf("!");
 				int lim2 = s2.substring(0, lim).lastIndexOf("!");
 
@@ -445,12 +445,12 @@ public final class RealMatrix extends NumberMatrix<Double> {
 				for (int i = 0; i < longestLength - length; i++)
 					spaces += " ";
 
-				s2 = s2.substring(0, lim2 + 1) + s2.substring(lim2 + 1, lim) + spaces + s2.substring(lim + 1);
+				s2 = new StringBuilder(s2.substring(0, lim2 + 1) + s2.substring(lim2 + 1, lim) + spaces + s2.substring(lim + 1));
 			}
 
-			s += s2 + "\n";
+			s.append(s2 + "\n");
 		}
 
-		return s.trim();
+		return s.toString().trim();
 	}
 }

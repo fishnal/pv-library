@@ -375,44 +375,47 @@ public class ComplexMatrix extends NumberMatrix<ComplexNumber> {
 
 	@Override
 	public String toString() {
-		if (this.height == 0 || this.width == 0)
+		if (this.height == 0 || this.width == 0) {
 			return "empty";
+		}
 		
-		String s = "";
-		String[] strArr = new String[this.height];
+		StringBuilder s = new StringBuilder();
+		StringBuilder[] strArr = new StringBuilder[this.height];
 
 		int longestLength = 0;
 		for (int r = 0; r < this.height; r++) {
-			strArr[r] = "";
+			strArr[r] = new StringBuilder();
 			for (int c = 0; c < this.width; c++) {
 				ComplexNumber d = this.getValue(r, c);
 				
-				if (d.toString().length() > longestLength)
+				if (d.toString().length() > longestLength) {
 					longestLength = d.toString().length();
+				}
 				
-				strArr[r] += d + (c == this.width - 1 ? "" : "!");
+				strArr[r].append(d + (c == this.width - 1 ? "" : "!"));
 			}
 		}
 
-		for (String s2 : strArr) {
-			while (s2.contains("!")) {
+		for (StringBuilder s2 : strArr) {
+			while (s2.indexOf("!") >= 0) {
 				int lim = s2.lastIndexOf("!");
 				int lim2 = s2.substring(0, lim).lastIndexOf("!");
 
 				int length = lim2 == -1 ? lim : lim - lim2 - 1;
 
-				String spaces = " ";
+				StringBuilder spaces = new StringBuilder(" ");
 
-				for (int i = 0; i < longestLength - length; i++)
-					spaces += " ";
+				for (int i = 0; i < longestLength - length; i++) {
+					spaces.append(" ");
+				}
 
-				s2 = s2.substring(0, lim2 + 1) + s2.substring(lim2 + 1, lim) + spaces + s2.substring(lim + 1);
+				s2 = new StringBuilder(s2.substring(0, lim2 + 1) + s2.substring(lim2 + 1, lim) + spaces + s2.substring(lim + 1));
 			}
 
-			s += s2 + "\n";
+			s.append(s2).append("\n");
 		}
 
-		return s.trim();
+		return s.toString().trim();
 
 	}
 }

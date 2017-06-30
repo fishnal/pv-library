@@ -263,7 +263,7 @@ public class SortedLinkedList<E> implements DataStructure<E> {
             }
         }
 
-        return new SortedLinkedList<E>(data);
+        return new SortedLinkedList<>(data);
     }
 
     /**
@@ -289,7 +289,7 @@ public class SortedLinkedList<E> implements DataStructure<E> {
             data[i] = link.value;
         }
 
-        return new SortedLinkedList<E>(data);
+        return new SortedLinkedList<>(data);
     }
 
     // TODO toString()

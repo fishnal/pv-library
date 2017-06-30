@@ -3,6 +3,12 @@ package pvlib.util;
 import java.util.ArrayList;
 import java.util.Collection;
 
+/**
+ * A "abstract" implementation of {@link DataStructure}. Scope is package-private as the underlying data is
+ * simply an {@link ArrayList}. This is used for when an abstract data structure is needed rather than, say
+ * a LinkedList, to store data and utilize sorting methods from {@link SortMethod}.
+ * @param <E> - the type that this data structure will hold.
+ */
 class AbstractStructure<E> implements DataStructure<E> {
 	private ArrayList<E> data = new ArrayList<>();
 	
