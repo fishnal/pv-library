@@ -84,14 +84,12 @@ public abstract class Tree<E> implements java.io.Serializable {
 		 */
 		@Override
 		public String toString() {
-			String s = "";
+			StringBuilder s = new StringBuilder();
 
-			if (parent != null)
-				s += "parent[" + parent.value + "]";
+			s.append(String.format("parent=%s", parent == null ? null : parent.value));
+			s.append(String.format(",this=%s", this.value));
 
-			s += ",this[" + this.value + "]";
-
-			return s;
+			return s.toString();
 		}
 	}
 
@@ -135,6 +133,28 @@ public abstract class Tree<E> implements java.io.Serializable {
 	public abstract int size();
 
 	/**
+	 * @return the internal path length of this tree.
+	 */
+	public abstract int internalPathLength();
+
+	/**
+	 * @return the number of internal nodes in this tree.
+	 */
+	public abstract int internalNodes();
+
+	/**
+	 * @return the external path length of the tree.
+	 */
+	public final int externalPathLength() {
+		return internalPathLength() + 2 * internalNodes();
+	}
+
+	/**
+	 * @return the number of leafs in the tree.
+	 */
+	public abstract int leafCount();
+
+	/**
 	 * Performs a "deep" equality search on the two trees. Checks if both trees
 	 * have the same number of nodes, and if each node in the tree is equal to
 	 * one another. Each node in one tree must be a "mirrored" visual placement
@@ -144,11 +164,4 @@ public abstract class Tree<E> implements java.io.Serializable {
 	 */
 	@Override
 	public abstract boolean equals(Object obj);
-
-	/**
-	 * @return the root of the tree and the internal and external path length of
-	 *         the tree from the root.
-	 */
-	@Override
-	public abstract String toString();
 }
