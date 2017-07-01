@@ -113,6 +113,17 @@ public final class DirectedGraph<T> extends Graph<T> {
 
 			return true;
 		}
+
+		@Override
+		public String toString() {
+			StringBuilder s = new StringBuilder();
+
+			List<T> values = new ArrayList<>(links.size());
+			links.forEach(link -> values.add(link.value));
+			s.append(String.format("%s -> %s", this.value, values));
+
+			return s.toString();
+		}
 	}
 
 	private boolean changesMade = false;
@@ -452,6 +463,4 @@ public final class DirectedGraph<T> extends Graph<T> {
 
 		return 0;
 	}
-
-	// TODO toString
 }
