@@ -87,7 +87,11 @@ public abstract class Graph<T> implements java.io.Serializable {
 		 * @return true if this vertex points to itself; false otherwise.
 		 */
 		protected final boolean selfPoints() {
-			return links.contains(this);
+			for (Vertex v : links)
+				if (v == this)
+					return true;
+
+			return false;
 		}
 
 		/**
@@ -337,13 +341,10 @@ public abstract class Graph<T> implements java.io.Serializable {
 	 */
 	@Override
 	public String toString() {
-		// TODO review how useful this is
 		StringBuilder s = new StringBuilder();
 
 		for (Vertex v : vertices) {
-			for (Vertex v2 : v.links) {
-				s.append(v.value).append("").append(v2.value).append(" ");
-			}
+			s.append(v).append('\n');
 		}
 
 		return s.toString().trim();
