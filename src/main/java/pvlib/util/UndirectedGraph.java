@@ -83,10 +83,6 @@ public class UndirectedGraph<T> extends Graph<T> {
 	public UndirectedGraph() {
 		super();
 	}
-	
-	protected boolean changesMade() {
-		return changesMade;
-	}
 
 	@Override
 	public boolean add(T vertex, T... links) {
@@ -143,6 +139,7 @@ public class UndirectedGraph<T> extends Graph<T> {
 		for (int i = 0; i < v.links.size(); i++)
 			v.links.get(i).links.remove(v);
 		v.links.clear();
+		vertices.remove(v);
 		
 		return true;
 	}
