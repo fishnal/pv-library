@@ -197,6 +197,13 @@ public final class Classes {
 		}
 	}
 
+	/**
+	 * Checks if one class can be casted to another class. Includes cross-primitive-wrapper casts such
+	 * as a primitive int to a wrapper Double.
+	 * @param clazz1 - the original class.
+	 * @param clazz2 - the desired casted class.
+	 * @return true if the original class can be casted to the desired class.
+	 */
 	public static boolean canCast(Class<?> clazz1, Class<?> clazz2) {
 		if (clazz1 == null || clazz2 == null)
 			return false;
