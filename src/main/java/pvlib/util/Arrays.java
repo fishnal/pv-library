@@ -2,12 +2,8 @@ package pvlib.util;
 
 import java.lang.reflect.Array;
 
-import java.util.List;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Iterator;
+import java.util.*;
+import java.util.function.UnaryOperator;
 
 /**
  * Utilities for arrays, such as casting multi-dimensional arrays, sorting
@@ -18,13 +14,36 @@ import java.util.Iterator;
  *
  */
 public final class Arrays {
+	private final static Random RANDOM = new Random();
+
+	public enum RandomPrimitive {
+		BOOLEAN((Boolean b) -> RANDOM.nextBoolean()),
+		BYTE((Byte b) -> (byte) (RANDOM.nextInt(256) - 128)),
+		CHAR((Character c) -> (char) (RANDOM.nextInt(Character.MAX_VALUE + 1))),
+		SHORT((Short s) -> (short) (RANDOM.nextInt(65536) - 32768)),
+		INT((Integer i) -> RANDOM.nextInt()),
+		LONG((Long l) -> RANDOM.nextLong()),
+		FLOAT((Float f) -> RANDOM.nextFloat()),
+		DOUBLE((Double d) -> RANDOM.nextDouble());
+
+		private UnaryOperator<?> generator;
+
+		RandomPrimitive(UnaryOperator<?> generator) {
+			this.generator = generator;
+		}
+
+		public Object generate() {
+			return this.generator.apply(null);
+		}
+	}
+
 	private Arrays() {
 	}
 
 	/**
 	 * Gets the element located at the indices in some dimensional array. If
-	 * <code>get(array, new int[]{1, 2, 3})</code> is called, then it virtually
-	 * returns <code>array[1][2][3]</code>.
+	 * <code>get(array, new int[]{1, 2, 3})</code> is called, then it
+	 * returns the equivalent of <code>array[1][2][3]</code>.
 	 * 
 	 * @param array
 	 *            - the array.
@@ -44,9 +63,7 @@ public final class Arrays {
 	 */
 	public static Object get(Object array, int[] indices)
 			throws NullPointerException, IllegalArgumentException, ArrayIndexOutOfBoundsException {
-		if (array == null)
-			throw new NullPointerException();
-		if (indices == null)
+		if (array == null || indices == null)
 			throw new NullPointerException();
 		if (!array.getClass().isArray())
 			throw new IllegalArgumentException("must pass in an actual array");
@@ -165,6 +182,33 @@ public final class Arrays {
 				Array.set(array, i, newValue);
 			else
 				array = Array.get(array, i);
+		}
+	}
+
+	public static Object randFillArray(Object array, RandomPrimitive generator) {
+		if (array == null || generator == null)
+			throw new NullPointerException();
+		if (!array.getClass().isArray())
+			throw new IllegalArgumentException("must pass in an actual array");
+		return randFillArray0(array, generator, Classes.getDeepestComponent(array.getClass()));
+	}
+
+	private static Object randFillArray0(Object array, RandomPrimitive generator, Class<?> componentType) {
+		if (array == null)
+			return null;
+
+		try {
+			int length = Array.getLength(array);
+			for (int i = 0; i < length; i++) {
+				Array.set(array, i, randFillArray0(Array.get(array, i), generator, componentType));
+			}
+			return array;
+		} catch (IllegalArgumentException iae) {
+			// actual component element of array
+			Object generated = generator.generate();
+			if (!Classes.canCast(componentType, generated.getClass()))
+				throw new ClassCastException(String.format("cannot convert %s to %s", generated.getClass(), componentType));
+			return Classes.objectToObjectCast(generated, componentType);
 		}
 	}
 
@@ -427,57 +471,16 @@ public final class Arrays {
 		}
 	}
 
-	/**
-	 * Finds the "maximum" value in an undefined-dimensional array, which is
-	 * defined as the one value in the entire array that when compared to all
-	 * other values in the entire array, a value greater than 0 will always be
-	 * returned. If the component data type of the array cannot be assigned from
-	 * the java.lang.Comparable interface, then the hash codes
-	 * (<code>Object.hashCode()</code>) of the elements in the array are
-	 * compared instead. Otherwise,
-	 * <code>Comparable&lt;T&gt;.compareTo(T)</code> is used for comparisons.
-	 * 
-	 * @param array
-	 *            - the array to look through.
-	 * @return null if the array given is not an array; the "maximum" value in
-	 *         the Comparable array.
-	 * @throws ClassCastException
-	 *             if an error occurs when attempting to compare two elements in
-	 *             the array.
-	 */
-	public static <T> Object max(final Object array) throws ClassCastException {
+	public static <T> Object max(final Object array) throws ClassCastException, IllegalArgumentException {
 		if (array.getClass().isArray()) {
 			if (Comparable.class.isAssignableFrom(Classes.getDeepestComponent(array.getClass())))
 				return Arrays.<T>maxComparable(array, null);
-			return Arrays.maxHashCode(array, null);
+			throw new IllegalArgumentException("could not be compared; consider using <T> pvlib.util.Arrays#get(Object, Comparator<T>)");
 		}
 
 		return null;
 	}
 
-	/**
-	 * Finds the "maximum" value in an undefined-dimensional array, which is
-	 * defined as the one value in the entire array that when compared to all
-	 * other values in the entire array, using a given comparator, a value
-	 * greater than 0 will always be returned. Null elements are ignored in the
-	 * comparisons. If the given comparator is null, then {@link #max(Object)}
-	 * is called, passing in the same array given to this method. At this point,
-	 * if the array component type does not implement the java.lang.Comparable
-	 * interface, then the hash codes of the elements in the array are compared
-	 * instead. Otherwise, {@link java.lang.Comparable#compareTo(Object)} is
-	 * used for comparisons.
-	 * 
-	 * @param array
-	 *            - the array to look through.
-	 * @param comparator
-	 *            - the comparator used for comparing the elements of the array.
-	 * @return null if the array is null, if the given object is not an array,
-	 *         or if all elements in the array are null; otherwise the maximum
-	 *         value in the array.
-	 * @throws ClassCastException
-	 *             if an error occurs when attempting to compare two elements in
-	 *             the array.
-	 */
 	public static <T> Object max(final Object array, final Comparator<T> comparator) throws ClassCastException {
 		if (array != null && array.getClass().isArray()) {
 			if (comparator == null)
@@ -488,18 +491,6 @@ public final class Arrays {
 		return null;
 	}
 
-	/**
-	 * Finds the "maximum" value in an undefined-dimensional Comparable array.
-	 * 
-	 * @param array
-	 *            - the array to look through.
-	 * @param max
-	 *            - the current maximum value in the array.
-	 * @return the "maximum" value in the Comparable array.
-	 * @throws ClassCastException
-	 *             if an error occurs when attempting to compare two elements in
-	 *             the array.
-	 */
 	private static <T> Object maxComparable(Object array, T max) throws ClassCastException {
 		try {
 			int len = Array.getLength(array);
@@ -519,49 +510,6 @@ public final class Arrays {
 		}
 	}
 
-	/**
-	 * Finds the maximum value in an array based on the hash codes of the
-	 * array's elements.
-	 * 
-	 * @param array
-	 *            - the array to look through.
-	 * @param max
-	 *            - the current maximum value in the array based on it's hash
-	 *            code.
-	 * @return the maximum hash code value in the array.
-	 */
-	private static Object maxHashCode(Object array, Object max) {
-		try {
-			int len = Array.getLength(array);
-
-			for (int i = 0; i < len; i++) {
-				Object arr = Array.get(array, i);
-				max = Arrays.maxHashCode(arr, max);
-			}
-
-			return max;
-		} catch (IllegalArgumentException iae) {
-			if (max == null && array != null)
-				return array;
-			if (array.hashCode() > max.hashCode())
-				return array;
-			return max;
-		}
-	}
-
-	/**
-	 * Finds the "maximum" value in an undefined-dimensional array using a given
-	 * comparator.
-	 * 
-	 * @param array
-	 *            - the array to look through.
-	 * @param max
-	 *            - the current maximum value in the array.
-	 * @return the "maximum" value in the Comparable array.
-	 * @throws ClassCastException
-	 *             if an error occurs when attempting to compare two elements in
-	 *             the array.
-	 */
 	private static <T> Object maxComparator(Object array, T max, final Comparator<T> comparator)
 			throws ClassCastException {
 		try {
@@ -582,55 +530,16 @@ public final class Arrays {
 		}
 	}
 
-	/**
-	 * Finds the "minimum" value in an undefined-dimensional array, which is
-	 * defined as the one value in the entire array that when compared to all
-	 * other values in the entire array, a value less than 0 will always be
-	 * returned. If the component data type of the array cannot be assigned from
-	 * of the elements in the array are compared instead. Otherwise,
-	 * {@link java.lang.Comparable#compareTo(Object)} is used for comparisons.
-	 * 
-	 * @param array
-	 *            - the array to look through.
-	 * @return null if the array given is not an array; the "minimum" value in
-	 *         the Comparable array.
-	 * @throws ClassCastException
-	 *             if an error occurs when attempting to compare two elements in
-	 *             the array.
-	 */
 	public static <T> Object min(final Object array) throws ClassCastException {
 		if (array != null && array.getClass().isArray()) {
 			if (Comparable.class.isAssignableFrom(Classes.getDeepestComponent(array.getClass())))
 				return Arrays.<T>minComparable(array, null);
-			return Arrays.minHashCode(array, null);
+			throw new IllegalArgumentException("could not be compared; consider using <T> pvlib.util.Arrays#get(Object, Comparator<T>)");
 		}
 
 		return null;
 	}
 
-	/**
-	 * Finds the "minimum" value in an undefined-dimensional array, which is
-	 * defined as the one value in the entire array that when compared to all
-	 * other values in the entire array, using a given comparator, a value less
-	 * than 0 will always be returned. Null elements are ignored in the
-	 * comparisons. If the given comparator is null, then {@link #min(Object)}
-	 * is called, passing in the same array given to this method. At this point,
-	 * if the array component type does not implement the java.lang.Comparable
-	 * interface, then the hash codes of the elements in the array are compared
-	 * instead. Otherwise, {@link java.lang.Comparable#compareTo(Object)} is
-	 * used for comparisons.
-	 * 
-	 * @param array
-	 *            - the array to look through.
-	 * @param comparator
-	 *            - the comparator used for comparing the elements of the array.
-	 * @return null if the array is null, if the given object is not an array,
-	 *         or if all elements in the array are null; otherwise the minimum
-	 *         value in the array.
-	 * @throws ClassCastException
-	 *             if an error occurs when attempting to compare two elements in
-	 *             the array.
-	 */
 	public static <T> Object min(final Object array, final Comparator<T> comparator) throws ClassCastException {
 		if (array != null && array.getClass().isArray()) {
 			if (comparator == null)
@@ -641,18 +550,6 @@ public final class Arrays {
 		return null;
 	}
 
-	/**
-	 * Finds the "minimum" value in an undefined-dimensional Comparable array.
-	 * 
-	 * @param array
-	 *            - the array to look through.
-	 * @param min
-	 *            - the current minimum value in the array.
-	 * @return the "minimum" value in the Comparable array.
-	 * @throws ClassCastException
-	 *             if an error occurs when attempting to compare two elements in
-	 *             the array.
-	 */
 	private static <T> Object minComparable(Object array, T min) {
 		try {
 			int len = Array.getLength(array);
@@ -672,49 +569,6 @@ public final class Arrays {
 		}
 	}
 
-	/**
-	 * Finds the minimum value in an array based on the hash codes of the
-	 * array's elements.
-	 * 
-	 * @param array
-	 *            - the array to look through.
-	 * @param min
-	 *            - the current minimum value in the array based on it's hash
-	 *            code.
-	 * @return the minimum hash code value in the array.
-	 */
-	private static Object minHashCode(Object array, Object min) {
-		try {
-			int len = Array.getLength(array);
-
-			for (int i = 0; i < len; i++) {
-				Object arr = Array.get(array, i);
-				min = Arrays.minHashCode(arr, min);
-			}
-
-			return min;
-		} catch (IllegalArgumentException iae) {
-			if (min == null && array != null)
-				return array;
-			if (array.hashCode() < min.hashCode())
-				return array;
-			return min;
-		}
-	}
-
-	/**
-	 * Finds the "maximum" value in an undefined-dimensional array using a given
-	 * comparator.
-	 * 
-	 * @param array
-	 *            - the array to look through.
-	 * @param min
-	 *            - the current maximum value in the array.
-	 * @return the "maximum" value in the Comparable array.
-	 * @throws ClassCastException
-	 *             if an error occurs when attempting to compare two elements in
-	 *             the array.
-	 */
 	private static <T> Object minComparator(Object array, T min, final Comparator<T> comparator) {
 		try {
 			int len = Array.getLength(array);
@@ -746,6 +600,7 @@ public final class Arrays {
 	 * @return null if the array is null or if the given array is null;
 	 *         otherwise the sorted array in ascending order.
 	 */
+	@Deprecated
 	public static <T> Object sort(final Object array) {
 		if (array != null && array.getClass().isArray()) {
 			if (Comparable.class.isAssignableFrom(Classes.getDeepestComponent(array.getClass())))
@@ -771,6 +626,7 @@ public final class Arrays {
 	 *         otherwise the sorted array in ascending order.
 	 * @see Classes#naturalComparator()
 	 */
+	@Deprecated
 	public static <T> Object sort(final Object array, final Comparator<T> comparator) {
 		if (array != null && array.getClass().isArray()) {
 			if (comparator == null)
@@ -792,6 +648,7 @@ public final class Arrays {
 	 * @return null if the array is null or if the given array is null;
 	 *         otherwise the sorted array in descending order.
 	 */
+	@Deprecated
 	public static <T> Object reverseSort(final Object array) {
 		if (array != null && array.getClass().isArray()) {
 			if (Comparable.class.isAssignableFrom(Classes.getDeepestComponent(array.getClass())))
@@ -815,6 +672,7 @@ public final class Arrays {
 	 *         otherwise the sorted array in descending order.
 	 * @see Classes#naturalComparator()
 	 */
+	@Deprecated
 	public static <T> Object reverseSort(final Object array, final Comparator<T> comparator) {
 		if (array != null && array.getClass().isArray()) {
 			if (comparator == null)
@@ -832,6 +690,7 @@ public final class Arrays {
 	 * @author Vishal Patel
 	 *
 	 */
+	@Deprecated
 	private final static class Sorter {
 		/**
 		 * Types of methods that can be used to compare the elements.
@@ -854,6 +713,7 @@ public final class Arrays {
 			 * considered smaller, and one with an equal hash code to another's
 			 * is considered equal.
 			 */
+			@Deprecated
 			HASHCODE,
 
 			/**
