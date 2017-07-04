@@ -375,16 +375,4 @@ public final class Classes {
 
 		return array == clazz || array.isArray() && componentCheck(array.getComponentType(), clazz);
 	}
-
-	/**
-	 * The natural ordering comparator. Ultimately equivalent to
-	 * {@link java.util.Comparator#naturalOrder()}.
-	 * 
-	 * @return the natural ordering comparator that compares two objects,
-	 *         assuming they can be casted into {@link java.lang.Comparable}
-	 *         objects.
-	 */
-	public static Comparator<Comparable<Object>> naturalComparator() {
-		return Comparable::compareTo;
-	}
 }
