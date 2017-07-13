@@ -4,7 +4,7 @@ package pvlib.math.structures;
  * A matrix structure intended to hold elements in a rectangular 2D array.
  * @param <T> the data this matrix structure holds.
  */
-public abstract class Matrix<T> {
+public abstract class Matrix<T> implements  java.io.Serializable {
 	/**
 	 * Checks if a 2D array is rectangular (the lengths of each array in the 2D array are equal).
 	 * @param array the 2D array.

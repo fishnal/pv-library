@@ -10,7 +10,7 @@ public class ComplexNumber extends Number implements Comparable<Number> {
 	 * @return true if the object is an instance of the ComplexNumber class.
 	 */
 	public final static boolean isImaginary(Object o) {
-		return ComplexNumber.class.isInstance(o);
+		return o instanceof ComplexNumber;
 	}
 
 	/**
@@ -34,7 +34,7 @@ public class ComplexNumber extends Number implements Comparable<Number> {
     public final double theta;
 
 	/**
-	 * Constructs an ComplexNumber given the real and imaginary counter-parts.
+	 * Constructs a ComplexNumber given the real and imaginary counter-parts.
 	 * @param a the real counter-part.
 	 * @param b the imaginary counter-part.
 	 */
@@ -51,7 +51,7 @@ public class ComplexNumber extends Number implements Comparable<Number> {
 	}
 
 	/**
-	 * Constructs an ComplexNumber given a polar coordinate.
+	 * Constructs a ComplexNumber given a polar coordinate.
 	 * @param pc the polar coordinate.
 	 */
 	public ComplexNumber(PolarCoordinate pc) {
@@ -62,7 +62,7 @@ public class ComplexNumber extends Number implements Comparable<Number> {
 	}
 
 	/**
-	 * Effectively clones an ComplexNumber.
+	 * Effectively clones a ComplexNumber.
 	 * @param in the other imaginary number.
 	 */
 	public ComplexNumber(ComplexNumber in) {

@@ -14,7 +14,7 @@ import java.util.List;
  * @param <E>
  *            the data type this structure will hold.
  */
-public interface DataStructure<E> {
+public interface DataStructure<E> extends java.io.Serializable {
 	/**
 	 * Adds an element to the data structure.
 	 * 

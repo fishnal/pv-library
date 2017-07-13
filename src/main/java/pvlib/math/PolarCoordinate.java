@@ -3,7 +3,7 @@ package pvlib.math;
 /**
  * Represents a polar coordinate with an r-value and theta-value.
  */
-public class PolarCoordinate {
+public class PolarCoordinate implements java.io.Serializable {
     /**
      * R-value.
      */
