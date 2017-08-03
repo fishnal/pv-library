@@ -186,7 +186,7 @@ public final class RealMatrix extends NumberMatrix<Double> {
 			throw new IllegalArgumentException(
 					"number of columns in first matrix must equal number of rows in second matrix");
 
-		RealMatrix product = new RealMatrix(this.height, matrix.width);
+		RealMatrix product = new RealMatrix(matrix.width, this.height);
 
 		for (int rt = 0; rt < this.height; rt++) {
 			for (int cm = 0; cm < matrix.width; cm++) {

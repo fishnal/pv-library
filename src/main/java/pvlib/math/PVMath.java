@@ -1,6 +1,7 @@
 package pvlib.math;
 
 import java.util.*;
+import java.util.function.DoubleFunction;
 
 /**
  * Intended to be an extension of the {@link java.lang.Math} class. Supports the Java SDK's {@link java.lang.Byte},
@@ -14,26 +15,24 @@ import java.util.*;
  */
 public final class PVMath {
     /**
-     * Acceptable data types for performing mathematical operations.
-     */
-    private final static Class<? extends Number>[] ACCEPTED_TYPES = new Class[]{Byte.class, Short.class, Integer.class, Long.class, Float.class, Double.class, ComplexNumber.class};
-
-    /**
-     * Comparator used to sort the classes; sorts based on the name of the class defined by {@link Class#getName()}.
-     * Used to binary search the array of accepted types for checking if a data type is accepted by this Math class.
-     * @see #isAccepted(Class)
-     */
-    private final static Comparator<Class<? extends Number>> ACCEPTED_TYPES_COMPARATOR = (c1, c2) -> c1.getName().compareTo(c1.getName());
-
-    /**
      * Constant of Math.log(10)
      */
     public final static double LOG10 = Math.log(10);
-
     /**
      * Constant of Math.log(2)
      */
     public final static double LOG2 = Math.log(2);
+    /**
+     * Acceptable data types for performing mathematical operations.
+     */
+    private final static Class<? extends Number>[] ACCEPTED_TYPES = new Class[]{Byte.class, Short.class, Integer.class, Long.class, Float.class, Double.class, ComplexNumber.class};
+    /**
+     * Comparator used to sort the classes; sorts based on the name of the class defined by {@link Class#getName()}.
+     * Used to binary search the array of accepted types for checking if a data type is accepted by this Math class.
+     *
+     * @see #isAccepted(Class)
+     */
+    private final static Comparator<Class<? extends Number>> ACCEPTED_TYPES_COMPARATOR = (c1, c2) -> c1.getName().compareTo(c1.getName());
 
     /**
      * Static initilization; sort {@link #ACCEPTED_TYPES} using {@link #ACCEPTED_TYPES_COMPARATOR}.
@@ -51,6 +50,7 @@ public final class PVMath {
 
     /**
      * Checks if a Number sub-class is accepted by this Math class.
+     *
      * @param numberSubClass - the sub-class to check if it is accepted.
      * @return true if the sub-class is accepted; false otherwise
      */
@@ -60,6 +60,7 @@ public final class PVMath {
 
     /**
      * Adds two numbers together.
+     *
      * @param n1 - the first operand.
      * @param n2 - the second operand.
      * @return the sum of the two numbers (possibly a {@link ComplexNumber}).
@@ -68,13 +69,14 @@ public final class PVMath {
         if (n1 instanceof ComplexNumber)
             return ((ComplexNumber) n1).add(n2);
         else if (n2 instanceof ComplexNumber)
-            return ((ComplexNumber)n2).add(n1);
+            return ((ComplexNumber) n2).add(n1);
         else
             return n1.doubleValue() + n2.doubleValue();
     }
 
     /**
      * Subtracts two numbers from each other.
+     *
      * @param n1 - the first operand.
      * @param n2 - the second operand.
      * @return - the difference between the two numbers (possibly a {@link ComplexNumber}).
@@ -90,6 +92,7 @@ public final class PVMath {
 
     /**
      * Multiplies two numbers against each other.
+     *
      * @param n1 - the first operand.
      * @param n2 - the second operand.
      * @return the product of the two numbers (possibly a {@link ComplexNumber}).
@@ -98,13 +101,14 @@ public final class PVMath {
         if (n1 instanceof ComplexNumber)
             return ((ComplexNumber) n1).multiply(n2);
         else if (n2 instanceof ComplexNumber)
-            return ((ComplexNumber)n2).multiply(n1);
+            return ((ComplexNumber) n2).multiply(n1);
         else
             return n1.doubleValue() * n2.doubleValue();
     }
 
     /**
      * Divides one number from another.
+     *
      * @param n1 - the first operand.
      * @param n2 - the second operand.
      * @return the quotient of the two numbers (possibly a {@link ComplexNumber}).
@@ -135,6 +139,7 @@ public final class PVMath {
      * Takes the inverse cosine of a number. The inverse cosine of a number is obtained by the following:
      * <code>acos(x) = pi / 2 + iln(ix + sqrt(1 - x^2))</code>. The result is complex when the input is
      * complex or if the input is not in the range [-1, 1].
+     *
      * @param x - a number.
      * @return the inverse cosine of the number (possibly a {@link ComplexNumber}).
      */
@@ -157,6 +162,7 @@ public final class PVMath {
      * Takes the inverse hyperbolic cosine of a number. The inverse hyperbolic cosine of a number is obtained by the
      * following: <code>acosh(x) = ln(sqrt(x-1) * sqrt(x+1) + x)</code>. The result is complex when the input
      * is complex or if the input is not in the range [1, infinity].
+     *
      * @param x - a number.
      * @return the inverse hyperbolic cosine of the number (possibly a {@link ComplexNumber}).
      */
@@ -173,6 +179,7 @@ public final class PVMath {
      * Takes the inverse sine of a number. The inverse sine of a number is obtained by the following:
      * <code>asin(x) = -i * ln(ix + sqrt(1 - x^2))</code>. The result is complex when the input is complex
      * or if the input is not in the range [-1, 1].
+     *
      * @param x - a number.
      * @return the inverse sine of the number (possibly a {@link ComplexNumber}).
      */
@@ -194,6 +201,7 @@ public final class PVMath {
     /**
      * Takes the inverse hyperbolic sine of a number. The inverse hyperbolic sine of a number is obtained by the
      * following: <code>asinh(x) = ln(x + sqrt(x^2 + 1))</code>. The result is complex when the input is complex.
+     *
      * @param x - a number.
      * @return the inverse hyperbolic sine of the number (possibly a {@link ComplexNumber}).
      */
@@ -207,6 +215,7 @@ public final class PVMath {
     /**
      * Takes the inverse tangent of a number. The inverse tangent of a number is obtained by the following:
      * <code>atan(x) = i/2 * ln((1-xi)/(1+xi))</code>. The result is complex when the input is complex.
+     *
      * @param x - a number.
      * @return the inverse tangent of the number (possibly a {@link ComplexNumber}).
      */
@@ -229,6 +238,7 @@ public final class PVMath {
 
     /**
      * Takes the inverse tangent of two numbers composing a vector.
+     *
      * @param y - the y component.
      * @param x - the x component.
      * @return the inverse tangent of the vector provided (possibly a {@link ComplexNumber}).
@@ -242,6 +252,7 @@ public final class PVMath {
      * Takes the inverse hyperbolic tangent of a number. The inverse hyperbolic tangent of a number is obtained
      * by the following: <code>atanh(x) = 1/2 * ln((1+x)/(1-x))</code>. The result is complex when the input is
      * complex or not in the range (-1, 1).
+     *
      * @param x - a number.
      * @return the inverse hyperbolic tangent of the number (possibly a {@link ComplexNumber}).
      */
@@ -256,6 +267,7 @@ public final class PVMath {
 
     /**
      * Takes the cube root a number. The result is complex if the input is complex.
+     *
      * @param x - a number.
      * @return the cube root of the number (possibly a {@link ComplexNumber}).
      */
@@ -266,6 +278,7 @@ public final class PVMath {
     /**
      * Performs a ceiling operation on a number. For complex values, the ceiling operation is performed
      * on both the real and complex parts of the value.
+     *
      * @param x - a number.
      * @return the ceiling value of the number (possibly a {@link ComplexNumber}).
      */
@@ -282,6 +295,7 @@ public final class PVMath {
      * Takes the cosine of a number. The cosine of a number is obtained by the following:
      * <code>cos(a+bi) = cos(a)cosh(b) - isin(a)sinh(b)</code>. The result is complex if the input
      * is complex.
+     *
      * @param x - a number.
      * @return the cosine of the number (possibly a {@link ComplexNumber}).
      */
@@ -297,6 +311,7 @@ public final class PVMath {
 
     /**
      * Takes the hyperbolic cosine of a number. The result is complex if the input is complex.
+     *
      * @param x - a number.
      * @return the hyperbolic cosine of the number (possibly a {@link ComplexNumber}).
      */
@@ -306,6 +321,7 @@ public final class PVMath {
 
     /**
      * Raises Euler's number by a number. The result is complex if the input is complex.
+     *
      * @param x - a number.
      * @return Euler's number raised by the number (possibly a {@link ComplexNumber}).
      */
@@ -321,6 +337,7 @@ public final class PVMath {
     /**
      * Raises Euler's number by a number and subtracts that result by 1. The result is complex if the input
      * is complex.
+     *
      * @param x - a number.
      * @return Euler's number raised by the number and subtracted by 1 (possibly a {@link ComplexNumber}).
      */
@@ -331,6 +348,7 @@ public final class PVMath {
     /**
      * Performs a flooring operation on a number. For complex values, the flooring operation is performed on both
      * the real and complex parts of the value.
+     *
      * @param x - a value.
      * @return the flooring value of the number (possibly a {@link ComplexNumber}).
      */
@@ -346,6 +364,7 @@ public final class PVMath {
     /**
      * Calculates the hypotenuse given two side values; <code>sqrt(a^2, b^2)</code>. The result is complex
      * if one of the inputs is complex.
+     *
      * @param a - the first value.
      * @param b - the second value.
      * @return the hypotenuse of the resulting right triangle formed by the two values provided (possibly a
@@ -359,6 +378,7 @@ public final class PVMath {
      * Takes the natural logarithm of a number and is obtained by the following:
      * <code>log(x) = ln(||x||) + arg(x) * i</code>. The result is complex if the input is complex
      * or is not in the range of (0, infinity).
+     *
      * @param x - a number.
      * @return the natural logarithm of the number (possibly a {@link ComplexNumber}).
      */
@@ -375,6 +395,7 @@ public final class PVMath {
     /**
      * Takes the natural logarithm of the sum of a number and 1. The result is complex if the input is complex or if
      * the sum of the input and 1 is not in the range of (0, infinity).
+     *
      * @param x - a number.
      * @return the natural logarithm of the sum of a number and 1 (possibly a {@link ComplexNumber}).
      */
@@ -385,6 +406,7 @@ public final class PVMath {
     /**
      * Takes the base-2 logarithm of a number. The result is complex if the input is complex or is not in the range
      * (0, infinity).
+     *
      * @param x - a number.
      * @return the base-2 logarithm of a number (possibly a {@link ComplexNumber}).
      */
@@ -395,6 +417,7 @@ public final class PVMath {
     /**
      * Takes the base-10 logarithm of a number. The result is complex if the input is complex or is not in the range
      * (0, infinity).
+     *
      * @param x - a number.
      * @return the base-10 logarithm of a number (possibly a {@link ComplexNumber}).
      */
@@ -404,12 +427,13 @@ public final class PVMath {
 
     /**
      * Raises a number by another number.
-     * @param n - the base.
+     *
+     * @param n     - the base.
      * @param power - the exponent.
      * @return the base raised to the power of the exponent (possibly a {@link ComplexNumber}).
      * @throws IllegalArgumentException
      */
-    public static Number pow(Number n, Number power)  throws IllegalArgumentException {
+    public static Number pow(Number n, Number power) throws IllegalArgumentException {
         return new ComplexNumber(n).pow(power);
     }
 
@@ -427,6 +451,7 @@ public final class PVMath {
 
     /**
      * Rounds a number. If the value is complex, then both the real and complex parts are rounded.
+     *
      * @param x - a number.
      * @return the rounded number (possibly a {@link ComplexNumber}).
      */
@@ -442,6 +467,7 @@ public final class PVMath {
     /**
      * Takes the sine of a number and is obtained by the following:
      * <code>sin(a+bi) = sin(a)cosh(b) - icos(a)sinh(b)</code>. The result is complex if the input is complex.
+     *
      * @param x - a number.
      * @return the sine of the number (possibly a {@link ComplexNumber}).
      */
@@ -457,6 +483,7 @@ public final class PVMath {
 
     /**
      * Takes the hyperbolic sine of a number. The result is complex if the input is complex.
+     *
      * @param x - a number.
      * @return the hyperbolic sine of a number (possibly a {@link ComplexNumber}).
      */
@@ -466,6 +493,7 @@ public final class PVMath {
 
     /**
      * Takes the square root of a number. The result is complex if the input is less than 0.
+     *
      * @param x - a number.
      * @return the square root of the number (possibly a {@link ComplexNumber}).
      */
@@ -475,6 +503,7 @@ public final class PVMath {
 
     /**
      * Takes the tangent of a number. The result is complex if the input is complex.
+     *
      * @param x - a number.
      * @return the tangent of the number (possibly a {@link ComplexNumber}).
      */
@@ -484,6 +513,7 @@ public final class PVMath {
 
     /**
      * Takes the hyperbolic tangent of a number. The result is complex if the input is complex.
+     *
      * @param x - a number.
      * @return the hyperbolic tangent of a number (possibly a {@link ComplexNumber}).
      */
@@ -507,6 +537,7 @@ public final class PVMath {
 
     /**
      * Gets the greatest common factor between two integers.
+     *
      * @param a - the first number.
      * @param b - the second number.
      * @return the greatest common factor between the two numbers.
@@ -519,20 +550,84 @@ public final class PVMath {
         List<Long> db = divisors(b);
 
         da.retainAll(db);
-        return da.get(da.size()-1);
+        return da.get(da.size() - 1);
     }
 
     /**
      * Gets the divisors of an integer.
+     *
      * @param l - the integer.
      * @return a list of divisors for this number.
      */
     public static List<Long> divisors(long l) {
         List<Long> list = new ArrayList<>();
         for (long i = l; i > 0; i--)
-            if (l%i == 0)
+            if (l % i == 0)
                 list.add(i);
         Collections.reverse(list);
         return list;
+    }
+
+    /**
+     * Takes the average of a set of numbers.
+     *
+     * @param values - a set of numbers
+     * @return the average of a set of numbers.
+     */
+    public static Number average(Number... values) {
+        Number avg = 0;
+
+        for (Number n : values) {
+            avg = add(avg, n);
+        }
+
+        return divide(avg, values.length);
+    }
+
+    /**
+     * Sums up a sequence of numbers; essentially mimics summation functions. Each iteration
+     * is incremented by exactly 1, so calling <code>summation(function, 0, 3)</code> is equivalent
+     * to <code>summation(function, 0, 3.4)</code>
+     *
+     * @param function - the function applied to each summation iteration.
+     * @param start    - the starting bound (inclusive).
+     * @param end      - the ending bound (inclusive).
+     * @return the sum of the sequence of numbers provided by a function and two bounds.
+     */
+    public static Number summation(DoubleFunction<Number> function, double start, double end) {
+        Number sum = 0;
+
+        for (double d = start; d <= end; d++) {
+            sum = add(sum, function.apply(d));
+        }
+
+        return sum;
+    }
+
+    /**
+     * Finds the standard deviation amongst a set of numbers. Utilizes the Discrete Random Variable method
+     * (see <a href=https://en.wikipedia.org/wiki/Standard_deviation#Discrete_random_variable>this wikipedia page
+     * for more information</a>)
+     *
+     * @param values - the set of numbers.
+     * @return the standard deviation amongst the set of numbers
+     */
+    public static Number stdDeviation(Number... values) {
+        // do not use #summation(DoubleFunction, double, double), it's significantly slower
+        double inv = 1 / values.length;
+
+        Number mu = 0;
+        for (Number n : values) {
+            mu = add(n, mu);
+        }
+        mu = multiply(mu, inv);
+
+        Number sqrtPart = 0;
+        for (Number n : values) {
+            sqrtPart = add(sqrtPart, pow(subtract(n, mu), 2));
+        }
+        sqrtPart = multiply(sqrtPart, inv);
+
+        return sqrt(sqrtPart);
     }
 }

@@ -164,4 +164,4 @@ public abstract class Tree<E> implements java.io.Serializable {
 	 */
 	@Override
 	public abstract boolean equals(Object obj);
-}
+}	

@@ -161,7 +161,7 @@ public class ComplexMatrix extends NumberMatrix<ComplexNumber> {
 			throw new IllegalArgumentException(
 					"number of columns in first matrix must equal number of rows in second matrix");
 
-		ComplexMatrix product = new ComplexMatrix(this.height, matrix.width);
+		ComplexMatrix product = new ComplexMatrix(matrix.width, this.height);
 
 		for (int rt = 0; rt < this.height; rt++) {
 			for (int cm = 0; cm < matrix.width; cm++) {

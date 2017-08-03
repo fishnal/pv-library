@@ -9,7 +9,7 @@ import static java.lang.Math.abs;
  * @author Vishal Patel
  *
  */
-public class Fraction {
+public class Fraction implements java.io.Serializable {
 	/**
 	 * Fast, but less accurate, method for simplifying a Fraction.
 	 */
@@ -34,9 +34,6 @@ public class Fraction {
 	 * Denominator of the fraction.
 	 */
 	protected Number denominator;
-
-	protected Fraction() {
-    }
 
 	/**
 	 * Constructs a Fraction object from a given value. The fraction is
