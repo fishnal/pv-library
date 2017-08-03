@@ -1,5 +1,11 @@
 package pvlib.math.structures;
 
+import pvlib.util.Arrays;
+import pvlib.util.ForEachHolder;
+
+import java.lang.reflect.Array;
+import java.util.function.Consumer;
+
 /**
  * A matrix structure intended to hold elements in a rectangular 2D array.
  * @param <T> the data this matrix structure holds.
@@ -44,7 +50,7 @@ public abstract class Matrix<T> implements  java.io.Serializable {
 	 */
 	protected final static int checkData(Object[][] data) {
 		for (int r = 0; r < data.length; r++)
-			for (int c = 0; c < data.length; c++)
+			for (int c = 0; c < data[r].length; c++)
 				if (data[r][c] == null)
 					return -1;
 
@@ -169,6 +175,34 @@ public abstract class Matrix<T> implements  java.io.Serializable {
 
 		return copy;
 	}
+	
+	/**
+	 * Gets the elements in a row of this matrix.
+	 * @param row - the row index
+	 * @param clazz - the type this matrix holds.
+	 * @return an array of the elements in a row.
+	 */
+	public final T[] getRow(int row, Class<T> clazz) {
+		Object data = Array.newInstance(clazz, this.width);
+		for (int c = 0; c < this.width; c++) {
+			Array.set(data, c, this.getValue(row, c));
+		}
+		return (T[]) data;
+	}
+	
+	/**
+	 * Gets the elements in a column of this matrix.
+	 * @param column - the column index
+	 * @param clazz - the type this matrix holds.
+	 * @return an array of the elements in a column.
+	 */
+	public final T[] getColumn(int column, Class<T> clazz) {
+		Object data = Array.newInstance(clazz, this.height);
+		for (int r = 0; r < this.height; r++) {
+			Array.set(data, r, this.getValue(r, column));
+		}
+		return (T[]) data;
+	}
 
 	/**
 	 * Gets the casted data of this matrix.
@@ -183,6 +217,65 @@ public abstract class Matrix<T> implements  java.io.Serializable {
 	 */
 	protected final boolean sameDimensions(Matrix<T> other) {
 		return this.height == other.height && this.width == other.width;
+	}
+	
+	/**
+	 * Iterates through each element in the matrix. Instead of using a {@link Consumer}
+	 * that accepts the generic type of this matrix, the consumer accepts a {@link ForEachHolder}
+	 * that has the same generic type of this matrix. The {@code ForEachHolder} allows for the
+	 * consumer implementation to access what indices the matrix is currently iterating at.
+	 * The iteration goes from rows to columns (top to bottom, left to right), similar to a
+	 * 2D-array. As such, the {@code ForEachHolder}'s indices will have the row index in the
+	 * first element, column index in the second element, and the matrix element as it's data.
+	 *
+	 * @param action - the consumer to utilize when iterating through each element.
+	 * @see ForEachHolder
+	 * @see Consumer
+	 */
+	public final void forEach(Consumer<ForEachHolder<T>> action) {
+		for (int r = 0; r < this.height; r++) {
+			for (int c = 0; c < this.width; c++) {
+				action.accept(new ForEachHolder<>(this.getValue(r, c), r, c));
+			}
+		}
+	}
+	
+	/**
+	 * Iterates through each row in the matrix. Instead of using a {@link Consumer} that accepts
+	 * the generic type of this matrix, the consumer accepts a {@link ForEachHolder}
+	 * that has the same generic type of this matrix. The {@code ForEachHolder} allows for the consumer
+	 * implementation to access the row-index the matrix is currently iterating at. The iteration
+	 * goes from top to bottom. As such the {@code ForEachHolder}'s indices will have the row index
+	 * in the first element, and will contain a {@code T} array, representing the current row, as it's data.
+	 *
+	 * @param action - the consumer to utilize when iterating through each row.
+	 * @param clazz - the type the matrix holds.
+	 * @see ForEachHolder
+	 * @see Consumer
+	 */
+	public final void forEachRow(Consumer<ForEachHolder<T[]>> action, Class<T> clazz) {
+		for (int r = 0; r < this.height; r++) {
+			action.accept(new ForEachHolder<>(this.getRow(r, clazz), r));
+		}
+	}
+	
+	/**
+	 * Iterates through each column in the matrix. Instead of using a {@link Consumer} that accepts
+	 * the generic type of this matrix, the consumer accepts a {@link ForEachHolder}
+	 * that has the same generic type of this matrix. The {@code ForEachHolder} allows for the consumer
+	 * implementation to access the column-index the matrix is currently iterating at. The iteration
+	 * goes from left to right. As such the {@code ForEachHolder}'s indices will have the column index
+	 * in the first element, and will contain a {@code T} array, representing the current column, as it's data.
+	 *
+	 * @param action - the consumer to utilize when iterating through each column.
+	 * @param clazz - the type the matrix holds.
+	 * @see ForEachHolder
+	 * @see Consumer
+	 */
+	public final void forEachColumn(Consumer<ForEachHolder<T[]>> action, Class<T> clazz) {
+		for (int c = 0; c < this.width; c++) {
+			action.accept(new ForEachHolder<>(this.getColumn(c, clazz), c));
+		}
 	}
 
 	/**
