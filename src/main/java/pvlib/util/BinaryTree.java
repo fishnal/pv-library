@@ -31,6 +31,86 @@ public class BinaryTree<E extends Comparable<E>> extends Tree<E> {
 		public boolean isLeaf() { return right == null && left == null; }
 
 		/**
+		 * Removes a node from this node's sub-tree.
+		 * 
+		 * @param node - the node to remove.
+		 */
+		protected void remove(BinaryNode node) {
+			if (node.isLeaf()) {
+				leafRemoval(node);
+			} else if (node.right != null && node.left != null) {
+				doubleRemoval(node);
+			} else {
+				singleRemoval(node);
+			}
+		}
+
+		/**
+		 * Removes a node from this node's sub-tree assuming that the removal node
+		 * is a leaf node.
+		 * 
+		 * @param node - the leaf node to remove.
+		 */
+		private void leafRemoval(BinaryNode node) {
+			BinaryNode parent = (BinaryNode) node.parent;
+
+			if (parent != null) {
+				if (parent.right == node) {
+					parent.right = null;
+				} else {
+					parent.left = null;
+				}
+			} else {
+				BinaryTree.this.root = null;
+			}
+		}
+
+		/**
+		 * Removes a node from this node's sub-tree assuming that the removal node
+		 * has only one child node.
+		 * 
+		 * @param node - the single-child node to remove.
+		 */
+		private void singleRemoval(BinaryNode node) {
+			BinaryNode parent = (BinaryNode) node.parent;
+			BinaryNode child = node.right != null ? node.right : node.left;
+
+			if (parent != null) {
+				if (parent.right == node) {
+					parent.right = null;
+				} else {
+					parent.left = null;
+				}
+			} else {
+				BinaryTree.this.root = child;
+			}
+
+			child.parent = parent;
+		}
+
+		/**
+		 * Removes a node from this node's sub-tree assuming that the removal node
+		 * has two children nodes.
+		 * 
+		 * @param node - the two-children node to remove.
+		 */
+		private void doubleRemoval(BinaryNode node) {
+			BinaryNode minSubRight = node.right;
+
+			while (minSubRight.left != null) {
+				minSubRight = minSubRight.left;
+			}
+
+			node.value = minSubRight.value;
+
+			if (minSubRight.isLeaf()) {
+				leafRemoval(minSubRight);
+			} else {
+				singleRemoval(minSubRight);
+			}
+		}
+
+		/**
 		 * @return {@inheritDoc}; and the children associated with this binary
 		 *         node.
 		 */
@@ -71,18 +151,12 @@ public class BinaryTree<E extends Comparable<E>> extends Tree<E> {
 		if (root == null)
 			root = new BinaryNode(null, value);
 		else {
-
-			BinaryNode node = get(value, (BinaryNode) root);
-			if (node == null) {
-
-				BinaryNode parent = bestParent(value, (BinaryNode) root);
-				node = new BinaryNode(parent, value);
-				if (value.compareTo(parent.value) < 0)
-					parent.left = node;
-				else
-					parent.right = node;
-			} else
-				node.value = value;
+			BinaryNode parent = bestParent(value, (BinaryNode) root);
+			BinaryNode node = new BinaryNode(parent, value);
+			if (value.compareTo(parent.value) < 0)
+				parent.left = node;
+			else
+				parent.right = node;
 		}
 	}
 
@@ -99,85 +173,12 @@ public class BinaryTree<E extends Comparable<E>> extends Tree<E> {
 
 	@Override
 	public boolean remove(E value) {
-		// TODO make this more efficient
 		BinaryNode node = get(value, (BinaryNode) root);
-		if (node == null)
+		if (node == null) {
 			return false;
-
-		// find the least value of the right hand side tree of this node
-		// if right does not exist, then greatest value of left hand side of this node
-		// if left does not exist, just null and return
-
-		BinaryNode currNode;
-
-		if (node.right != null) {
-			currNode = node.right;
-
-			while (currNode.left != null) {
-				currNode = currNode.left;
-			}
-			// leftmost node on right hand side of tree found
-			// unlink it from the parent
-
-
-			BinaryNode currNodeParent = (BinaryNode) currNode.parent;
-
-			BinaryNode nodeParent = (BinaryNode) node.parent;
-
-			if (currNodeParent.right == currNode)
-				currNodeParent.right = null;
-			else
-				currNodeParent.left = null;
-
-			if (nodeParent.left == node)
-				nodeParent.left = currNode;
-			else
-				nodeParent.right = currNode;
-			currNode.parent = node.parent;
-			// !!!!!
-			// ((BinaryNode) currNode.parent).right = currNode;
-			node.right.parent = currNode;
-			if (node.left != null)
-				node.left.parent = currNode;
-			else
-				node.left = currNode.left;
-
-			if (currNode != node.right)
-				currNode.right = node.right;
-			if (currNode != node.left)
-				currNode.left = node.left;
-		} else if (node.left != null) {
-			currNode = node.left;
-
-			BinaryNode currNodeParent = (BinaryNode) currNode.parent;
-
-			BinaryNode nodeParent = (BinaryNode) node.parent;
-
-			if (currNodeParent.right == currNode)
-				currNodeParent.right = null;
-			else
-				currNodeParent.left = null;
-
-			if (nodeParent.left == node)
-				nodeParent.left = currNode;
-			else
-				nodeParent.right = currNode;
-			currNode.parent = node.parent;
-			// !!!!!
-			// currNodeParent.left = currNode;
-			node.right = currNode.right;
-			node.left.parent = currNode;
-
-			if (currNode != node.right)
-				currNode.right = node.right;
-		} else {
-			BinaryNode nodeParent = (BinaryNode) node.parent;
-
-			if (nodeParent.right == node)
-				nodeParent.right = null;
-			else
-				nodeParent.left = null;
 		}
+
+		((BinaryNode) root).remove(node);
 
 		return true;
 	}
