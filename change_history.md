@@ -25,6 +25,9 @@
 # Date Format: DD/MM/YYYY
 
 # 03/08/2017
+### [pvlib.math.ComplexNumber][ComplexNumber]
++ Added `public PolarCoordinate toPolarCoordinate()`: converts the complex number to a [`PolarCoordinate`][PolarCoordinate]
+object
 ### [pvlib.math.structures.ComplexMatrix][ComplexMatrix]
 + Fixed `ComplexMatrix multiply(NumberMatrix<ComplexNumber>)`: product would be a matrix of width=this.height and
 height=matrix.width; instead these should be flipped so width=matrix.width and height=this.height
