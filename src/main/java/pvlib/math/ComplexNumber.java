@@ -118,6 +118,13 @@ public class ComplexNumber extends Number implements Comparable<Number> {
 	public long longValue() throws UnsupportedOperationException {
 		throw new UnsupportedOperationException();
 	}
+	
+	/**
+	 * @return the polar coordinate of this complex number.
+	 */
+	public PolarCoordinate toPolarCoordinate() {
+		return new PolarCoordinate(r, theta);
+	}
 
 	/**
 	 * Adds this and another number.
