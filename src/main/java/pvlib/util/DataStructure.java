@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
+import java.util.function.Consumer;
 
 /**
  * Represents an abstract data structure, whose elements can be read, modified,
@@ -212,6 +213,17 @@ public interface DataStructure<E> extends java.io.Serializable {
 	 * @return true if the structures are equal.
 	 */
 	boolean equals(Object obj);
+	
+	/**
+	 * Iterates through each element in the data structure, performing a consumer operation
+	 * on each element.
+	 * @param action - the consumer operation to apply to each element.
+	 */
+	default void forEach(Consumer<E> action) {
+		for (int i = 0; i < this.size(); i++) {
+			action.accept(this.get(i));
+		}
+	}
 
 	/**
 	 * Sorts the data structure, modifying its elements and indices, by
