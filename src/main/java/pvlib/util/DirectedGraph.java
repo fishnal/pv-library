@@ -426,8 +426,7 @@ public final class DirectedGraph<T> extends Graph<T> {
 				cycleList.add(new ArrayList<>(path));
 				path.remove(path.size() - 1);
 				continue;
-			} else if (/*path != null && */path.contains(next) || path.contains(next))
-				// TODO supposedly path != null is always true, so verify this
+			} else if (path.contains(next) || path.contains(next))
 				continue;
 
 			cycle0(next, cycleVertex, cycleList, path);
