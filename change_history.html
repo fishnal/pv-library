@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+	<meta charset="utf-8">
+
+	<title>Change History</title>
+	<style>
+		html {
+			color: #373D49;
+			font-family: "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+		}
+
+		h1, h2, h3, h4, h5, h6 {
+			margin-bottom: 16px;
+			font-weight: 600;
+			line-height: 1.25;
+		}
+
+		a {
+			color: #0366d6;
+			text-decoration: none;
+		}
+
+		code {
+			font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
+			font-size: 14px;
+			background-color: rgba(27,31,35,0.05);
+		}
+	</style>
+</head>
+
+<body id="preview">
+	<h1>Date Format: DD/MM/YYYY</h1>
+
+
+	<h1><a id="03082017" href="#03082017">03/08/2017</a></h1>
+
+
+	<h3></a>Project Changes</h3>
+
+
+	<ul>
+		<li>Restructured the entire library from <code>pvlib</code> to <code>pv3199.lib.java</code></li>
+
+
+		<li>Classes are remaining the same, but have been refactored to match this new package structure</li>
+
+
+		<li>pom.xml has been updated as well</li>
+	</ul>
+
+
+	<h3></a>change_history.md</h3>
+
+
+	<ul>
+		<li>Added some additional links in the history (might switch to raw html rather than use<br>
+		markdown formatting to make it more functional).</li>
+	</ul>
+
+
+	<h3><a href="src/main/java/pv3199/lib/java/math/ComplexNumber.java">pv3199.lib.java.math.ComplexNumber</a>
+	</h3>
+
+
+	<ul>
+		<li>Added <code>public <a href="src/main/java/pv3199/lib/java/math/PolarCoordinate.java">PolarCoordinate</a> toPolarCoordinate()</code>: converts the complex number to a <a href=
+		"src/main/java/pv3199/lib/java/math/PolarCoordinate.java"><code>PolarCoordinate</code></a><br>object
+		</li>
+	</ul>
+
+
+	<h3><a href="src/main/java/pv3199/lib/java/math/structures/ComplexMatrix.java">pv3199.lib.java.math.structures.ComplexMatrix</a>
+	</h3>
+
+
+	<ul>
+		<li>Fixed <code><a href="src/main/java/pv3199/lib/java/math/structures/ComplexMatrix.java">ComplexMatrix</a> multiply(<a href="src/main/java/pv3199/lib/java/math/structures/NumberMatrix.java">NumberMatrix</a>&lt;<a href="src/main/java/pv3199/lib/java/math/ComplexNumber.java">ComplexNumber</a>&gt;)</code>: product would be a matrix of width=this.height and<br>
+		height=matrix.width; instead these should be flipped so width=matrix.width and height=this.height</li>
+	</ul>
+
+
+	<h3><a href="src/main/java/pv3199/lib/java/math/structures/Matrix.java">pv3199.lib.java.math.structures.Matrix</a>
+	</h3>
+
+
+	<ul>
+		<li>Added some necessary imports</li>
+
+
+		<li>Fixed <code>static int checkData(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html">Object</a>[][])</code>: iteration through columns continued while column index was<br>
+			less than number of rows rather than number of columns in current iterating row, which could<br>
+			lead to an <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/IndexOutOfBoundsException.html">IndexOutOfBoundsException</a>
+			being thrown
+		</li>
+
+
+		<li>Added <code>public T[] getRow(int row, <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html">Class</a>&lt;T&gt; clazz)</code>: gets the elements in a row for this matrix, provided<br>
+		the row index and the generic type’s class</li>
+
+
+		<li>Added <code>public T[] getColumn(int column, <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html">Class</a>&lt;T&gt; clazz)</code>: gets the elements in a column for this matrix,
+		provided<br>
+		the column index and the generic type’s class</li>
+
+
+		<li>Added <code>public void forEach(<a href="https://docs.oracle.com/javase/8/docs/api/java/util/function/Consumer.html">Consumer</a>&lt;<a href="src/main/java/pv3199/lib/java/util/ForEachHolder.java">ForEachHolder</a>&lt;T&gt;&gt; action)</code>: iterates through each element in this
+		matrix,<br>
+			performing a consumer operation on each element; the consumer however accepts a<br>
+			<a href="src/main/java/pv3199/lib/java/util/ForEachHolder.java"><code>ForEachHolder</code></a> which allows for retrieval of the current
+			iterating indices in the matrix<br>
+			as well as the data stored at these indices in the matrix; iteration goes through rows then columns in a top-bottom<br>
+			then left-right manner
+		</li>
+
+
+		<li>Added <code>public void forEachRow(<a href="https://docs.oracle.com/javase/8/docs/api/java/util/function/Consumer.html">Consumer</a>&lt;<a href="src/main/java/pv3199/lib/java/util/ForEachHolder.java">ForEachHolder</a>&lt;T[]&gt;&gt; action)</code>: iterates through each row in this
+		matrix,<br>
+			performing a consumer operation on each row; the consumer however accepts a<br>
+			<a href="src/main/java/pv3199/lib/java/util/ForEachHolder.java"><code>ForEachHolder</code></a> which allows for retrieval of the current
+			iterating row index in the matrix<br>
+			as well as the row data stored at this index in the matrix; iteration goes through in a top to bottom manner
+		</li>
+
+
+		<li>Added <code>public void forEachColumn(<a href="https://docs.oracle.com/javase/8/docs/api/java/util/function/Consumer.html">Consumer</a>&lt;<a href="src/main/java/pv3199/lib/java/util/ForEachHolder.java">ForEachHolder</a>&lt;T[]&gt;&gt; action)</code>: iterates through each column in
+		this<br>
+			matrix, performing a consumer operation on each column; the consumer however accepts a<br>
+			<a href="src/main/java/pv3199/lib/java/util/ForEachHolder.java"><code>ForEachHolder</code></a> which allows for retrieval of the current
+			iterating column index in the<br>
+			matrix as well as the row data stored at this index in the matrix; iteration goes through in a left to right manner
+		</li>
+	</ul>
+
+
+	<h3><a href="src/main/java/pv3199/lib/java/math/structures/RealMatrix.java">pv3199.lib.java.math.structures.RealMatrix</a>
+	</h3>
+
+
+	<ul>
+		<li>Fixed <code><a href="src/main/java/pv3199/lib/java/math/structures/RealMatrix.java">RealMatrix</a> multiply(<a href="src/main/java/pv3199/lib/java/math/structures/NumberMatrix.java">NumberMatrix</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Double.html">Double</a>&gt;)</code>: product would be a matrix of width=this.height and<br>
+		height=matrix.width; instead these should be flipped so width=matrix.width and height=this.height</li>
+	</ul>
+
+
+	<h3><a href="src/main/java/pv3199/lib/java/util/BinaryTree.java">pv3199.lib.java.util.BinaryTree.BinaryNode</a>
+	</h3>
+
+
+	<ul>
+		<li>Added <code>protected void remove(<a href="src/main/java/pv3199/lib/java/util/BinaryTree.java">BinaryNode</a> node)</code>: removes a <code><a href="src/main/java/pv3199/lib/java/util/BinaryTree.java">BinaryNode</a></code> from this node’s tree</li>
+
+
+		<li>Added <code>private void leafRemoval(<a href="src/main/java/pv3199/lib/java/util/BinaryTree.java">BinaryNode</a> node)</code>: removes a leaf <code><a href="src/main/java/pv3199/lib/java/util/BinaryTree.java">BinaryNode</a></code> from this node’s
+		tree</li>
+
+
+		<li>Added <code>private void singleRemoval(<a href="src/main/java/pv3199/lib/java/util/BinaryTree.java">BinaryNode</a> node)</code>: removes a <code><a href="src/main/java/pv3199/lib/java/util/BinaryTree.java">BinaryNode</a></code> that has only one
+		child from this node’s<br>
+		tree</li>
+
+
+		<li>Added <code>private void doubleRemoval(<a href="src/main/java/pv3199/lib/java/util/BinaryTree.java">BinaryNode</a> node)</code>: removes a <code><a href="src/main/java/pv3199/lib/java/util/BinaryTree.java">BinaryNode</a></code> that has two children
+		from this node’s<br>
+		tree</li>
+	</ul>
+
+
+	<h3><a href="src/main/java/pv3199/lib/java/util/BinaryTree.java">pv3199.lib.java.util.BinaryTree</a>
+	</h3>
+
+
+	<ul>
+		<li>Modified <code>void add(E)</code>: there’s no point in checking if “node” is null, we can’t update it’s value if node is not null<br>
+		because we wouldn’t be changing anything; instead we’re going to be adding this value again to the tree (no single value<br>
+		in tree is unique now), and if this value is not found, it’s still added</li>
+
+
+		<li>Fixed <code>boolean remove(E)</code>: this was a complete mess, so it was rewritten entirely and explains why
+		<code><a href="src/main/java/pv3199/lib/java/util/BinaryTree.java">BinaryNode</a></code> has<br>
+		removal methods</li>
+	</ul>
+
+
+	<h3><a href="src/main/java/pv3199/lib/java/util/DataStructure.java">pv3199.lib.java.util.DataStructure</a>
+	</h3>
+
+
+	<ul>
+		<li>Added <code>default void forEach(<a href="https://docs.oracle.com/javase/8/docs/api/java/util/function/Consumer.html">Consumer</a>&lt;E&gt; action)</code>: iterates through each element in the data structure performing
+		a<br>
+		consumer operation on each element</li>
+	</ul>
+
+
+	<h3><a href="src/main/java/pv3199/lib/java/util/DirectedGraph.java">pv3199.lib.java.util.DirectedGraph</a>
+	</h3>
+
+
+	<ul>
+		<li>Resolved a TODO review comment in <code>cycle0(<a href="src/main/java/pv3199/lib/java/util/Graph.java">Vertex</a>, <a href="src/main/java/pv3199/lib/java/util/Graph.java">Vertex</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/util/List.html">List</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/util/List.html">List</a>&lt;<a href="src/main/java/pv3199/lib/java/util/Graph.java">Vertex</a>&gt;&gt;, <a href="https://docs.oracle.com/javase/8/docs/api/java/util/List.html">List</a>&lt;<a href="src/main/java/pv3199/lib/java/util/Graph.java">Vertex</a>&gt;)</code>: questioned
+		whether<br>
+		“path != null” was actually needed or not; resolved as no longer needed</li>
+	</ul>
+
+
+	<h3><a href="src/main/java/pv3199/lib/java/util/ForEachHolder.java">pv3199.lib.java.util.ForEachHolder</a>
+	</h3>
+
+
+	<ul>
+		<li>Class created which allows for iterations in a data structure, such as matrices.</li>
+
+
+		<li>Provides the value and indices at the current iteration. How these indices are stored are up to how the instances<br>
+		are made</li>
+	</ul>
+
+
+	<h3><a href="src/main/java/pv3199/lib/java/util/Tree.java">pv3199.lib.java.util.Tree</a>
+	</h3>
+
+
+	<ul>
+		<li>Nothing changed here, just removed a line</li>
+	</ul>
+</body>
+</html>
