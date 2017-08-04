@@ -3,12 +3,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>pv3199</groupId>
-    <artifactId>pvlib</artifactId>
+    <artifactId>lib.java</artifactId>
     <version>1.0</version>
     <packaging>jar</packaging>
 
-    <name>pvlib</name>
-    <url>http://maven.apache.org</url>
+    <name>pv3199.lib.java</name>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
