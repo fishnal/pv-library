@@ -1,2 +1,3 @@
 target/* linguist-documentation
+change_history.html linguist-documentation
 docs/formatter.rb linguist-documentation=false
