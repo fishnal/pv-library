@@ -3,8 +3,8 @@
 <html>
 <head>
 	<meta charset="utf-8">
-
 	<title>Change History</title>
+
 	<style>
 		html {
 			color: #373D49;
@@ -18,212 +18,392 @@
 		}
 
 		a {
-			color: #0366d6;
+			color: #00f;
 			text-decoration: none;
 		}
 
 		code {
 			font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
 			font-size: 14px;
-			background-color: rgba(27,31,35,0.05);
+			background-color: #efaaaa;
+		}
+
+		.collapseButton {
+
 		}
 	</style>
+
+	<script>
+		const HEADER_TAGS = ["h1", "h2", "h3", "h4", "h5", "h6"];
+
+		/**
+		 * Get the first header (from h1 to h6) that this node presents from its direct children
+		 */
+		function getHeader(node) {
+			for (var i = 0; i < node.children.length; i++) {
+				var child = node.children[i];
+				if (HEADER_TAGS.indexOf(child.tagName.toLowerCase()) != -1) {
+					return child;
+				}
+			}
+		}
+
+		/**
+		 * Appropriates the size of a toggle button to the given header
+		 */
+		function modifyToggle(toggle, header) {
+			var computedCSS = window.getComputedStyle(header);
+			var fontSize = parseInt(computedCSS.fontSize);
+			// use this font size to determine an appropriate toggle button size
+		}
+
+		function collapse(collapsableNode) {
+			console.log(collapsableNode);
+		}
+
+		function init() {
+			// deal with collapsable elements
+			var collapsables = document.getElementsByClassName("collapsable");
+
+			for (var i = 0; i < collapsables.length; i++) {
+				var collapsable = collapsables[i];
+
+				collapsable.setAttribute("data-manually-collapsed", false);
+				var collapseToggle = document.createElement("BUTTON");
+				collapseToggle.addEventListener("click", collapse);
+				collapseToggle.innerText = "+";
+				collapseToggle.className = "collapseButton " + collapseToggle.className;
+				var header = getHeader(collapsable);
+				header.style.display = "inline";
+				modifyToggle(collapseToggle, header);
+				// collapsable.insertBefore(collapseToggle, header);
+			}
+
+			// deal with date elements
+		}
+	</script>
 </head>
 
-<body id="preview">
-	<h1>Date Format: DD/MM/YYYY</h1>
-
-
-	<h1><a id="03082017" href="#03082017">03/08/2017</a></h1>
-
-
-	<h3></a>Project Changes</h3>
-
-
-	<ul>
-		<li>Restructured the entire library from <code>pvlib</code> to <code>pv3199.lib.java</code></li>
-
-
-		<li>Classes are remaining the same, but have been refactored to match this new package structure</li>
-
-
-		<li>pom.xml has been updated as well</li>
-	</ul>
-
-
-	<h3></a>change_history.md</h3>
-
-
-	<ul>
-		<li>Added some additional links in the history (might switch to raw html rather than use<br>
-		markdown formatting to make it more functional).</li>
-	</ul>
-
-
-	<h3><a href="src/main/java/pv3199/lib/java/math/ComplexNumber.java">pv3199.lib.java.math.ComplexNumber</a>
-	</h3>
-
-
-	<ul>
-		<li>Added <code>public <a href="src/main/java/pv3199/lib/java/math/PolarCoordinate.java">PolarCoordinate</a> toPolarCoordinate()</code>: converts the complex number to a <a href=
-		"src/main/java/pv3199/lib/java/math/PolarCoordinate.java"><code>PolarCoordinate</code></a><br>object
-		</li>
-	</ul>
-
-
-	<h3><a href="src/main/java/pv3199/lib/java/math/structures/ComplexMatrix.java">pv3199.lib.java.math.structures.ComplexMatrix</a>
-	</h3>
-
-
-	<ul>
-		<li>Fixed <code><a href="src/main/java/pv3199/lib/java/math/structures/ComplexMatrix.java">ComplexMatrix</a> multiply(<a href="src/main/java/pv3199/lib/java/math/structures/NumberMatrix.java">NumberMatrix</a>&lt;<a href="src/main/java/pv3199/lib/java/math/ComplexNumber.java">ComplexNumber</a>&gt;)</code>: product would be a matrix of width=this.height and<br>
-		height=matrix.width; instead these should be flipped so width=matrix.width and height=this.height</li>
-	</ul>
-
-
-	<h3><a href="src/main/java/pv3199/lib/java/math/structures/Matrix.java">pv3199.lib.java.math.structures.Matrix</a>
-	</h3>
-
-
-	<ul>
-		<li>Added some necessary imports</li>
-
-
-		<li>Fixed <code>static int checkData(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html">Object</a>[][])</code>: iteration through columns continued while column index was<br>
-			less than number of rows rather than number of columns in current iterating row, which could<br>
-			lead to an <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/IndexOutOfBoundsException.html">IndexOutOfBoundsException</a>
-			being thrown
-		</li>
-
-
-		<li>Added <code>public T[] getRow(int row, <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html">Class</a>&lt;T&gt; clazz)</code>: gets the elements in a row for this matrix, provided<br>
-		the row index and the generic type’s class</li>
-
-
-		<li>Added <code>public T[] getColumn(int column, <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html">Class</a>&lt;T&gt; clazz)</code>: gets the elements in a column for this matrix,
-		provided<br>
-		the column index and the generic type’s class</li>
-
-
-		<li>Added <code>public void forEach(<a href="https://docs.oracle.com/javase/8/docs/api/java/util/function/Consumer.html">Consumer</a>&lt;<a href="src/main/java/pv3199/lib/java/util/ForEachHolder.java">ForEachHolder</a>&lt;T&gt;&gt; action)</code>: iterates through each element in this
-		matrix,<br>
-			performing a consumer operation on each element; the consumer however accepts a<br>
-			<a href="src/main/java/pv3199/lib/java/util/ForEachHolder.java"><code>ForEachHolder</code></a> which allows for retrieval of the current
-			iterating indices in the matrix<br>
-			as well as the data stored at these indices in the matrix; iteration goes through rows then columns in a top-bottom<br>
-			then left-right manner
-		</li>
-
-
-		<li>Added <code>public void forEachRow(<a href="https://docs.oracle.com/javase/8/docs/api/java/util/function/Consumer.html">Consumer</a>&lt;<a href="src/main/java/pv3199/lib/java/util/ForEachHolder.java">ForEachHolder</a>&lt;T[]&gt;&gt; action)</code>: iterates through each row in this
-		matrix,<br>
-			performing a consumer operation on each row; the consumer however accepts a<br>
-			<a href="src/main/java/pv3199/lib/java/util/ForEachHolder.java"><code>ForEachHolder</code></a> which allows for retrieval of the current
-			iterating row index in the matrix<br>
-			as well as the row data stored at this index in the matrix; iteration goes through in a top to bottom manner
-		</li>
-
-
-		<li>Added <code>public void forEachColumn(<a href="https://docs.oracle.com/javase/8/docs/api/java/util/function/Consumer.html">Consumer</a>&lt;<a href="src/main/java/pv3199/lib/java/util/ForEachHolder.java">ForEachHolder</a>&lt;T[]&gt;&gt; action)</code>: iterates through each column in
-		this<br>
-			matrix, performing a consumer operation on each column; the consumer however accepts a<br>
-			<a href="src/main/java/pv3199/lib/java/util/ForEachHolder.java"><code>ForEachHolder</code></a> which allows for retrieval of the current
-			iterating column index in the<br>
-			matrix as well as the row data stored at this index in the matrix; iteration goes through in a left to right manner
-		</li>
-	</ul>
-
-
-	<h3><a href="src/main/java/pv3199/lib/java/math/structures/RealMatrix.java">pv3199.lib.java.math.structures.RealMatrix</a>
-	</h3>
-
-
-	<ul>
-		<li>Fixed <code><a href="src/main/java/pv3199/lib/java/math/structures/RealMatrix.java">RealMatrix</a> multiply(<a href="src/main/java/pv3199/lib/java/math/structures/NumberMatrix.java">NumberMatrix</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Double.html">Double</a>&gt;)</code>: product would be a matrix of width=this.height and<br>
-		height=matrix.width; instead these should be flipped so width=matrix.width and height=this.height</li>
-	</ul>
-
-
-	<h3><a href="src/main/java/pv3199/lib/java/util/BinaryTree.java">pv3199.lib.java.util.BinaryTree.BinaryNode</a>
-	</h3>
-
-
-	<ul>
-		<li>Added <code>protected void remove(<a href="src/main/java/pv3199/lib/java/util/BinaryTree.java">BinaryNode</a> node)</code>: removes a <code><a href="src/main/java/pv3199/lib/java/util/BinaryTree.java">BinaryNode</a></code> from this node’s tree</li>
-
-
-		<li>Added <code>private void leafRemoval(<a href="src/main/java/pv3199/lib/java/util/BinaryTree.java">BinaryNode</a> node)</code>: removes a leaf <code><a href="src/main/java/pv3199/lib/java/util/BinaryTree.java">BinaryNode</a></code> from this node’s
-		tree</li>
-
-
-		<li>Added <code>private void singleRemoval(<a href="src/main/java/pv3199/lib/java/util/BinaryTree.java">BinaryNode</a> node)</code>: removes a <code><a href="src/main/java/pv3199/lib/java/util/BinaryTree.java">BinaryNode</a></code> that has only one
-		child from this node’s<br>
-		tree</li>
-
-
-		<li>Added <code>private void doubleRemoval(<a href="src/main/java/pv3199/lib/java/util/BinaryTree.java">BinaryNode</a> node)</code>: removes a <code><a href="src/main/java/pv3199/lib/java/util/BinaryTree.java">BinaryNode</a></code> that has two children
-		from this node’s<br>
-		tree</li>
-	</ul>
-
-
-	<h3><a href="src/main/java/pv3199/lib/java/util/BinaryTree.java">pv3199.lib.java.util.BinaryTree</a>
-	</h3>
-
-
-	<ul>
-		<li>Modified <code>void add(E)</code>: there’s no point in checking if “node” is null, we can’t update it’s value if node is not null<br>
-		because we wouldn’t be changing anything; instead we’re going to be adding this value again to the tree (no single value<br>
-		in tree is unique now), and if this value is not found, it’s still added</li>
-
-
-		<li>Fixed <code>boolean remove(E)</code>: this was a complete mess, so it was rewritten entirely and explains why
-		<code><a href="src/main/java/pv3199/lib/java/util/BinaryTree.java">BinaryNode</a></code> has<br>
-		removal methods</li>
-	</ul>
-
-
-	<h3><a href="src/main/java/pv3199/lib/java/util/DataStructure.java">pv3199.lib.java.util.DataStructure</a>
-	</h3>
-
-
-	<ul>
-		<li>Added <code>default void forEach(<a href="https://docs.oracle.com/javase/8/docs/api/java/util/function/Consumer.html">Consumer</a>&lt;E&gt; action)</code>: iterates through each element in the data structure performing
-		a<br>
-		consumer operation on each element</li>
-	</ul>
-
-
-	<h3><a href="src/main/java/pv3199/lib/java/util/DirectedGraph.java">pv3199.lib.java.util.DirectedGraph</a>
-	</h3>
-
-
-	<ul>
-		<li>Resolved a TODO review comment in <code>cycle0(<a href="src/main/java/pv3199/lib/java/util/Graph.java">Vertex</a>, <a href="src/main/java/pv3199/lib/java/util/Graph.java">Vertex</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/util/List.html">List</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/util/List.html">List</a>&lt;<a href="src/main/java/pv3199/lib/java/util/Graph.java">Vertex</a>&gt;&gt;, <a href="https://docs.oracle.com/javase/8/docs/api/java/util/List.html">List</a>&lt;<a href="src/main/java/pv3199/lib/java/util/Graph.java">Vertex</a>&gt;)</code>: questioned
-		whether<br>
-		“path != null” was actually needed or not; resolved as no longer needed</li>
-	</ul>
-
-
-	<h3><a href="src/main/java/pv3199/lib/java/util/ForEachHolder.java">pv3199.lib.java.util.ForEachHolder</a>
-	</h3>
-
-
-	<ul>
-		<li>Class created which allows for iterations in a data structure, such as matrices.</li>
-
-
-		<li>Provides the value and indices at the current iteration. How these indices are stored are up to how the instances<br>
-		are made</li>
-	</ul>
-
-
-	<h3><a href="src/main/java/pv3199/lib/java/util/Tree.java">pv3199.lib.java.util.Tree</a>
-	</h3>
-
-
-	<ul>
-		<li>Nothing changed here, just removed a line</li>
-	</ul>
+<body onload="init()">
+	<h1 id="TOP">Date Format: DD/MM/YYYY</h1>
+
+	<!-- 08/08/2017 -->
+	<div class="collapsable">
+		<h1><a class="date" id="08082017" href="#08082017">08/08/2017</a></h1>
+
+		<!-- Project Changes -->
+		<div class="collapsable">
+			<h3>Project Changes</h3>
+			<ul>
+				<li>pom.xml changed:
+					<ul>
+						<li>jar package is named to <code>pvlib-${project.version}.jar</code></li>
+						<li>included maven javadoc plugin and configured it to show private members</li>
+					</ul></li>
+				<li>JavaDoc added (private members show)</li>
+			</ul>
+		</div>
+
+		<!-- Change History -->
+		<div class="collapsable">
+			<h3>change_history.html</h3>
+			<ul>
+				<li>Planning to implement a collapsable structure so date's and other topics can be collapsed and expanded as desired</li>
+				<li>Raw HTML looks more neat</li>
+				<li>All links reference towards documentation pages now</li>
+				<li>Removed links towards argument and return types, not necessary as they can be followed through the documentation and
+					were too much of a hassle to write</li>
+			</ul>
+		</div>
+
+		<!-- math.ComplexNumber -->
+		<div class="collapsable">
+			<h3><a href="target/site/apidocs/pv3199/lib/java/math/ComplexNumber.html">pv3199.lib.java.math.ComplexNumber</a></h3>
+			<ul>
+				<li>Included descriptions for method and <code>@throws UnsupportedOperationException</code> for the following methods:
+					<ul>
+						<li><code>public double <a href="target/site/apidocs/pv3199/lib/java/math/ComplexNumber.html#doubleValue--">doubleValue</a>()</code></li>
+						<li><code>public float <a href="target/site/apidocs/pv3199/lib/java/math/ComplexNumber.html#floatValue--">floatValue</a>()</code></li>
+						<li><code>public int <a href="target/site/apidocs/pv3199/lib/java/math/ComplexNumber.html#intValue--">intValue</a>()</code></li>
+						<li><code>public long <a href="target/site/apidocs/pv3199/lib/java/math/ComplexNumber.html#longValue--">longValue</a>()</code></li>
+					</ul>
+				</li>
+			</ul>
+		</div>
+
+		<!-- math.Fraction -->
+		<div class="collapsable">
+			<h3><a href="target/site/apidocs/pv3199/lib/java/math/Fraction.html">pv3199.lib.java.math.Fraction</a></h3>
+			<ul>
+				<li>Added <code>@param numerator</code>, <code>@param denomnator</code>, and <code>@throws ArithmeticException</code>
+				for <code>public <a href="target/site/apidocs/pv3199/lib/java/math/Fraction.html#Fraction-java.lang.Number-java.lang.Number-">Fraction</a>(Number,
+					Number)</code></li>
+				<li>Added <code>@param precision</code> for <code>public Fraction
+					<a href="target/site/apidocs/pv3199/lib/java/math/Fraction.html#simplify-long">simplify</a>(long precision)</code></li>
+			</ul>
+		</div>
+
+		<!-- math.PVMath -->
+		<div class="collapsable">
+			<h3><a href="target/site/apidocs/pv3199/lib/java/math/PVMath.html">pv3199.lib.java.math.PVMath</a></h3>
+			<ul>
+				<li>Removed <code>@throws IllegalArgumentException</code> for
+				<code>public static Number
+					<a href="target/site/apidocs/pv3199/lib/java/math/PVMath.html#pow-java.lang.Number-java.lang.Number-">pow</a>(Number,
+					Number)</code></li>
+			</ul>
+		</div>
+
+		<!-- math.structures.Matrix -->
+		<div class="collapsable">
+			<h3><a href="target/site/apidocs/pv3199/lib/java/math/structures/Matrix.html">pv3199.lib.java.math.structures.Matrix</a></h3>
+			<ul>
+				<li>Fixed <code>@return</code> for <code>protected final static int
+					<a href="target/site/apidocs/pv3199/lib/java/math/structures/Matrix.html#checkData-java.lang.Object:A:A-">checkData</a>(Object[][])</code></li>
+			</ul>
+		</div>
+
+		<!-- math.structures.NumberMatrix -->
+		<div class="collapsable">
+			<h3><a href="target/site/apidocs/pv3199/lib/java/math/structures/NumberMatrix.html">pv3199.lib.java.math.structures.NumberMatrix</a></h3>
+			<ul>
+				<li>Added <code>@return</code> for <code>public abstract NumberMatrix&lt;T&gt;
+					<a href="target/site/apidocs/pv3199/lib/java/math/structures/NumberMatrix.html#pow-int-">pow</a>(int power)</code></li>
+			</ul>
+		</div>
+
+		<!-- util.Arrays -->
+		<div class="collapsable">
+			<h3><a href="target/site/apidocs/pv3199/lib/java/util/Arrays.html">pv3199.lib.java.util.Arrays</a></h3>
+			<ul>
+				<li>Added <code>@param &lt;T&gt;</code> for the following:
+					<ul>
+						<li><code>public static &lt;T&gt; T[] <a href="target/site/apidocs/pv3199/lib/java/util/Arrays.html#joinArrays-T:A...-">joinArrays</a>(final
+							T[]... arrays)</code></li>
+						<li><code>public static &lt;T&gt; T <a href="target/site/apidocs/pv3199/lib/java/util/Arrays.html#castArray-java.lang.Object-java.lang.Class-">castArray</a>(Object,
+							Class&lt;T&gt;)</code></li>
+					</ul>
+				</li>
+				<li>Added <code>@param comparator</code> for the following:
+					<ul>
+						<li><code>public static &lt;T&gt; Object <a href="target/site/apidocs/pv3199/lib/java/util/Arrays.html#sort-java.lang.Object-java.util.Comparator-">sort</a>(final
+							Object, final Comparator&lt;T&gt;)</code></li>
+						<li><code>public static &lt;T&gt; Object <a href="target/site/apidocs/pv3199/lib/java/util/Arrays.html#reverseSort-java.lang.Object-java.util.Comparator-">reverseSort</a>(final
+							Object, final Comparator&lt;T&gt;)</code></li>
+					</ul>
+				</li>
+			</ul>
+		</div>
+
+		<!-- util.DataStructure -->
+		<div class="collapsable">
+			<h3><a href="target/site/apidocs/pv3199/lib/java/util/DataStructure.html">pv3199.lib.java.util.DataStructure</a></h3>
+			<ul>
+				<li>Added <code>@param &lt;T&gt;</code> for the following:
+					<ul>
+						<li><code>static &lt;T extends Object&gt; void
+							<a href="target/site/apidocs/pv3199/lib/java/util/DataStructure.html#sort-pv3199.lib.java.util.SortMethod-pv3199.lib.java.util.DataStructure-java.util.Comparator-">sort</a>(SortMethod,
+							DataStructure&lt;T&gt;, Comparator&lt;T&gt;)</code></li>
+						<li><code>static &lt;T extends Object&gt; DataStructure&lt;T&gt;
+							<a href="target/site/apidocs/pv3199/lib/java/util/DataStructure.html#safeSort-pv3199.lib.java.util.SortMethod-pv3199.lib.java.util.DataStructure-java.util.Comparator-">safeSort</a>(SortMethod,
+							DataStructure&lt;T&gt;, Comparator&lt;T&gt;)</code></li>
+						<li><code>static &lt;T&gt; DataStructure&lt;T&gt;
+							<a href="target/site/apidocs/pv3199/lib/java/util/DataStructure.html#fromCollection-java.util.Collection-">fromCollection</a>(Collection&lt;T&gt;)</code></li>
+						<li><code>static &lt;T&gt; DataStructure&lt;T&gt;
+							<a href="target/site/apidocs/pv3199/lib/java/util/DataStructure.html#fromArray-T:A-">fromArray</a>(T[])</code></li>
+					</ul>
+				</li>
+			</ul>
+		</div>
+
+		<!-- util.DirectedGraph -->
+		<div class="collapsable">
+			<h3><a href="target/site/apidocs/pv3199/lib/java/util/DirectedGraph.html">pv3199.lib.java.util.DirectedGraph</a></h3>
+			<ul>
+				<li>Removed <code>&lt;style&gt; blockquote { font-size: 16; } &lt;/style&gt;</code> from
+					<code>public boolean
+						<a href="target/site/apidocs/pv3199/lib/java/util/DirectedGraph.html#pathLength-T-T-int-">pathLength</a>(T, T, int)</code></li>
+			</ul>
+		</div>
+
+		<!-- util.Search -->
+		<div class="collapsable">
+			<h3><a href="target/site/apidocs/pv3199/lib/java/util/Search.html">pv3199.lib.java.util.Search</a></h3>
+			<ul>
+				<li>Added <code>@param &lt;T&gt;</code> for the following:
+					<ul>
+						<li><code>public static &lt;T&gt; int
+							<a href="target/site/apidocs/pv3199/lib/java/util/Search.html#binarySearch-T:A-T-java.util.Comparator-">binarySearch</a>(T[],
+							T, Comparator&lt;T&gt;)</code></li>
+						<li><code>public static &lt;T&gt; int
+							<a href="target/site/apidocs/pv3199/lib/java/util/Search.html#binarySearch-java.util.List-T-java.util.Comparator-">binarySearch</a>(List&lt;T&gt;,
+							T, Comparator&lt;T&gt;)</code></li>
+						<li><code>public static &lt;T&gt; int
+							<a href="target/site/apidocs/pv3199/lib/java/util/Search.html#search-T:A-T-">search</a>(T[],
+							T)</code></li>
+						<li><code>public static &lt;T&gt; int
+							<a href="target/site/apidocs/pv3199/lib/java/util/Search.html#search-java.util.List-T-">search</a>(List&lt;T&gt;,
+							T)</code></li>
+					</ul>
+				</li>
+			</ul>
+		</div>
+
+		<!-- util.SortMethod -->
+		<div class="collapsable">
+			<h3><a href="target/site/apidocs/pv3199/lib/java/util/SortMethod.html">pv3199.lib.java.util.SortMethod</a></h3>
+			<ul>
+				<li>Fixed escape sequencing for documentation in
+					<code><a href="target/site/apidocs/pv3199/lib/java/util/SortMethod.html#SHELL">SHELL</a></code></li>
+			</ul>
+		</div>
+	</div>
+
+	<!-- 03/08/2017 -->
+	<div class="collapsable">
+		<h1><a class="date" id="03082017" href="#03082017">03/08/2017</a></h1>
+
+		<!-- Project Changes -->
+		<div class="collapsable">
+			<h3>Project Changes</h3>
+			<ul>
+				<li>Restructured the entire library from <code>pvlib</code> to <code>pv3199.lib.java</code></li>
+				<li>Classes are remaining the same, but have been refactored to match this new package structure</li>
+				<li>pom.xml has been updated as well</li>
+			</ul>
+		</div>
+
+		<!-- Change History -->
+		<div class="collapsable">
+			<h3>change_history.md</h3>
+			<ul>
+				<li>Added some additional links in the history (might switch to raw html rather than use markdown formatting to make it more functional).</li>
+			</ul>
+		</div>
+
+		<!-- math.ComplexNumber -->
+		<div class="collapsable">
+			<h3><a href="target/site/apidocs/pv3199/lib/java/math/ComplexNumber.html">pv3199.lib.java.math.ComplexNumber</a></h3>
+			<ul>
+				<li>Added <code>public PolarCoordinate
+					<a href="target/site/apidocs/pv3199/lib/java/math/ComplexNumber.html#toPolarCoordinate--">toPolarCoordinate()</a></code>:
+					converts the complex number to a <code>PolarCoordinate</code> object</li>
+			</ul>
+		</div>
+
+		<!-- math.structures.ComplexMatrix -->
+		<div class="collapsable">
+			<h3><a href="target/site/apidocs/pv3199/lib/java/math/structures/ComplexMatrix.html">pv3199.lib.java.math.structures.ComplexMatrix</a></h3>
+			<ul>
+				<li>Fixed <code>public ComplexMatrix
+					<a href="target/site/apidocs/pv3199/lib/java/math/structures/ComplexMatrix.html#multiply-pv3199.lib.java.math.structures.NumberMatrix-">multiply</a>(NumberMatrix&lt;ComplexNumber&gt;)</code>:
+					product would be a matrix of width=this.height and height=matrix.width; instead these should be flipped so width=matrix.width and height=this.height</li>
+			</ul>
+		</div>
+
+		<!-- math.structures.Matrix -->
+		<div class="collapsable">
+			<h3><a href="target/site/apidocs/pv3199/lib/java/math/structures/Matrix.html">pv3199.lib.java.math.structures.Matrix</a></h3>
+			<ul>
+				<li>Added some necessary imports</li>
+				<li>Fixed <code>protected static int
+					<a href="target/site/apidocs/pv3199/lib/java/math/structures/Matrix.html#checkData-java.lang.Object:A:A-">checkData</a>(Object[][])</code>: iteration
+					through columns continued while column index was less than number of rows rather than number of columns in current iterating row, which could
+					lead to an <code>IndexOutOfBoundsException</code> being thrown</li>
+				<li>Added <code>public T[] <a href="target/site/apidocs/pv3199/lib/java/math/structures/Matrix.html#getRow-int-java.lang.Class-">getRow</a>(int row, Class&lt;T&gt; clazz)</code>:
+					gets the elements in a row for this matrix, provided the row index and the generic type’s class</li>
+				<li>Added <code>public T[] <a href="target/site/apidocs/pv3199/lib/java/math/structures/Matrix.html#getColumn-int-java.lang.Class-">getColumn</a>(int column, Class&lt;T&gt; clazz)</code>:
+					gets the elements in a column for this matrix, provided the column index and the generic type’s class</li>
+				<li>Added <code>public void <a href="target/site/apidocs/pv3199/lib/java/math/structures/Matrix.html#forEach-java.util.function.Consumer-">forEach</a>(Consumer&lt;ForEachHolder&lt;T&gt;&gt;
+					action)</code>: iterates through each element in this matrix, performing a consumer operation on each element; the consumer however accepts a
+					<code>ForEachHolder</code> which allows for retrieval of the current iterating indices in the matrix as well as the data stored at these indices in the
+					matrix; iteration goes through rows then columns in a top-bottom then left-right manner
+				</li>
+				<li>Added <code>public void <a href="target/site/apidocs/pv3199/lib/java/math/structures/Matrix.html#forEachRow-java.util.function.Consumer-java.lang.Class-">forEachRow</a>(Consumer&lt;ForEachHolder&lt;T[]&gt;&gt;
+					action, Class&lt;T&gt; clazz)</code>: iterates through each row in this matrix, performing a consumer operation on each row; the consumer however accepts a
+					<code>ForEachHolder</code> which allows for retrieval of the current iterating row index in the matrix as well as the row data stored at
+					this index in the matrix; iteration goes through in a top to bottom manner
+				</li>
+				<li>Added <code>public void <a href="target/site/apidocs/pv3199/lib/java/math/structures/Matrix.html#forEachColumn-java.util.function.Consumer-java.lang.Class-">forEachColumn</a>(Consumer&lt;ForEachHolder&lt;T[]&gt;&gt;
+					action, Class&lt;T&gt; clazz)</code>: iterates through each column in this matrix, performing a consumer operation on each column; the consumer however accepts a
+					<code>ForEachHolder</code> which allows for retrieval of the current iterating column index in the matrix as well as the row data stored at this index in the matrix;
+					iteration goes through in a left to right manner
+				</li>
+			</ul>
+		</div>
+
+		<!-- math.structures.RealMatrix -->
+		<div class="collapsable">
+			<h3><a href="target/site/apidocs/pv3199/lib/java/math/structures/RealMatrix.html">pv3199.lib.java.math.structures.RealMatrix</a></h3>
+			<ul>
+				<li>Fixed <code>public RealMatrix <a href="target/site/apidocs/pv3199/lib/java/math/structures/RealMatrix.html#multiply-pv3199.lib.java.math.structures.NumberMatrix-">multiply</a>(NumberMatrix&lt;Double&gt;)</code>:
+					product would be a matrix of width=this.height and height=matrix.width; instead these should be flipped so width=matrix.width and height=this.height</li>
+			</ul>
+		</div>
+
+		<!-- util.BinaryNode -->
+		<div class="collapsable">
+			<h3><a href="target/site/apidocs/pv3199/lib/java/util/BinaryTree.BinaryNode.html">pv3199.lib.java.util.BinaryTree.BinaryNode</a></h3>
+			<ul>
+				<li>Added <code>protected void <a href="target/site/apidocs/pv3199/lib/java/util/BinaryTree.BinaryNode.html#remove-pv3199.lib.java.util.BinaryTree.BinaryNode-">remove</a>(BinaryNode
+					node)</code>: removes a <code>BinaryNode</code> from this node’s tree</li>
+				<li>Added <code>private void <a href="target/site/apidocs/pv3199/lib/java/util/BinaryTree.BinaryNode.html#leafRemoval-pv3199.lib.java.util.BinaryTree.BinaryNode-">leafRemoval</a>(BinaryNode
+					node)</code>: removes a leaf <code>BinaryNode</code> from this node’s tree</li>
+				<li>Added <code>private void <a href="target/site/apidocs/pv3199/lib/java/util/BinaryTree.BinaryNode.html#singleRemoval-pv3199.lib.java.util.BinaryTree.BinaryNode-">singleRemoval</a>(BinaryNode
+					node)</code>: removes a <code>BinaryNode</code> that has only one child from this node’s tree</li>
+				<li>Added <code>private void <a href="target/site/apidocs/pv3199/lib/java/util/BinaryTree.BinaryNode.html#doubleRemoval-pv3199.lib.java.util.BinaryTree.BinaryNode-">doubleRemoval</a>(BinaryNode
+					node)</code>: removes a <code>BinaryNode</code> that has two children from this node’s tree</li>
+			</ul>
+		</div>
+
+		<!-- util.BinaryTree -->
+		<div class="collapsable">
+			<h3><a href="target/site/apidocs/pv3199/lib/java/util/BinaryTree.html">pv3199.lib.java.util.BinaryTree</a></h3>
+			<ul>
+				<li>Modified <code>public void <a href="target/site/apidocs/pv3199/lib/java/util/BinaryTree.html#add-E-">add</a>(E)</code>: there’s no point in checking if “node” is null,
+					we can’t update it’s value if node is not null because we wouldn’t be changing anything; instead we’re going to be adding this value again to the tree (no single value
+					in tree is unique now), and if this value is not found, it’s still added</li>
+				<li>Fixed <code>public boolean <a href="target/site/apidocs/pv3199/lib/java/util/BinaryTree.html#remove-E-">remove</a>(E)</code>: this was a complete mess, so it was
+					rewritten entirely and explains why <code>BinaryNode</code> has removal methods</li>
+			</ul>
+		</div>
+
+		<!-- util.DataStructure -->
+		<div class="collapsable">
+			<h3><a href="target/site/apidocs/pv3199/lib/java/util/DataStructure.html">pv3199.lib.java.util.DataStructure</a></h3>
+			<ul>
+				<li>Added <code>default void <a href="target/site/apidocs/pv3199/lib/java/util/DataStructure.html#forEach-java.util.function.Consumer-">forEach</a>(Consumer&lt;E&gt;
+					action)</code>: iterates through each element in the data structure performing a consumer operation on each element</li>
+			</ul>
+		</div>
+
+		<!-- util.DirectedGraph -->
+		<div class="collapsable">
+			<h3><a href="target/site/apidocs/pv3199/lib/java/util/DirectedGraph.html">pv3199.lib.java.util.DirectedGraph</a></h3>
+			<ul>
+				<li>Resolved a TODO review comment in <code><a href="target/site/apidocs/pv3199/lib/java/util/DirectedGraph.html#cycle0-pv3199.lib.java.util.Graph.Vertex-pv3199.lib.java.util.Graph.Vertex-java.util.List-java.util.List-">cycle0</a>(Vertex,
+					Vertex, List&lt;List&lt;Vertex&gt;&gt;, List&lt;Vertex&gt;)</code>: questioned whether “path != null” was actually needed or not; resolved as no longer needed</li>
+			</ul>
+		</div>
+
+
+		<!-- util.ForEachHolder -->
+		<div class="collapsable">
+			<h3><a href="target/site/apidocs/pv3199/lib/java/util/ForEachHolder.html">pv3199.lib.java.util.ForEachHolder</a></h3>
+			<ul>
+				<li>Class created which allows for iterations in a data structure, such as matrices.</li>
+				<li>Provides the value and indices at the current iteration. How these indices are stored are up to how the instances are made</li>
+			</ul>
+		</div>
+
+
+		<!-- util.Tree -->
+		<div class="collapsable">
+			<h3><a href="target/site/apidocs/pv3199/lib/java/util/Tree.html">pv3199.lib.java.util.Tree</a></h3>
+			<ul>
+				<li>Nothing changed here, just removed a line</li>
+			</ul>
+		</div>
+	</div>
 </body>
 </html>
