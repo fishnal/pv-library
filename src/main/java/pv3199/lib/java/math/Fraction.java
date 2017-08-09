@@ -50,9 +50,9 @@ public class Fraction implements java.io.Serializable {
 	/**
 	 * Constructs a Fraction from a numerator number and denominator number. The fraction
 	 * is not simplified
-	 * @param numerator
-	 * @param denominator
-	 * @throws ArithmeticException
+	 * @param numerator - the numerator
+	 * @param denominator - the denominator
+	 * @throws ArithmeticException if the denominator is 0
 	 */
 	public Fraction(Number numerator, Number denominator) throws ArithmeticException {
 		if (!(numerator instanceof ComplexNumber) && !numerator.getClass().getPackage().getName().equals("java.lang"))
@@ -196,6 +196,8 @@ public class Fraction implements java.io.Serializable {
 	 * the denominator will be. The larger the precision, the more accurate the
 	 * simplification is. Simplification immediately stops when the simplified
 	 * fraction's decimal value is equal to the original fraction.
+	 * 
+	 * @param precision - the precision value.
 	 *
 	 * @return the simplified fraction using a given precision value.
 	 */

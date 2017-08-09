@@ -237,7 +237,7 @@ public interface DataStructure<E> extends java.io.Serializable {
 	 *            - the structure to sort.
 	 * @param comparator
 	 *            - the comparator used in sorting the elements.
-	 * 
+	 * @param <T> - the type of the data structure.
 	 */
 	static <T extends Object> void sort(SortMethod method, DataStructure<T> ds, Comparator<T> comparator) {
 		if (comparator == null)
@@ -257,6 +257,7 @@ public interface DataStructure<E> extends java.io.Serializable {
 	 *            - the structure to sort.
 	 * @param comparator
 	 *            - the comparator used in sorting the elements.
+	 * @param <T> - the type of the data structure.
 	 * @return a sorted copy of the data structure.
 	 */
 	static <T extends Object> DataStructure<T> safeSort(SortMethod method, DataStructure<T> ds,
@@ -271,6 +272,7 @@ public interface DataStructure<E> extends java.io.Serializable {
 	 * 
 	 * @param collection
 	 *            - the Collection object to form the structure with.
+	 * @param <T> - the type of the collection.
 	 * @return a data structure holding the contents of the Collection object.
 	 */
 	static <T> DataStructure<T> fromCollection(Collection<T> collection) {
@@ -282,6 +284,7 @@ public interface DataStructure<E> extends java.io.Serializable {
 	 * 
 	 * @param arr
 	 *            - the array to form the structure with.
+	 * @param <T> - the type of the array.
 	 * @return a data structure holding the contents of the array.
 	 */
 	static <T> DataStructure<T> fromArray(T[] arr) {

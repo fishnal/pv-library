@@ -20,6 +20,7 @@ public final class Search {
 	 *            - the comparator used for comparing the elements; if null then
 	 *            a "default" comparator is used, casting the elements to
 	 *            Comparable types.
+	 * @param <T> - the type of the array.
 	 * @return the index of the element in the array; -1 if the element is not
 	 *         located in the array.
 	 * @see #search(Object[], Object)
@@ -40,6 +41,7 @@ public final class Search {
 	 *            - the element to look for.
 	 * @param comparator
 	 *            - the comparator used for comparing the elements
+	 * @param <T> - the type of the array.
 	 * @return the index of the element in the list; -1 if the element is not
 	 *         located in the list.
 	 * @see #search(List, Object)
@@ -81,6 +83,7 @@ public final class Search {
 	 *            - the array to look through.
 	 * @param target
 	 *            - the target to look for.
+	 * @param <T> - the type of the array.
 	 * @return the index of the element in the array; -1 if the element could
 	 *         not be found.
 	 */
@@ -99,6 +102,7 @@ public final class Search {
 	 *            - the list to look through.
 	 * @param target
 	 *            - the target to look for.
+	 * @param <T> - the type of the list.
 	 * @return the index of the element in the list; -1 if the element could not
 	 *         be found.
 	 */

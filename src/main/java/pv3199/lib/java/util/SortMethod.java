@@ -219,7 +219,7 @@ public enum SortMethod {
 	}),
 
 	/**
-	 * Shell Sorting algorithm. Uses a gap sequence of <code>(3^k - 1) / 2 <= ceil(n / 3)</code>.
+	 * Shell Sorting algorithm. Uses a gap sequence of <code>(3^k - 1) / 2 &lt;= ceil(n / 3)</code>.
 	 * Number of gaps is determined by solving for k, and n represents the size of
 	 * the data structure.
 	 */
@@ -296,6 +296,7 @@ public enum SortMethod {
 	 *            - the data structure being sorted.
 	 * @param comparator
 	 *            - the comparator being used to sort elements.
+	 * @param <T> - the type of the data structure.
 	 */
 	public <T> void apply(DataStructure<T> ds, Comparator<T> comparator) {
 		this.algorithm.apply(new Object[] { ds, comparator });

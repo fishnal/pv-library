@@ -177,6 +177,7 @@ public final class Arrays {
      * Combines multiple arrays into one array.
      *
      * @param arrays - the arrays to combine.
+     * @param <T> - the data type of the arrays.
      * @return the combined array otherwise
      */
     public static <T> T[] joinArrays(final T[]... arrays) {
@@ -240,7 +241,7 @@ public final class Arrays {
      * @return null if either of the parameters are null or if the element could
      * not be found; otherwise an integer list containing the indices
      * for each of the array's dimensions that lead to the element in
-     * reversed order (use ListUtil.reverse(List<?>) to fix the
+     * reversed order (use ListUtil.reverse(List&lt;?&gt;) to fix the
      * ordering).
      * @throws IllegalArgumentException if the component type of array is not the same as the type of
      *                                  the element.
@@ -343,7 +344,7 @@ public final class Arrays {
      * @return null if either of the parameters are null or if the element could
      * not be found; otherwise an integer list containing the indices
      * for each of the array's dimensions that lead to the element in
-     * reversed order (use ListUtil.reverse(List<?>) to fix the
+     * reversed order (use ListUtil.reverse(List&lt;?&gt;) to fix the
      * ordering).
      * @throws IllegalArgumentException if the component type of array is not the same as the type of
      *                                  the element.
@@ -480,6 +481,7 @@ public final class Arrays {
      *
      * @param array - the array to search through.
      * @param max   - the current maximum value.
+     * @param comparator - the comparator to use for comparing the elements in the array.
      * @param <T>   - the generic type for the {@link Comparator} interface, intended to be the same as the array's
      *              deepest component type.
      * @return the maximum deep value in the array.
@@ -591,6 +593,7 @@ public final class Arrays {
      *
      * @param array - the array to search through.
      * @param min   - the current minimum value.
+     * @param comparator - the comparator to use in comparing the elements in the array.
      * @param <T>   - the generic type for the {@link Comparator} interface, intended to be the same as the array's
      *              deepest component type.
      * @return the minimum deep value in the array.
@@ -647,6 +650,7 @@ public final class Arrays {
      * @param array - the array to sort.
      * @param <T>   - the generic type for the {@link Comparator} interface, intended to match the array's deepest
      *              component type.
+     * @param comparator - the comparator to use for sorting
      * @return the sorted array
      * @throws IllegalArgumentException if the object passed in is not an actual array or if the comparator is null and
      *                                  the array's deepest component type does not implement the {@link Comparable}
@@ -694,6 +698,7 @@ public final class Arrays {
      * @param array - the array to sort.
      * @param <T>   - the generic type for the {@link Comparator} interface, intended to match the array's deepest
      *              component type.
+     * @param comparator - the comparator to use in reverse sorting.
      * @return the reverse-sorted array
      * @throws IllegalArgumentException if the object passed in is not an actual array or if the comparator is null and
      *                                  the array's deepest component type does not implement the {@link Comparable}
@@ -716,6 +721,7 @@ public final class Arrays {
      *
      * @param source  - the array to cast.
      * @param newType - the new data type that the array will be casted to.
+     * @param <T> - the type of the new array.
      * @return null if the array cannot be casted; otherwise the casted array.
      * @throws IllegalArgumentException if the array parameter is not an actual array.
      */
@@ -883,6 +889,7 @@ public final class Arrays {
      *
      * @param a - the first array.
      * @param b - the second array.
+     * @param <T> - the type of the arrays.
      * @return true if both arrays are equal on a "deep" or raw component level.
      */
     public static <T> boolean deepEquals(T[] a, T[] b) {
@@ -998,6 +1005,8 @@ public final class Arrays {
          *                   <li>1 - Hash Code comparisons</li>
          *                   <li>2 - Comparator invocation</li>
          *                   </ul>
+         * @param descending - whether or not this array is sorted in ascending (false) or descending order (true)
+         * @param <T> - the component type of the array.
          * @return null if the method given was not supported or did not exist;
          * otherwise the sorted array in ascending order.
          */
@@ -1032,6 +1041,7 @@ public final class Arrays {
          *                   elements using a Comparator instance; ignored otherwise.
          * @param descending - whether the array is being sorted in descending order or
          *                   not.
+         * @param <T> - the component type of the array.
          * @return the sorted array.
          */
         private static <T> Object sort0(Object array, Object newArray, final CompareMethod method,
@@ -1082,6 +1092,7 @@ public final class Arrays {
          *                   using a comparator instance.
          * @param descending - whether the array is being sorted in descending order or
          *                   not.
+         * @param <T> - the component type of the array.
          */
         private static <T> void findKey(Object array, final CompareMethod method, final Comparator<T> comparator,
                                         final boolean descending) {

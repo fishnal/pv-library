@@ -110,6 +110,7 @@ public abstract class NumberMatrix<T extends Number> extends Matrix<T> {
 	/**
 	 * Raises this matrix to an integer exponent. Simply multiplies the matrix by itself <code>power</code> times.
 	 * @param power the number to raise the matrix by.
+	 * @return this matrix raised to an integer exponent.
 	 * @throws IllegalMatrixException if this matrix is not a square
 	 */
 	public abstract NumberMatrix<T> pow(int power) throws IllegalMatrixException;

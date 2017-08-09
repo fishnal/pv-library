@@ -306,7 +306,6 @@ public final class DirectedGraph<T> extends Graph<T> {
 	}
 
 	/**
-	 * <style> blockquote { font-size: 16; } </style>
 	 * <p>
 	 * Paths are NOT simple and all paths from <code>originVertex</code> to
 	 * <code>targetVertex</code> are based upon the adjacency matrix of the

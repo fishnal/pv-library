@@ -88,7 +88,8 @@ public class ComplexNumber extends Number implements Comparable<Number> {
 	}
 
     /**
-     * @throws UnsupportedOperationException
+	 * Unsupported operation
+     * @throws UnsupportedOperationException not supported
      */
 	@Override
 	public double doubleValue() throws UnsupportedOperationException {
@@ -96,7 +97,8 @@ public class ComplexNumber extends Number implements Comparable<Number> {
 	}
 
     /**
-     * @throws UnsupportedOperationException
+	 * Unsupported operation
+     * @throws UnsupportedOperationException not supported
      */
 	@Override
 	public float floatValue() throws UnsupportedOperationException {
@@ -104,7 +106,8 @@ public class ComplexNumber extends Number implements Comparable<Number> {
 	}
 
     /**
-     * @throws UnsupportedOperationException
+	 * Unsupported operation
+     * @throws UnsupportedOperationException not supported
      */
 	@Override
 	public int intValue() throws UnsupportedOperationException {
@@ -112,7 +115,8 @@ public class ComplexNumber extends Number implements Comparable<Number> {
 	}
 
     /**
-     * @throws UnsupportedOperationException
+	 * Unsupported operation
+     * @throws UnsupportedOperationException not supported
      */
 	@Override
 	public long longValue() throws UnsupportedOperationException {

@@ -45,7 +45,7 @@ public abstract class Matrix<T> implements  java.io.Serializable {
 	/**
 	 * Checks a 2D array for null values.
 	 * @param data the 2D array.
-	 * @return1 if the 2D array has null values.
+	 * @return if the 2D array has null values.
 	 */
 	protected final static int checkData(Object[][] data) {
 		for (int r = 0; r < data.length; r++)

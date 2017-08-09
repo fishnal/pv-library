@@ -431,9 +431,8 @@ public final class PVMath {
      * @param n     - the base.
      * @param power - the exponent.
      * @return the base raised to the power of the exponent (possibly a {@link ComplexNumber}).
-     * @throws IllegalArgumentException
      */
-    public static Number pow(Number n, Number power) throws IllegalArgumentException {
+    public static Number pow(Number n, Number power) {
         return new ComplexNumber(n).pow(power);
     }
 
