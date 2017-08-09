@@ -8,6 +8,7 @@ public class SortedLinkedList<E> implements DataStructure<E> {
 	private final static int GREATER = 0b11;
 	private Link start;
 	private int size;
+	
 	/**
 	 * Default constructor.
 	 */

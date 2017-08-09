@@ -569,7 +569,8 @@ public final class PVMath {
 	/**
 	 * Sums up a sequence of numbers; essentially mimics summation functions. Each iteration
 	 * is incremented by exactly 1, so calling <code>summation(function, 0, 3)</code> is equivalent
-	 * to <code>summation(function, 0, 3.4)</code>
+	 * to <code>summation(function, 0, 3.4)</code>. Kahan's Summation Algorithm is utilized to reduce
+	 * numerical errors.
 	 *
 	 * @param function - the function applied to each summation iteration.
 	 * @param start    - the starting bound (inclusive).
@@ -577,10 +578,15 @@ public final class PVMath {
 	 * @return the sum of the sequence of numbers provided by a function and two bounds.
 	 */
 	public static Number summation(DoubleFunction<Number> function, double start, double end) {
+		// Kahan Summation Algorithm
 		Number sum = 0;
+		Number c = 0;
 		
 		for (double d = start; d <= end; d++) {
-			sum = add(sum, function.apply(d));
+			Number y = subtract(function.apply(d), c);
+			Number t = add(sum, y);
+			c = subtract(subtract(t, sum), y);
+			sum = t;
 		}
 		
 		return sum;
