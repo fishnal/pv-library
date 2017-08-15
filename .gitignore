@@ -2,9 +2,9 @@ LRG.java
 LRG.class
 .*/
 pvlib.iml
-.classpath
-.project
-target/classes/*
-target/javadoc-bundle-options/*
-target/maven/archiver/*
-target/maven-status/*
+/.classpath
+/.project
+target/classes
+target/javadoc-bundle-options
+target/maven/archiver
+target/maven-status
