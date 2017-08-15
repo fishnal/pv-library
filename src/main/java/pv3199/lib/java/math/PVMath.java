@@ -423,6 +423,20 @@ public final class PVMath {
 	public static Number pow(Number n, Number power) {
 		return new ComplexNumber(n).pow(power);
 	}
+
+	/**
+	 * Inverts a number.
+	 * 
+	 * @param n the number to invert.
+	 * @return the number inverted.
+	 */
+	public static Number invert(Number n) {
+		if (n instanceof ComplexNumber) {
+			return ((ComplexNumber)n).inverse();
+		}
+
+		return 1 / n.doubleValue();
+	}
 	
 	/**
 	 * @return a random number that can be either real or complex.
@@ -518,22 +532,64 @@ public final class PVMath {
 		else if (n2 instanceof ComplexNumber) return n2.equals(n1);
 		return new ComplexNumber(n1).equals(n2);
 	}
+
+	/**
+	 * Checks if two numbers are coprime.
+	 * 
+	 * @param a the first number
+	 * @param b the second number
+	 * @return true if the two numbers are coprime.
+	 */
+	public static boolean coprimeWith(long a, long b) {
+		List<Long> ad = divisors(a);
+		List<Long> bd = divisors(b);
+
+		ad.retainAll(bd);
+		return ad.size() == 1;
+	}
+
+	/**
+	 * Gets the factorial of a number.
+	 * 
+	 * @param l a number.
+	 * @return the factorial of a number.
+	 * @throws IllegalArgumentException if the number is negative.
+	 */
+	public static long factorial(long l) throws IllegalArgumentException {
+		if (l < 0) {
+			throw new IllegalArgumentException("negative value");
+		}
+
+		long res = 1;
+
+		for (long i = l; i >= 2; i--) {
+			res *= i;
+		}
+
+		return res;
+	}
 	
 	/**
-	 * Gets the greatest common factor between two integers.
+	 * Gets the greatest common divisor between two integers.
 	 *
 	 * @param a - the first number.
 	 * @param b - the second number.
-	 * @return the greatest common factor between the two numbers.
+	 * @return the greatest common divisor between two numbers.
 	 */
-	public static Long gcf(long a, long b) {
-		if (a <= 0 || b <= 0) return null;
-		
-		List<Long> da = divisors(a);
-		List<Long> db = divisors(b);
-		
-		da.retainAll(db);
-		return da.get(da.size() - 1);
+	public static Long gcd(long a, long b) {
+		long r = a % b;
+		return r == 0 ? b : gcd(b, r);
+	}
+
+	/**
+	 * Gets the least common multiple between two integers.
+	 * 
+	 * @param a the first number.
+	 * @param b the second number.
+	 * @return the least common multiply between two integers.
+	 */
+	public static Long lcm(long a, long b) {
+		return a * b / gcd(a, b);
 	}
 	
 	/**
@@ -564,6 +620,39 @@ public final class PVMath {
 		}
 		
 		return divide(avg, values.length);
+	}
+
+	/**
+	 * Generates a list of prime numbers in the range [2,n) modeled after the Sieve
+	 * of Eratosthenes algorithm.
+	 * 
+	 * @param n the maximum possible prime number.
+	 * @return a list of prime numbers in the range [2,n)
+	 */
+	public static List<Integer> primes(int n) {
+		boolean[] arr = new boolean[n];
+		List<Integer> primes = new ArrayList<>();
+		double limit = Math.sqrt(n);
+
+		for (int i = 0; i < n; i++) {
+			arr[i] = true;
+		}
+
+		for (int i = 2; i <= limit; i++) {
+			if (arr[i]) {
+				for (int j = i * i; j < n; j += i) {
+					arr[j] = false;
+				}
+			}
+		}
+
+		for (int i = 2; i < arr.length; i++) {
+			if (arr[i]) {
+				primes.add(i);
+			}
+		}
+
+		return primes;
 	}
 	
 	/**

@@ -250,10 +250,10 @@ public class Fraction implements java.io.Serializable {
 			long[] cn2B = simplifyDecimal(cn2.b, precision);
 			
 			ComplexNumber cn1Num = new ComplexNumber(cn1A[0] * cn1B[1], cn1A[1] * cn1B[0]);
-			long cn1CF = PVMath.gcf(abs((long) cn1Num.a), abs((long) cn1Num.b));
+			long cn1CF = PVMath.gcd(abs((long) cn1Num.a), abs((long) cn1Num.b));
 			cn1Num = cn1Num.divide(cn1CF);
 			ComplexNumber cn2Num = new ComplexNumber(cn2A[0] * cn2B[1], cn2A[1] * cn2B[0]);
-			long cn2CF = PVMath.gcf(abs((long) cn2Num.a), abs((long) cn2Num.b));
+			long cn2CF = PVMath.gcd(abs((long) cn2Num.a), abs((long) cn2Num.b));
 			cn2Num = cn2Num.divide(cn2CF);
 			double cn1Denom = cn1A[1] * cn1B[1] * cn2CF;
 			double cn2Denom = cn2A[1] * cn2B[1] * cn1CF;
