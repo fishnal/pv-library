@@ -255,8 +255,21 @@ public interface DataStructure<E> extends java.io.Serializable {
 	boolean equals(Object obj);
 	
 	/**
+	 * Iterates through each element in the data structure, performing a consumer
+	 * operation on a {@link ForEachHolder} wrapper on each element. If the consumer implementation
+	 * does not need to access the indices of each iteration, it is advised to utilize {@link #forEach(Consumer)}.
+	 *
+	 * @param action the consumer operation to apply on each element when wrapped in a {@link ForEachHolder}
+	 */
+	default void forEach(ConsumerHolder<E> action) {
+		for (int i = 0; i < this.size(); i++) {
+			action.accept(new ForEachHolder<>(this.get(i), i));
+		}
+	}
+	
+	/**
 	 * Iterates through each element in the data structure, performing a consumer operation
-	 * on each element.
+	 * on each element. This is a more efficient alternative to {@link #forEach(ConsumerHolder)}.
 	 *
 	 * @param action - the consumer operation to apply to each element.
 	 */

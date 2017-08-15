@@ -5,6 +5,7 @@ import java.util.function.Consumer;
 import pv3199.lib.java.math.ComplexNumber;
 import pv3199.lib.java.math.PVMath;
 import pv3199.lib.java.util.Arrays;
+import pv3199.lib.java.util.ConsumerHolder;
 import pv3199.lib.java.util.ForEachHolder;
 
 /**
@@ -266,12 +267,26 @@ public class Vector {
 	/**
 	 * Iterates through each scalar component in this vector, applying a consumer that accepts a
 	 * {@link ForEachHolder} containing the current scalar component value and current iterating index.
+	 * If the consumer implementation does not need to access the indices for each iteration, it is advised
+	 * to utilize {@link #forEach(Consumer)}.
 	 * 
 	 * @param action the consumer action to apply on each scalar component value.
 	 */
-	public void forEach(Consumer<ForEachHolder<Number>> action) {
+	public void forEach(ConsumerHolder<Number> action) {
 		for (int i = 0; i < this.size; i++) {
 			action.accept(new ForEachHolder<>(this.components[i], i));
+		}
+	}
+	
+	/**
+	 * Iterates through each scalar component in this vector, applying a consumer operation on each
+	 * number. This is a more efficient alternative to {@link #forEach(ConsumerHolder)}.
+	 *
+	 * @param action the consumer action to apply on each scalar component value.
+	 */
+	public void forEach(Consumer<Number> action) {
+		for (int i = 0; i < this.size; i++) {
+			action.accept(this.components[i]);
 		}
 	}
 	

@@ -1,5 +1,6 @@
 package pv3199.lib.java.math.structures;
 
+import pv3199.lib.java.util.ConsumerHolder;
 import pv3199.lib.java.util.ForEachHolder;
 
 import java.lang.reflect.Array;
@@ -228,15 +229,33 @@ public abstract class Matrix<T> implements java.io.Serializable {
 	 * The iteration goes from rows to columns (top to bottom, left to right), similar to a
 	 * 2D-array. As such, the {@code ForEachHolder}'s indices will have the row index in the
 	 * first element, column index in the second element, and the matrix element as it's data.
+	 * If the implementation does not need to access the indices of each iteration, then it is
+	 * advised to utilize {@link #forEach(Consumer)} for efficiency.
 	 *
 	 * @param action - the consumer to utilize when iterating through each element.
 	 * @see ForEachHolder
 	 * @see Consumer
+	 * @see ConsumerHolder
 	 */
-	public final void forEach(Consumer<ForEachHolder<T>> action) {
+	public final void forEach(ConsumerHolder<T> action) {
 		for (int r = 0; r < this.height; r++) {
 			for (int c = 0; c < this.width; c++) {
 				action.accept(new ForEachHolder<>(this.getValue(r, c), r, c));
+			}
+		}
+	}
+	
+	/**
+	 * Iterates through each element in the matrix, performing a consumer operation on each.
+	 * Iteration goes from rows to columns (top to bottom, left to right), similar to a 2D-array.
+	 * This is a more efficient alternative to {@link #forEach(ConsumerHolder)}.
+	 *
+	 * @param action the consumer to utilize when iterating through each element.
+	 */
+	public final void forEach(Consumer<T> action) {
+		for (int r = 0; r < this.height; r++) {
+			for (int c = 0; c < this.width; c++) {
+				action.accept(this.getValue(r, c));
 			}
 		}
 	}
@@ -248,15 +267,32 @@ public abstract class Matrix<T> implements java.io.Serializable {
 	 * implementation to access the row-index the matrix is currently iterating at. The iteration
 	 * goes from top to bottom. As such the {@code ForEachHolder}'s indices will have the row index
 	 * in the first element, and will contain a {@code T} array, representing the current row, as it's data.
+	 * If the implementation does not need to access the indices of each iteration, then it is
+	 * advised to utilize {@link #forEach(Consumer)} for efficiency.
 	 *
 	 * @param action - the consumer to utilize when iterating through each row.
 	 * @param clazz  - the type the matrix holds.
 	 * @see ForEachHolder
 	 * @see Consumer
+	 * @see ConsumerHolder
 	 */
-	public final void forEachRow(Consumer<ForEachHolder<T[]>> action, Class<T> clazz) {
+	public final void forEachRow(ConsumerHolder<T[]> action, Class<T> clazz) {
 		for (int r = 0; r < this.height; r++) {
 			action.accept(new ForEachHolder<>(this.getRow(r, clazz), r));
+		}
+	}
+	
+	/**
+	 * Iterates through each row in the matrix, performing a consumer operation on each.
+	 * Iteration goes from top to bottom. This is a more efficient alternative to
+	 * {@link #forEachRow(ConsumerHolder, Class)}.
+	 *
+	 * @param action the consumer to utilize when iterating through each row.
+	 * @param clazz the type the matrix holds.
+	 */
+	public final void forEachRow(Consumer<T[]> action, Class<T> clazz) {
+		for (int r = 0; r < this.height; r++) {
+			action.accept(this.getRow(r, clazz));
 		}
 	}
 	
@@ -267,15 +303,32 @@ public abstract class Matrix<T> implements java.io.Serializable {
 	 * implementation to access the column-index the matrix is currently iterating at. The iteration
 	 * goes from left to right. As such the {@code ForEachHolder}'s indices will have the column index
 	 * in the first element, and will contain a {@code T} array, representing the current column, as it's data.
+	 * If the implementation does not need to access the indices of each iteration, then it is
+	 * advised to utilize {@link #forEach(Consumer)} for efficiency.
 	 *
 	 * @param action - the consumer to utilize when iterating through each column.
 	 * @param clazz  - the type the matrix holds.
 	 * @see ForEachHolder
 	 * @see Consumer
+	 * @see ConsumerHolder
 	 */
-	public final void forEachColumn(Consumer<ForEachHolder<T[]>> action, Class<T> clazz) {
+	public final void forEachColumn(ConsumerHolder<T[]> action, Class<T> clazz) {
 		for (int c = 0; c < this.width; c++) {
 			action.accept(new ForEachHolder<>(this.getColumn(c, clazz), c));
+		}
+	}
+	
+	/**
+	 * Iterates through each column in the matrix, performing a consumer operation on each.
+	 * Iteration goes from left to right. This is a more efficient alternative to
+	 * {@link #forEachColumn(ConsumerHolder, Class)}.
+	 *
+	 * @param action the consumer to utilize when iterating through each column.
+	 * @param clazz the type the matrix holds.
+	 */
+	public final void forEachColumn(Consumer<T[]> action, Class<T> clazz) {
+		for (int c = 0; c < this.width; c++) {
+			action.accept(this.getColumn(c, clazz));
 		}
 	}
 	
