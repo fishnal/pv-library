@@ -216,11 +216,11 @@ public final class PVMath {
 		// a = xi
 		// b = 1 - a
 		// c = 1 + a
-		// d = ln(b / a)
+		// d = ln(b / c)
 		Number a = new ComplexNumber(0, 1).multiply(x);
 		Number b = subtract(1, a);
 		Number c = add(1, a);
-		Number d = log(divide(b, a));
+		Number d = log(divide(b, c));
 		return new ComplexNumber(0, .5).multiply(d);
 	}
 	
@@ -630,24 +630,20 @@ public final class PVMath {
 	 * @return a list of prime numbers in the range [2,n)
 	 */
 	public static List<Integer> primes(int n) {
-		boolean[] arr = new boolean[n];
+		boolean[] isComposite = new boolean[n];
 		List<Integer> primes = new ArrayList<>();
 		double limit = Math.sqrt(n);
 
-		for (int i = 0; i < n; i++) {
-			arr[i] = true;
-		}
-
 		for (int i = 2; i <= limit; i++) {
-			if (arr[i]) {
+			if (!isComposite[i]) {
 				for (int j = i * i; j < n; j += i) {
-					arr[j] = false;
+					isComposite[j] = true;
 				}
 			}
 		}
 
-		for (int i = 2; i < arr.length; i++) {
-			if (arr[i]) {
+		for (int i = 2; i < isComposite.length; i++) {
+			if (!isComposite[i]) {
 				primes.add(i);
 			}
 		}
