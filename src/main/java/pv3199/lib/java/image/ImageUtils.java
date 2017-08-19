@@ -15,7 +15,7 @@ public final class ImageUtils {
 		return isolateColor(image, 2);
 	}
 	
-	private static BufferedImage isolateColor(BufferedImage image, int color) {
+	private static BufferedImage isolateColor(BufferedImage image, final int color) {
 		BufferedImage isolated = new BufferedImage(image.getWidth(), image.getHeight(), image.getType());
 		final int shift = color == 0 ? 16 : color == 1 ? 8 : 0;
 		
@@ -23,7 +23,7 @@ public final class ImageUtils {
 			for (int x = 0; x < image.getWidth(); x++) {
 				int rgb = image.getRGB(x, y);
 				int ic = rgb >> shift & 0xff;
-				isolated.setRGB(x, y, color << shift);
+				isolated.setRGB(x, y, ic << shift);
 			}
 		}
 		
