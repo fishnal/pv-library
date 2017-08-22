@@ -8,3 +8,8 @@ target/classes
 target/javadoc-bundle-options
 target/maven/archiver
 target/maven-status
+target/sunfire-reports
+target/test-classes
+target/maven-archiver
+target/generate-test-sources
+target/generated-sources

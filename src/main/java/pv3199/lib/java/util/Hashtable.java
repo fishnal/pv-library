@@ -9,27 +9,27 @@ public class Hashtable<E> {
 	 * function.
 	 */
 	private final static Function<Object, Integer> DEFAULT_HASH_FUNCTION = Object::hashCode;
-	
+
 	/**
 	 * Default table capacity.
 	 */
 	private final static int DEFAULT_TABLE_SIZE = 10;
-	
+
 	/**
 	 * The number of items in this table.
 	 */
 	private int count;
-	
+
 	/**
 	 * The hashing function.
 	 */
 	private Function<Object, Integer> hashFunction;
-	
+
 	/**
 	 * The table table
 	 */
 	private Object[] table;
-	
+
 	/**
 	 * Constructs a hashtable with the {@link #DEFAULT_HASH_FUNCTION default hashing function}.
 	 * All hashtables constructed through the nullable constructor share the same default hashing
@@ -38,7 +38,7 @@ public class Hashtable<E> {
 	public Hashtable() {
 		this(DEFAULT_TABLE_SIZE);
 	}
-	
+
 	/**
 	 * Constructs a hashtable with the {@link #DEFAULT_HASH_FUNCTION default hashing function}
 	 * and a set initial capacity.
@@ -52,7 +52,7 @@ public class Hashtable<E> {
 		this.hashFunction = DEFAULT_HASH_FUNCTION;
 		table = new Object[initSize];
 	}
-	
+
 	/**
 	 * Constructs a hashtable with a given hashing function that accepts the generic type <code>E</code>
 	 * as the parameter and returns an integer. Unless the default hashing function is utilized, two objects
@@ -63,7 +63,7 @@ public class Hashtable<E> {
 	public Hashtable(Function<E, Integer> hashFunction) {
 		this(hashFunction, DEFAULT_TABLE_SIZE);
 	}
-	
+
 	/**
 	 * Constructs a hashtable with a given initial capacity and hashing function that accepts the generic type <code>E</code>
 	 * as the parameter and returns an integer. Unless the default hashing function is utilized, two objects
@@ -80,7 +80,7 @@ public class Hashtable<E> {
 		this.hashFunction = (Function<Object, Integer>) hashFunction;
 		table = new Object[initSize];
 	}
-	
+
 	/**
 	 * Adds a non-null element to the hash table.
 	 * @param element the element to add.
@@ -91,11 +91,11 @@ public class Hashtable<E> {
 		} else if (this.count == this.table.length) {
 			resizeTable();
 		}
-		
+
 		hash(element, this.table, this.hashFunction);
 		this.count++;
 	}
-	
+
 	/**
 	 * Hashes an object into a table given a hashing function.
 	 * @param o the object to hash.
@@ -104,8 +104,8 @@ public class Hashtable<E> {
 	 */
 	private static void hash(Object o, Object[] table, Function<Object, Integer> hashFunction) {
 		int hash = hashFunction.apply(o);
-		int index = table.length % hash;
-		
+		int index = hash % table.length;
+
 		if (table[index] != null) {
 			// handle collision with quadratic probing
 			handleCollision(o, table, index);
@@ -113,7 +113,7 @@ public class Hashtable<E> {
 			table[index] = o;
 		}
 	}
-	
+
 	/**
 	 * Handles hashing collisions for a table by quadratically probing the table. This can loop forever
 	 * if the table is already full.
@@ -130,7 +130,7 @@ public class Hashtable<E> {
 			}
 		}
 	}
-	
+
 	/**
 	 * Resizes the table and rehashes all non-null references in the previous table into the new table.
 	 * The table will be double the previous size. Should only be called when {@link #count} equals
@@ -142,45 +142,83 @@ public class Hashtable<E> {
 			if (o == null) {
 				continue;
 			}
-			
+
 			hash(o, newTable, this.hashFunction);
 		}
 		this.table = newTable;
 	}
-	
+
+	private void rehash() {
+		Object[] newTable = new Object[this.table.length];
+		for (Object o : this.table) {
+			if (o == null) {
+				continue;
+			}
+			hash(o, newTable, this.hashFunction);
+		}
+		this.table = newTable;
+	}
+
 	/**
 	 * Checks if this hashtable has an element.
 	 * @param element the element to check for.
 	 * @return true if the element was found.
 	 */
 	public final boolean contains(E element) {
+		return indexOf(element) != -1;
+	}
+
+	/**
+	 * Gets the index of an element in the hash table.
+	 * @param element the element to look for.
+	 * @return -1 if the element was not found; otherwise a non-negative index
+	 */
+	protected final int indexOf(E element) {
 		if (element == null) {
-			return false;
+			return -1;
 		}
-		
+
 		int hash = this.hashFunction.apply(element);
 		int index = this.table.length % hash;
-		
-		if (this.table[index] != element || this.table[index].equals(element)) {
-			for (int x = 1, i; this.table[(i = index + x * x)] != null; x++) {
-				if (this.table[i].equals(element)) {
-					return true;
-				}
+
+		if (this.table[index] == element || this.table[index].equals(element)) {
+			return index;
+		}
+
+		for (int x = 1, i; this.table[(i = index + x * x)] != null; x++) {
+			if (this.table[i].equals(element)) {
+				return i;
 			}
-			
+		}
+
+		return -1;
+	}
+
+	/**
+	 * Removes an element from the hashtable if it exists. Table is rehashed to account for
+	 * hash collisions.
+	 * @param element the element to remove.
+	 * @return true if the element was removed
+	 */
+	public final boolean remove(E element) {
+		int index = indexOf(element);
+		if (index == -1) {
 			return false;
 		}
-		
+
+		this.table[index] = null;
+		rehash();
+		this.count--;
 		return true;
 	}
-	
+
 	/**
 	 * @return the number of non-null elements in the hash table.
 	 */
 	public final int size() {
 		return this.count;
 	}
-	
+
 	/**
 	 * Clones this hash table. Any changes made to the previous hash table will not be reflected
 	 * in the cloned table. Any changes made to the elements in the previous hash table, however, will
@@ -193,7 +231,7 @@ public class Hashtable<E> {
 		ht.table = this.table.clone();
 		return ht;
 	}
-	
+
 	/**
 	 * Iterates over each non-null element in the hash table, applying a consumer operation on each.
 	 * @param action the consumer operation.
@@ -203,7 +241,7 @@ public class Hashtable<E> {
 			if (o == null) {
 				continue;
 			}
-			
+
 			action.accept((E) o);
 		}
 	}
