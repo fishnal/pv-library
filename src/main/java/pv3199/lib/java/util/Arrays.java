@@ -1,5 +1,7 @@
 package pv3199.lib.java.util;
 
+import com.sun.nio.sctp.IllegalReceiveException;
+
 import java.lang.reflect.Array;
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
@@ -30,7 +32,7 @@ public final class Arrays {
 	 * @throws IllegalArgumentException       if the array is not actually an array
 	 * @throws ArrayIndexOutOfBoundsException if one of the indices is out of bounds for this array.
 	 */
-	public static Object get(Object array, int[] indices) throws IllegalArgumentException, ArrayIndexOutOfBoundsException {
+	public static Object get(Object array, int... indices) throws IllegalArgumentException, ArrayIndexOutOfBoundsException {
 		if (!array.getClass().isArray()) throw new IllegalArgumentException("pass in an actual array");
 		
 		for (int i : indices)
@@ -80,8 +82,8 @@ public final class Arrays {
 		if (!array.getClass().isArray()) throw new IllegalArgumentException("must pass in an actual array");
 		
 		for (int i = 0; i < indices.length; i++) {
-			if (i == indices.length - 1) Array.set(array, i, newValue);
-			else array = Array.get(array, i);
+			if (i == indices.length - 1) Array.set(array, indices[i], newValue);
+			else array = Array.get(array, indices[i]);
 		}
 	}
 	
@@ -161,27 +163,36 @@ public final class Arrays {
 	 * Combines multiple arrays into one array.
 	 *
 	 * @param arrays - the arrays to combine.
-	 * @param <T>    - the data type of the arrays.
+	 * @param <T>    - the type of the arrays.
 	 * @return the combined array otherwise
+	 * @throws IllegalArgumentException if the type of the arrays is not an actual array.
 	 */
-	public static <T> T[] joinArrays(final T[]... arrays) {
+	public static <T> T joinArrays(final T... arrays) {
 		int len = 0;
+		if (!arrays.getClass().getComponentType().isArray()) {
+			throw new IllegalArgumentException("pass in arrays");
+		}
+		Class<?> clazz = null;
+		for (T arr : arrays) {
+			if (clazz == null) {
+				clazz = arr.getClass();
+			}
+			len += Array.getLength(arr);
+		}
 		
-		for (T[] arr : arrays)
-			len += arr.length;
-		
-		Object combined = Array.newInstance(Classes.getDeepestComponent(arrays.getClass()), len);
+		Object combined = Array.newInstance(clazz.getComponentType(), len);
 		
 		int ind = 0;
 		
-		for (T[] array : arrays) {
+		for (T array : arrays) {
 			int arrLen = Array.getLength(array);
 			
-			for (int j = 0; j < arrLen; j++, ind++)
-				Array.set(combined, ind, array[j]);
+			for (int j = 0; j < arrLen; j++) {
+				Array.set(combined, ind++, Array.get(array, j));
+			}
 		}
 		
-		return (T[]) combined;
+		return (T) combined;
 	}
 	
 	/**

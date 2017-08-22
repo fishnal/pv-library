@@ -251,6 +251,37 @@ public enum SortMethod {
 		}
 		
 		return null;
+	}),
+	
+	/**
+	 * Comb sorting algorithm using a shrink of 1.3
+	 */
+	COMB(arg -> {
+		DataStructure<Object> ds = (DataStructure<Object>) arg[0];
+		Comparator<Object> comparator = (Comparator<Object>) arg[1];
+		
+		int size = ds.size();
+		int gap = size;
+		double shrink = 1.3;
+		boolean sorted = false;
+		
+		while (!sorted) {
+			gap = (int) Math.floor(gap / shrink);
+			
+			if (gap <= 1) {
+				gap = 1;
+				sorted = true;
+			}
+			
+			for (int i = 0; i + gap < size; i++) {
+				if (comparator.compare(ds.get(i), ds.get(i + gap)) > 0) {
+					ds.swap(i, i + gap);
+					sorted = false;
+				}
+			}
+		}
+		
+		return null;
 	});
 	
 	/**

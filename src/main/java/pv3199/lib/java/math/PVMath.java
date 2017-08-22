@@ -426,7 +426,7 @@ public final class PVMath {
 
 	/**
 	 * Inverts a number.
-	 * 
+	 *
 	 * @param n the number to invert.
 	 * @return the number inverted.
 	 */
@@ -535,7 +535,7 @@ public final class PVMath {
 
 	/**
 	 * Checks if two numbers are coprime.
-	 * 
+	 *
 	 * @param a the first number
 	 * @param b the second number
 	 * @return true if the two numbers are coprime.
@@ -550,7 +550,7 @@ public final class PVMath {
 
 	/**
 	 * Gets the factorial of a number.
-	 * 
+	 *
 	 * @param l a number.
 	 * @return the factorial of a number.
 	 * @throws IllegalArgumentException if the number is negative.
@@ -583,7 +583,7 @@ public final class PVMath {
 
 	/**
 	 * Gets the least common multiple between two integers.
-	 * 
+	 *
 	 * @param a the first number.
 	 * @param b the second number.
 	 * @return the least common multiply between two integers.
@@ -625,7 +625,7 @@ public final class PVMath {
 	/**
 	 * Generates a list of prime numbers in the range [2,n) modeled after the Sieve
 	 * of Eratosthenes algorithm.
-	 * 
+	 *
 	 * @param n the maximum possible prime number.
 	 * @return a list of prime numbers in the range [2,n)
 	 */
