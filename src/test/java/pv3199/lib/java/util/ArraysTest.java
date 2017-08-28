@@ -4,7 +4,6 @@ import static java.util.Arrays.asList;
 
 import static pv3199.lib.java.util.Arrays.RandomPrimitive;
 
-import jdk.internal.org.objectweb.asm.commons.RemappingAnnotationAdapter;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
