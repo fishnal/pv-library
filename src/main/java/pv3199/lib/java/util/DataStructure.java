@@ -14,6 +14,8 @@ import java.util.function.Consumer;
  * @author Vishal Patel
  */
 public interface DataStructure<E> extends java.io.Serializable {
+	static Comparator<Object> DEFAULT_COMPARATOR = (o1, o2) -> ((Comparable<Object>) o1).compareTo(o2);
+
 	/**
 	 * Sorts the data structure, modifying its elements and indices, by
 	 * utilizing a comparator. If the given comparator is null, then the data
@@ -26,7 +28,9 @@ public interface DataStructure<E> extends java.io.Serializable {
 	 * @param <T>        - the type of the data structure.
 	 */
 	static <T extends Object> void sort(SortMethod method, DataStructure<T> ds, Comparator<T> comparator) {
-		if (comparator == null) comparator = (o1, o2) -> ((Comparable<T>) o1).compareTo(o2);
+		if (comparator == null) {
+			comparator = (Comparator<T>) DEFAULT_COMPARATOR;
+		}
 		method.apply(ds, comparator);
 	}
 	
@@ -69,8 +73,9 @@ public interface DataStructure<E> extends java.io.Serializable {
 	static <T> DataStructure<T> fromArray(T[] arr) {
 		AbstractStructure<T> as = new AbstractStructure<>();
 		
-		for (int i = 0; i < arr.length; i++)
+		for (int i = 0; i < arr.length; i++) {
 			as.add(arr[i]);
+		}
 		
 		return as;
 	}
@@ -109,8 +114,9 @@ public interface DataStructure<E> extends java.io.Serializable {
 	default void set(DataStructure<E> ds) {
 		this.clear();
 		
-		for (int i = 0; i < ds.size(); i++)
+		for (int i = 0; i < ds.size(); i++) {
 			this.add(ds.get(i));
+		}
 	}
 	
 	/**
@@ -134,7 +140,9 @@ public interface DataStructure<E> extends java.io.Serializable {
 	 * until there are no more elements left in the structure.
 	 */
 	default void clear() {
-		while (this.size() > 0) this.remove(0);
+		while (this.size() > 0) {
+			this.remove(0);
+		}
 	}
 	
 	/**
@@ -214,11 +222,15 @@ public interface DataStructure<E> extends java.io.Serializable {
 	 * @throws NullPointerException if the given array is null
 	 */
 	default <T> T[] toArray(T[] arr) {
-		if (arr == null) throw new NullPointerException();
-		if (arr.length != this.size()) arr = java.util.Arrays.copyOf(arr, this.size());
+		if (arr == null) {
+			throw new NullPointerException();
+		} else if (arr.length != this.size()) {
+			arr = java.util.Arrays.copyOf(arr, this.size());
+		}
 		
-		for (int i = 0; i < arr.length; i++)
+		for (int i = 0; i < arr.length; i++) {
 			arr[i] = (T) this.get(i);
+		}
 		
 		return arr;
 	}
@@ -233,8 +245,9 @@ public interface DataStructure<E> extends java.io.Serializable {
 	default List<E> asList() {
 		List<E> list = new ArrayList(this.size());
 		
-		for (int i = 0; i < this.size(); i++)
+		for (int i = 0; i < this.size(); i++) {
 			list.add(this.get(i));
+		}
 		
 		return list;
 	}

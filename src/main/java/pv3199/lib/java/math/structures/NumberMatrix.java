@@ -47,8 +47,9 @@ public abstract class NumberMatrix<T extends Number> extends Matrix<T> {
 	public static NumberMatrix<Double> identityMatrix(int size) {
 		RealMatrix id = new RealMatrix(size, size);
 		
-		for (int i = 0; i < size; i++)
+		for (int i = 0; i < size; i++) {
 			id.setValue(i, i, 1);
+		}
 		
 		return id;
 	}

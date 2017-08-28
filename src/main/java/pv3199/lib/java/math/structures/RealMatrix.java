@@ -93,8 +93,9 @@ public final class RealMatrix extends NumberMatrix<Double> {
 		int size = java.lang.Math.max(width, height);
 		RealMatrix id = new RealMatrix(size, size);
 		
-		for (int i = 0; i < size; i++)
+		for (int i = 0; i < size; i++) {
 			id.setValue(i, i, 1.0);
+		}
 		
 		return id;
 	}
@@ -112,7 +113,9 @@ public final class RealMatrix extends NumberMatrix<Double> {
 	
 	@Override
 	public void add(Number n) throws NullPointerException {
-		if (n == null) throw new NullPointerException("null argument");
+		if (n == null) {
+			throw new NullPointerException("null argument");
+		}
 		
 		for (int r = 0; r < this.height; r++) {
 			for (int c = 0; c < this.width; c++) {
@@ -130,12 +133,13 @@ public final class RealMatrix extends NumberMatrix<Double> {
 		
 		RealMatrix sum = new RealMatrix(this.width, this.height);
 		
-		for (int r = 0; r < sum.height; r++)
+		for (int r = 0; r < sum.height; r++) {
 			for (int c = 0; c < sum.width; c++) {
 				Number tn = this.getValue(r, c);
 				Number mn = matrix.getValue(r, c);
 				sum.setValue(r, c, tn.doubleValue() + mn.doubleValue());
 			}
+		}
 		
 		return sum;
 	}
@@ -147,39 +151,50 @@ public final class RealMatrix extends NumberMatrix<Double> {
 	
 	@Override
 	public RealMatrix subtract(NumberMatrix<Double> matrix) throws NullPointerException, IllegalArgumentException {
-		if (matrix == null) throw new NullPointerException("null argument");
-		if (!RealMatrix.class.isInstance(matrix)) throw new IllegalArgumentException("must be of type RealMatrix");
-		if (!sameDimensions(matrix)) throw new IllegalArgumentException("matrices must have same dimensions");
+		if (matrix == null) {
+			throw new NullPointerException("null argument");
+		} else if (!RealMatrix.class.isInstance(matrix)) {
+			throw new IllegalArgumentException("must be of type RealMatrix");
+		} else if (!sameDimensions(matrix)) {
+			throw new IllegalArgumentException("matrices must have same dimensions");
+		}
 		
 		RealMatrix diff = new RealMatrix(this.width, this.height);
 		
-		for (int r = 0; r < diff.height; r++)
+		for (int r = 0; r < diff.height; r++) {
 			for (int c = 0; c < diff.width; c++) {
 				Number tn = this.getValue(r, c);
 				Number mn = matrix.getValue(r, c);
 				diff.setValue(r, c, tn.doubleValue() - mn.doubleValue());
 			}
+		}
 		
 		return diff;
 	}
 	
 	@Override
 	public void multiply(Number n) throws NullPointerException {
-		if (n == null) throw new NullPointerException("null argument");
+		if (n == null) {
+			throw new NullPointerException("null argument");
+		}
 		
-		for (int r = 0; r < this.height; r++)
+		for (int r = 0; r < this.height; r++) {
 			for (int c = 0; c < this.width; c++) {
 				double product = this.getValue(r, c).doubleValue() * n.doubleValue();
 				this.setValue(r, c, product);
 			}
+		}
 	}
 	
 	@Override
 	public RealMatrix multiply(NumberMatrix<Double> matrix) throws NullPointerException, IllegalArgumentException {
-		if (matrix == null) throw new NullPointerException("null argument");
-		if (!RealMatrix.class.isInstance(matrix)) throw new IllegalArgumentException("must be of type RealMatrix");
-		if (this.width != matrix.height)
+		if (matrix == null) {
+			throw new NullPointerException("null argument");
+		} else if (!RealMatrix.class.isInstance(matrix)) {
+			throw new IllegalArgumentException("must be of type RealMatrix");
+		} else if (this.width != matrix.height) {
 			throw new IllegalArgumentException("number of columns in first matrix must equal number of rows in second matrix");
+		}
 		
 		RealMatrix product = new RealMatrix(matrix.width, this.height);
 		
@@ -205,10 +220,14 @@ public final class RealMatrix extends NumberMatrix<Double> {
 	
 	@Override
 	public RealMatrix divide(NumberMatrix<Double> matrix) throws NullPointerException, IllegalArgumentException, IllegalMatrixException {
-		if (matrix == null) throw new NullPointerException("null argument");
+		if (matrix == null) {
+			throw new NullPointerException("null argument");
+		}
 		
 		RealMatrix inv = (RealMatrix) matrix.inverse();
-		if (inv == null) throw new IllegalMatrixException("second matrix doesn't have an inverse");
+		if (inv == null) {
+			throw new IllegalMatrixException("second matrix doesn't have an inverse");
+		}
 		RealMatrix quotient = this.multiply(inv);
 		
 		return quotient;
@@ -216,12 +235,16 @@ public final class RealMatrix extends NumberMatrix<Double> {
 	
 	@Override
 	public RealMatrix inverse() throws IllegalMatrixException {
-		if (!isSquare(this)) throw new IllegalMatrixException("matrix must be square");
+		if (!isSquare(this)) {
+			throw new IllegalMatrixException("matrix must be square");
+		}
 		
 		double detOfThis = this.determinant();
 		RealMatrix mocfTp = matrixOfCoFactors().transpose();
 		
-		if (detOfThis == 0.0) return null;
+		if (detOfThis == 0.0) {
+			return null;
+		}
 		
 		mocfTp.divide(detOfThis);
 		
@@ -253,10 +276,14 @@ public final class RealMatrix extends NumberMatrix<Double> {
 				Double[][] subData = new Double[this.height - 1][this.width - 1];
 				
 				for (int r2 = 0, rsd = 0; rsd < subData.length; r2++) {
-					if (r2 == r) continue;
+					if (r2 == r) {
+						continue;
+					}
 					
 					for (int c2 = 0, csd = 0; csd < subData[rsd].length; c2++) {
-						if (c2 == c) continue;
+						if (c2 == c) {
+							continue;
+						}
 						
 						subData[rsd][csd] = this.getValue(r2, c2);
 						csd++;
@@ -276,7 +303,9 @@ public final class RealMatrix extends NumberMatrix<Double> {
 	
 	@Override
 	public RealMatrix matrixOfCoFactors() throws IllegalMatrixException {
-		if (!isSquare(this)) throw new IllegalMatrixException("matrix must be square");
+		if (!isSquare(this)) {
+			throw new IllegalMatrixException("matrix must be square");
+		}
 		
 		RealMatrix mom = matrixOfMinors();
 		
@@ -295,7 +324,9 @@ public final class RealMatrix extends NumberMatrix<Double> {
 			return this.getIdentityMatrix();
 		}
 		
-		if (!isSquare(this)) throw new IllegalMatrixException("matrix must be square");
+		if (!isSquare(this)) {
+			throw new IllegalMatrixException("matrix must be square");
+		}
 		
 		RealMatrix powd = power < 0 ? this.inverse() : this.clone();
 		RealMatrix multiplyAgainst = power < 0 ? this.inverse() : this.clone();
@@ -309,9 +340,12 @@ public final class RealMatrix extends NumberMatrix<Double> {
 	
 	@Override
 	public Double determinant() throws IllegalMatrixException {
-		if (this.height == 0 || this.width == 0)
+		if (this.height == 0 || this.width == 0) {
 			throw new IllegalMatrixException("matrix must have non-zero dimensions");
-		if (!isSquare(this)) throw new IllegalMatrixException("matrix must be square");
+		} else if (!isSquare(this)) {
+			throw new IllegalMatrixException("matrix must be square");
+		}
+
 		return determinant0(this.getData());
 	}
 	
@@ -337,7 +371,9 @@ public final class RealMatrix extends NumberMatrix<Double> {
 	private double determinant0(Double[][] data) {
 		int size = data.length;
 		
-		if (size == 1) return data[0][0].doubleValue();
+		if (size == 1) {
+			return data[0][0].doubleValue();
+		}
 		
 		double det = 0;
 		
@@ -346,7 +382,9 @@ public final class RealMatrix extends NumberMatrix<Double> {
 			
 			Double[][] subData = new Double[size - 1][size - 1];
 			for (int csd = 0, c2 = 0; c2 < size; c2++) {
-				if (c2 == c) continue;
+				if (c2 == c) {
+					continue;
+				}
 				
 				for (int rsd = 0, r2 = 1; r2 < size; r2++, rsd++) {
 					subData[rsd][csd] = data[r2][c2];
@@ -365,9 +403,11 @@ public final class RealMatrix extends NumberMatrix<Double> {
 	public Double[][] getData() {
 		Double[][] copyOfData = new Double[this.height][this.width];
 		
-		for (int r = 0; r < this.height; r++)
-			for (int c = 0; c < this.width; c++)
+		for (int r = 0; r < this.height; r++) {
+			for (int c = 0; c < this.width; c++) {
 				copyOfData[r][c] = this.getValue(r, c);
+			}
+		}
 		
 		return copyOfData;
 	}
@@ -390,18 +430,24 @@ public final class RealMatrix extends NumberMatrix<Double> {
 	public boolean equals(Object obj) {
 		RealMatrix matrix = (RealMatrix) obj;
 		
-		if (this.height != matrix.height || this.width != matrix.width) return false;
+		if (this.height != matrix.height || this.width != matrix.width) {
+			return false;
+		}
 		
-		for (int r = 0; r < this.height; r++)
-			for (int c = 0; c < this.width; c++)
+		for (int r = 0; r < this.height; r++) {
+			for (int c = 0; c < this.width; c++) {
 				if (Math.abs(this.getValue(r, c) - matrix.getValue(r, c)) > RealMatrix.epsilon) return false;
+			}
+		}
 		
 		return true;
 	}
 	
 	@Override
 	public String toString() {
-		if (this.height == 0 || this.width == 0) return "empty";
+		if (this.height == 0 || this.width == 0) {
+			return "empty";
+		}
 		
 		StringBuilder s = new StringBuilder();
 		StringBuilder[] strArr = new StringBuilder[this.height];
@@ -415,9 +461,13 @@ public final class RealMatrix extends NumberMatrix<Double> {
 				
 				if (displayFractions) {
 					f = f.simplify();
-					if (f.toString().length() > longestLength) longestLength = f.toString().length();
+					if (f.toString().length() > longestLength) {
+						longestLength = f.toString().length();
+					}
 				} else if (!displayFractions && d.toString().length() > longestLength) {
-					if (d.doubleValue() == d.longValue()) d = (Long) d.longValue();
+					if (d.doubleValue() == d.longValue()) {
+						d = (Long) d.longValue();
+					}
 					longestLength = d.toString().length();
 				}
 				
@@ -434,8 +484,9 @@ public final class RealMatrix extends NumberMatrix<Double> {
 				
 				String spaces = " ";
 				
-				for (int i = 0; i < longestLength - length; i++)
+				for (int i = 0; i < longestLength - length; i++) {
 					spaces += " ";
+				}
 				
 				s2 = new StringBuilder(s2.substring(0, lim2 + 1) + s2.substring(lim2 + 1, lim) + spaces + s2.substring(lim + 1));
 			}

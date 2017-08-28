@@ -54,11 +54,9 @@ public class Fraction implements java.io.Serializable, Comparable<Fraction> {
 	 * @throws ArithmeticException if the denominator is 0
 	 */
 	public Fraction(Number numerator, Number denominator) throws ArithmeticException {
-		if (!(numerator instanceof ComplexNumber) && !numerator.getClass().getPackage().getName().equals("java.lang"))
-			throw new IllegalArgumentException("unsupported class type: " + numerator.getClass().getName());
-		if (!(denominator instanceof ComplexNumber) && !denominator.getClass().getPackage().getName().equals("java.lang"))
-			throw new IllegalArgumentException("unsupported class type: " + denominator.getClass().getName());
-		if (denominator.equals(0.0)) throw new ArithmeticException("divide by 0");
+		if (denominator.equals(0.0)) {
+			throw new ArithmeticException("divide by 0");
+		}
 		this.numerator = numerator;
 		this.denominator = denominator;
 	}

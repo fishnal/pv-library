@@ -1,7 +1,5 @@
 package pv3199.lib.java.util;
 
-import com.sun.nio.sctp.IllegalReceiveException;
-
 import java.lang.reflect.Array;
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
@@ -33,10 +31,13 @@ public final class Arrays {
 	 * @throws ArrayIndexOutOfBoundsException if one of the indices is out of bounds for this array.
 	 */
 	public static Object get(Object array, int... indices) throws IllegalArgumentException, ArrayIndexOutOfBoundsException {
-		if (!array.getClass().isArray()) throw new IllegalArgumentException("pass in an actual array");
+		if (!array.getClass().isArray()) {
+			throw new IllegalArgumentException("pass in an actual array");
+		}
 		
-		for (int i : indices)
+		for (int i : indices) {
 			array = Array.get(array, i);
+		}
 		
 		return array;
 	}
@@ -55,7 +56,9 @@ public final class Arrays {
 	 * @throws ArrayIndexOutOfBoundsException if one of the indices is out of bounds for this array.
 	 */
 	public static Object get(Object array, Iterator<Integer> indices) throws IllegalArgumentException, ArrayIndexOutOfBoundsException {
-		if (!array.getClass().isArray()) throw new IllegalArgumentException("must pass in an actual array");
+		if (!array.getClass().isArray()) {
+			throw new IllegalArgumentException("must pass in an actual array");
+		}
 		
 		while (indices.hasNext()) {
 			int i = indices.next();
@@ -79,11 +82,16 @@ public final class Arrays {
 	 * @throws ArrayIndexOutOfBoundsException if one of the indices is out of bounds for this array.
 	 */
 	public static void set(Object array, int[] indices, Object newValue) throws IllegalArgumentException, ArrayIndexOutOfBoundsException {
-		if (!array.getClass().isArray()) throw new IllegalArgumentException("must pass in an actual array");
+		if (!array.getClass().isArray()) {
+			throw new IllegalArgumentException("must pass in an actual array");
+		}
 		
 		for (int i = 0; i < indices.length; i++) {
-			if (i == indices.length - 1) Array.set(array, indices[i], newValue);
-			else array = Array.get(array, indices[i]);
+			if (i == indices.length - 1) {
+				Array.set(array, indices[i], newValue);
+			} else {
+				array = Array.get(array, indices[i]);
+			}
 		}
 	}
 	
@@ -101,12 +109,17 @@ public final class Arrays {
 	 * @throws ArrayIndexOutOfBoundsException if one of the indices is out of bounds for this array.
 	 */
 	public static void set(Object array, Iterator<Integer> indices, Object newValue) throws IllegalArgumentException, ArrayIndexOutOfBoundsException {
-		if (!array.getClass().isArray()) throw new IllegalArgumentException("must pass in an actual array");
+		if (!array.getClass().isArray()) {
+			throw new IllegalArgumentException("must pass in an actual array");
+		}
 		
 		while (indices.hasNext()) {
 			int i = indices.next();
-			if (!indices.hasNext()) Array.set(array, i, newValue);
-			else array = Array.get(array, i);
+			if (!indices.hasNext()) {
+				Array.set(array, i, newValue);
+			} else {
+				array = Array.get(array, i);
+			}
 		}
 	}
 	
@@ -126,7 +139,9 @@ public final class Arrays {
 	 * @throws IllegalArgumentException if the array is not actually an array.
 	 */
 	public static Object randFillArray(Object array, RandomPrimitive generator) throws ClassCastException, IllegalArgumentException {
-		if (!array.getClass().isArray()) throw new IllegalArgumentException("pass in an actual array");
+		if (!array.getClass().isArray()) {
+			throw new IllegalArgumentException("pass in an actual array");
+		}
 		return randFillArray0(array, generator, Classes.getDeepestComponent(array.getClass()));
 	}
 	
@@ -142,7 +157,9 @@ public final class Arrays {
 	 *                            generated {@link RandomPrimitive} value.
 	 */
 	private static Object randFillArray0(Object array, RandomPrimitive generator, Class<?> componentType) throws ClassCastException {
-		if (array == null) return null;
+		if (array == null) {
+			return null;
+		}
 		
 		try {
 			int length = Array.getLength(array);
@@ -153,8 +170,9 @@ public final class Arrays {
 		} catch (IllegalArgumentException iae) {
 			// actual component element of array
 			Object generated = generator.generate();
-			if (!Classes.canCast(componentType, generated.getClass()))
+			if (!Classes.canCast(componentType, generated.getClass())) {
 				throw new ClassCastException(String.format("cannot convert %s to %s", generated.getClass(), componentType));
+			}
 			return Classes.objectToObjectCast(generated, componentType);
 		}
 	}
@@ -209,19 +227,24 @@ public final class Arrays {
 	 *                                  element.
 	 */
 	public static int[] indexOf(final Object array, final Object element) throws IllegalArgumentException {
-		if (!array.getClass().isArray()) throw new IllegalArgumentException("must pass in an actual array");
+		if (!array.getClass().isArray()) {
+			throw new IllegalArgumentException("must pass in an actual array");
+		}
 		
 		Object o = indexOf0(array, element);
 		
-		if (o == null) return null;
+		if (o == null) {
+			return null;
+		}
 		
 		List<Integer> list = (List<Integer>) o;
 		Collections.reverse(list);
 		
 		int[] inds = new int[list.size()];
 		
-		for (int i = 0; i < list.size(); i++)
+		for (int i = 0; i < list.size(); i++) {
 			inds[i] = list.get(i);
+		}
 		
 		return inds;
 	}
@@ -240,10 +263,18 @@ public final class Arrays {
 	 *                                  the element.
 	 */
 	private static List<Integer> indexOf0(final Object array, final Object element) throws IllegalArgumentException {
-		if (array == null) if (element == null) return new ArrayList<>();
-		else return null;
+		if (array == null) {
+			if (element == null) {
+				return new ArrayList<>();
+			}
+		} else {
+			return null;
+		}
+
 		if (Classes.componentCheck(array.getClass(), element.getClass())) {
-			if (array.equals(element)) return new ArrayList<>();
+			if (array.equals(element)) {
+				return new ArrayList<>();
+			}
 		}
 		
 		if (array.getClass().isArray()) {
@@ -307,18 +338,23 @@ public final class Arrays {
 	 * @throws IllegalArgumentException if the array parameter is not an actual array.
 	 */
 	public static int[] lastIndexOf(final Object array, final Object element) throws IllegalArgumentException {
-		if (!array.getClass().isArray()) throw new IllegalArgumentException("must pass in an actual array");
+		if (!array.getClass().isArray()) {
+			throw new IllegalArgumentException("must pass in an actual array");
+		}
 		
 		List<Integer> indices = lastIndexOf0(array, element);
 		
-		if (indices == null) return null;
+		if (indices == null) {
+			return null;
+		}
 		
 		Collections.reverse(indices);
 		
 		int[] inds = new int[indices.size()];
 		
-		for (int i = 0; i < indices.size(); i++)
+		for (int i = 0; i < indices.size(); i++) {
 			inds[i] = indices.get(i);
+		}
 		
 		return inds;
 	}
@@ -337,10 +373,18 @@ public final class Arrays {
 	 *                                  the element.
 	 */
 	private static List<Integer> lastIndexOf0(final Object array, final Object element) {
-		if (array == null) if (element == null) return new ArrayList<>();
-		else return null;
+		if (array == null) {
+			if (element == null) {
+				return new ArrayList<>();
+			}
+		} else {
+			return null;
+		}
+
 		if (Classes.componentCheck(array.getClass(), element.getClass())) {
-			if (array.equals(element)) return new ArrayList<>();
+			if (array.equals(element)) {
+				return new ArrayList<>();
+			}
 		}
 		
 		if (array.getClass().isArray()) {
@@ -370,7 +414,9 @@ public final class Arrays {
 	 * @throws IllegalArgumentException if the array parameter is not an actual array.
 	 */
 	public static boolean contains(final Object array, final Object element) throws IllegalArgumentException {
-		if (!array.getClass().isArray()) throw new IllegalArgumentException("must pass in an actual array");
+		if (!array.getClass().isArray()) {
+			throw new IllegalArgumentException("must pass in an actual array");
+		}
 		
 		try {
 			return indexOf(array, element) != null;
@@ -395,8 +441,9 @@ public final class Arrays {
 	 */
 	public static <T> Object max(final Object array) throws ClassCastException, IllegalArgumentException {
 		if (array.getClass().isArray()) {
-			if (Comparable.class.isAssignableFrom(Classes.getDeepestComponent(array.getClass())))
+			if (Comparable.class.isAssignableFrom(Classes.getDeepestComponent(array.getClass()))) {
 				return Arrays.<T>maxComparable(array, null);
+			}
 			throw new IllegalArgumentException("could not be compared; consider using <T> pvlib.util.Arrays#get(Object, Comparator<T>)");
 		}
 		
@@ -419,7 +466,9 @@ public final class Arrays {
 	 */
 	public static <T> Object max(final Object array, final Comparator<T> comparator) throws ClassCastException, IllegalArgumentException {
 		if (array.getClass().isArray()) {
-			if (comparator == null) return Arrays.<T>max(array);
+			if (comparator == null) {
+				return Arrays.<T>max(array);
+			}
 			return Arrays.maxComparator(array, null, comparator);
 		}
 		
@@ -448,8 +497,11 @@ public final class Arrays {
 			
 			return max;
 		} catch (IllegalArgumentException iae) {
-			if (max == null && array != null) return array;
-			if (((Comparable<T>) array).compareTo(max) > 0) return array;
+			if (max == null && array != null) {
+				return array;
+			} else if (((Comparable<T>) array).compareTo(max) > 0) {
+				return array;
+			}
 			return max;
 		}
 	}
@@ -477,8 +529,12 @@ public final class Arrays {
 			
 			return max;
 		} catch (IllegalArgumentException iae) {
-			if (max == null && array != null) return array;
-			if (comparator.compare((T) array, max) > 0) return array;
+			if (max == null && array != null) {
+				return array;
+			}
+			if (comparator.compare((T) array, max) > 0) {
+				return array;
+			}
 			return max;
 		}
 	}
@@ -499,8 +555,9 @@ public final class Arrays {
 	 */
 	public static <T> Object min(final Object array) throws ClassCastException {
 		if (array.getClass().isArray()) {
-			if (Comparable.class.isAssignableFrom(Classes.getDeepestComponent(array.getClass())))
+			if (Comparable.class.isAssignableFrom(Classes.getDeepestComponent(array.getClass()))) {
 				return Arrays.<T>minComparable(array, null);
+			}
 			throw new IllegalArgumentException("could not be compared; consider using <T> pvlib.util.Arrays#get(Object, Comparator<T>)");
 		}
 		
@@ -525,7 +582,9 @@ public final class Arrays {
 	 */
 	public static <T> Object min(final Object array, final Comparator<T> comparator) throws ClassCastException {
 		if (array.getClass().isArray()) {
-			if (comparator == null) return min(array);
+			if (comparator == null) {
+				return min(array);
+			}
 			return minComparator(array, null, comparator);
 		}
 		
@@ -554,8 +613,11 @@ public final class Arrays {
 			
 			return min;
 		} catch (IllegalArgumentException iae) {
-			if (min == null && array != null) return array;
-			if (((Comparable<T>) array).compareTo(min) < 0) return array;
+			if (min == null && array != null) {
+				return array;
+			} else if (((Comparable<T>) array).compareTo(min) < 0) {
+				return array;
+			}
 			return min;
 		}
 	}
@@ -583,8 +645,11 @@ public final class Arrays {
 			
 			return min;
 		} catch (IllegalArgumentException iae) {
-			if (min == null && array != null) return array;
-			if (comparator.compare((T) array, min) < 0) return array;
+			if (min == null && array != null) {
+				return array;
+			} else if (comparator.compare((T) array, min) < 0) {
+				return array;
+			}
 			return min;
 		}
 	}
@@ -603,8 +668,9 @@ public final class Arrays {
 	 */
 	public static <T> Object sort(final Object array) throws IllegalArgumentException {
 		if (array.getClass().isArray()) {
-			if (Comparable.class.isAssignableFrom(Classes.getDeepestComponent(array.getClass())))
+			if (Comparable.class.isAssignableFrom(Classes.getDeepestComponent(array.getClass()))) {
 				return Sorter.<T>sort(array, null, Sorter.CompareMethod.COMPARABLE, false);
+			}
 			throw new IllegalArgumentException("could not be compared; consider using <T> pvlib.util.Arrays#sort(Object, Comparator<T>)");
 		}
 		
@@ -629,7 +695,9 @@ public final class Arrays {
 	 */
 	public static <T> Object sort(final Object array, final Comparator<T> comparator) throws IllegalArgumentException {
 		if (array.getClass().isArray()) {
-			if (comparator == null) return Arrays.<T>sort(array);
+			if (comparator == null) {
+				return Arrays.<T>sort(array);
+			}
 			return Sorter.sort(array, comparator, Sorter.CompareMethod.COMPARATOR, false);
 		}
 		
@@ -650,8 +718,9 @@ public final class Arrays {
 	 */
 	public static <T> Object reverseSort(final Object array) {
 		if (array.getClass().isArray()) {
-			if (Comparable.class.isAssignableFrom(Classes.getDeepestComponent(array.getClass())))
+			if (Comparable.class.isAssignableFrom(Classes.getDeepestComponent(array.getClass()))) {
 				return Sorter.<T>sort(array, null, Sorter.CompareMethod.COMPARABLE, true);
+			}
 			throw new IllegalArgumentException("could not be compared; consider using <T> pvlib.util.Arrays#reverseSort(Object, Comparator<T>)");
 		}
 		
@@ -676,7 +745,9 @@ public final class Arrays {
 	 */
 	public static <T> Object reverseSort(final Object array, final Comparator<T> comparator) {
 		if (array.getClass().isArray()) {
-			if (comparator == null) return Arrays.<T>reverseSort(array);
+			if (comparator == null) {
+				return Arrays.<T>reverseSort(array);
+			}
 			return Sorter.sort(array, comparator, Sorter.CompareMethod.COMPARATOR, true);
 		}
 		
@@ -694,7 +765,9 @@ public final class Arrays {
 	 * @throws IllegalArgumentException if the array parameter is not an actual array.
 	 */
 	public static <T> T castArray(Object source, Class<T> newType) throws IllegalArgumentException {
-		if (!source.getClass().isArray()) throw new IllegalArgumentException("must pass an actual array");
+		if (!source.getClass().isArray()) {
+			throw new IllegalArgumentException("must pass an actual array");
+		}
 		
 		Class<?> at = Classes.getDeepestComponent(source.getClass());
 		Class<?> nt = Classes.getDeepestComponent(newType);
@@ -708,7 +781,9 @@ public final class Arrays {
 			Class<?> primNT = Classes.wrapperClassToPrimitiveClass(nt);
 			
 			if (primAT == boolean.class) {
-				if (primNT != boolean.class) return null;
+				if (primNT != boolean.class) {
+					return null;
+				}
 			}
 		}
 		
@@ -731,7 +806,9 @@ public final class Arrays {
 	 *                                        specified by <code>newType</code>
 	 */
 	private static Object copyElements(Object source, Class<?> newdDeepComponentType) throws ArrayIndexOutOfBoundsException, ClassCastException {
-		if (source == null) return null;
+		if (source == null) {
+			return null;
+		}
 		
 		try {
 			int length = Array.getLength(source);
@@ -747,7 +824,9 @@ public final class Arrays {
 			return newArray;
 		} catch (IllegalArgumentException iae) {
 			// this is an actual component element and not an array
-			if (!Classes.canCast(source.getClass(), newdDeepComponentType)) throw new ClassCastException();
+			if (!Classes.canCast(source.getClass(), newdDeepComponentType)) {
+				throw new ClassCastException();
+			}
 			return Classes.objectToObjectCast(source, newdDeepComponentType);
 		}
 	}
@@ -775,10 +854,19 @@ public final class Arrays {
 		for (int i = 0; i < dimCt; i++) {
 			dims[i] = Array.getLength(pointer);
 			int j = 0;
-			if (Array.getLength(pointer) == 0) break;
-			while (Array.get(pointer, j).getClass().isArray() && Array.getLength(Array.get(pointer, j)) == 0 && j < Array.getLength(pointer))
+
+			if (Array.getLength(pointer) == 0) {
+				break;
+			}
+
+			while (Array.get(pointer, j).getClass().isArray() && Array.getLength(Array.get(pointer, j)) == 0 && j < Array.getLength(pointer)) {
 				j++;
-			if (j == Array.getLength(pointer)) break;
+			}
+
+			if (j == Array.getLength(pointer)) {
+				break;
+			}
+
 			pointer = Array.get(pointer, j);
 		}
 		
@@ -802,7 +890,9 @@ public final class Arrays {
 	 * @throws IllegalArgumentException if the array parameter is not an actual array.
 	 */
 	public static Object clone(Object array) throws IllegalArgumentException {
-		if (!array.getClass().isArray()) throw new IllegalArgumentException("must pass in an actual array");
+		if (!array.getClass().isArray()) {
+			throw new IllegalArgumentException("must pass in an actual array");
+		}
 		
 		return clone0(array, null);
 	}
@@ -818,16 +908,18 @@ public final class Arrays {
 	 * @return the cloned array.
 	 */
 	private static Object clone0(Object array, Object clone) {
-		if (array.getClass().isArray() && clone == null)
+		if (array.getClass().isArray() && clone == null) {
 			clone = Array.newInstance(array.getClass().getComponentType(), Array.getLength(array));
+		}
 		
 		try {
 			int len = Array.getLength(array);
 			
 			for (int i = 0; i < len; i++) {
 				Object arr = Array.get(array, i);
-				if (arr.getClass().isArray())
+				if (arr.getClass().isArray()) {
 					Array.set(clone, i, Array.newInstance(arr.getClass().getComponentType(), Array.getLength(arr)));
+				}
 				Object clonedResult = clone0(arr, Array.get(clone, i));
 				if (!clonedResult.getClass().isArray()) {
 					Array.set(clone, i, clonedResult);
@@ -955,10 +1047,14 @@ public final class Arrays {
 	private static boolean deepEquals0(Object a, Object b) {
 		try {
 			int len = Array.getLength(a);
-			if (len != Array.getLength(b)) return false;
+			if (len != Array.getLength(b)) {
+				return false;
+			}
 			
 			for (int i = 0; i < len; i++)
-				if (!deepEquals0(Array.get(a, i), Array.get(b, i))) return false;
+				if (!deepEquals0(Array.get(a, i), Array.get(b, i))) {
+					return false;
+				}
 			
 			return true;
 		} catch (IllegalArgumentException | NullPointerException iae) {
@@ -1149,24 +1245,30 @@ public final class Arrays {
 						int fte = finderTrace.get(i);
 						int ste = sortTrace.get(i);
 						
-						if (fte < ste) return;
-						else if (fte > ste) break;
+						if (fte < ste) {
+							return;
+						} else if (fte > ste) {
+							break;
+						}
 					}
 					
 					boolean changed = false;
 					
-					if (key == null) changed = true;
-					else if (method == CompareMethod.COMPARABLE) {
+					if (key == null) {
+						changed = true;
+					} else if (method == CompareMethod.COMPARABLE) {
 						Comparable<T> array_T = (Comparable<T>) array;
 						T key_T = (T) key;
-						if ((!descending && array_T.compareTo(key_T) < 0) || (descending && array_T.compareTo(key_T) > 0))
+						if ((!descending && array_T.compareTo(key_T) < 0) || (descending && array_T.compareTo(key_T) > 0)) {
 							changed = true;
+						}
 					} else if (method == CompareMethod.COMPARATOR) {
 						T array_T = (T) array;
 						T key_T = (T) key;
 						
-						if ((!descending && comparator.compare(array_T, key_T) < 0) || (descending && comparator.compare(array_T, key_T) > 0))
+						if ((!descending && comparator.compare(array_T, key_T) < 0) || (descending && comparator.compare(array_T, key_T) > 0)) {
 							changed = true;
+						}
 					} else {
 						// the comparing method isn't recognized
 						throw new RuntimeException("unrecognized CompareMethod value");

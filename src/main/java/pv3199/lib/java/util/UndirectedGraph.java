@@ -20,7 +20,9 @@ public class UndirectedGraph<T> extends Graph<T> {
 	
 	@Override
 	public boolean add(T vertex, T... links) {
-		if (links == null) return add0(vertex, null);
+		if (links == null) {
+			return add0(vertex, null);
+		}
 		
 		ArrayList<T> linksList = new ArrayList<>(java.util.Arrays.asList(links));
 		return add0(vertex, linksList);
@@ -37,8 +39,7 @@ public class UndirectedGraph<T> extends Graph<T> {
 		
 		Vertex v0;
 		
-		if (links != null) v0 = new UndirectedVertex(vertex, links);
-		else v0 = new UndirectedVertex(vertex);
+		v0 = links != null ? new UndirectedVertex(vertex, links) : new UndirectedVertex(vertex);
 		
 		vertices.add(v0);
 		
@@ -49,7 +50,9 @@ public class UndirectedGraph<T> extends Graph<T> {
 	
 	@Override
 	protected void updateAdjacencyMatrix() {
-		if (!changesMade) return;
+		if (!changesMade) {
+			return;
+		}
 		
 		changesMade = false;
 		
@@ -58,14 +61,19 @@ public class UndirectedGraph<T> extends Graph<T> {
 	
 	@Override
 	public boolean remove(T vertex) {
-		if (vertex == null) return false;
+		if (vertex == null) {
+			return false;
+		}
 		
 		int vertexInd = indexOf(vertex);
-		if (vertexInd == -1) return false;
+		if (vertexInd == -1) {
+			return false;
+		}
 		
 		Vertex v = vertices.get(vertexInd);
-		for (int i = 0; i < v.links.size(); i++)
+		for (int i = 0; i < v.links.size(); i++) {
 			v.links.get(i).links.remove(v);
+		}
 		v.links.clear();
 		vertices.remove(v);
 		
@@ -74,11 +82,15 @@ public class UndirectedGraph<T> extends Graph<T> {
 	
 	@Override
 	public boolean set(T vertex, T... links) {
-		if (vertex == null) return false;
+		if (vertex == null) {
+			return false;
+		}
 		
 		Vertex v0 = get(vertex);
 		
-		if (v0 == null) return false;
+		if (v0 == null) {
+			return false;
+		}
 		
 		ArrayList<T> linksList = new ArrayList<>(java.util.Arrays.asList(links));
 		
@@ -94,44 +106,61 @@ public class UndirectedGraph<T> extends Graph<T> {
 		
 		long sum = 0;
 		
-		for (int r = 0; r < mat.height; r++)
-			for (int c = 0; c < mat.width; c++)
+		for (int r = 0; r < mat.height; r++) {
+			for (int c = 0; c < mat.width; c++) {
 				sum += mat.getValue(r, c).longValue();
+			}
+		}
 		
 		return sum;
 	}
 	
 	@Override
 	public boolean pathLength(T vertex, int n) {
-		if (vertex == null || n < 0) return false;
+		if (vertex == null || n < 0) {
+			return false;
+		}
 		
 		int ind = indexOf(vertex);
 		
-		if (ind < 0) return false;
+		if (ind < 0) {
+			return false;
+		}
 		
 		RealMatrix mat = getAdjacencyMatrix();
 		
-		if (n > 1) mat = mat.pow(n);
+		if (n > 1) {
+			mat = mat.pow(n);
+		}
 		
-		for (int c = 0; c < mat.width; c++)
-			if (mat.getValue(ind, c).intValue() == n) return true;
+		for (int c = 0; c < mat.width; c++) {
+			if (mat.getValue(ind, c).intValue() == n) {
+				return true;
+			}
+		}
 		
 		return false;
 	}
 	
 	@Override
 	public boolean pathLength(T originVertex, T targetVertex, int n) {
-		if (originVertex == null || targetVertex == null || n < 0) return false;
+		if (originVertex == null || targetVertex == null || n < 0) {
+			return false;
+		}
 		
 		int oi = indexOf(originVertex);
 		int ti = indexOf(targetVertex);
 		
-		if (oi < 0 || ti < 0) return false;
+		if (oi < 0 || ti < 0) {
+			return false;
+		}
 		
 		Vertex ov = vertices.get(oi);
 		Vertex tv = vertices.get(ti);
 		
-		if (n == 0 && ov != tv) return false;
+		if (n == 0 && ov != tv) {
+			return false;
+		}
 		
 		RealMatrix mat = getAdjacencyMatrix();
 		mat = mat.pow(n);
@@ -167,8 +196,9 @@ public class UndirectedGraph<T> extends Graph<T> {
 				if (isPlotted(currVal)) {
 					links.add(vertices.get(indexOf(currVal)));
 				} else {
-					if (currVal.equals(value)) links.add(this);
-					else {
+					if (currVal.equals(value)) {
+						links.add(this);
+					} else {
 						Vertex v = new UndirectedVertex(currVal);
 						vertices.add(v);
 						links.add(v);
@@ -184,7 +214,9 @@ public class UndirectedGraph<T> extends Graph<T> {
 		protected boolean addLinks(List<T> additionalLinks) {
 			additionalLinks.removeAll(links);
 			
-			if (!additionalLinks.isEmpty()) changesMade = true;
+			if (!additionalLinks.isEmpty()) {
+				changesMade = true;
+			}
 			
 			for (T t : additionalLinks) {
 				Vertex v;

@@ -192,11 +192,15 @@ public final class Classes {
 	 * @return true if the original class can be casted to the desired class.
 	 */
 	public static boolean canCast(Class<?> clazz1, Class<?> clazz2) {
-		if (clazz1 == null || clazz2 == null) return false;
+		if (clazz1 == null || clazz2 == null) {
+			return false;
+		}
 		
 		boolean a = isWrapper(clazz1) || clazz1.isPrimitive();
 		boolean b = isWrapper(clazz2) || clazz2.isPrimitive();
-		if (a ^ b) return false;
+		if (a ^ b) {
+			return false;
+		}
 		
 		if (a & b) {
 			Class<?> primClazz1 = isWrapper(clazz1) ? wrapperClassToPrimitiveClass(clazz1) : clazz1;

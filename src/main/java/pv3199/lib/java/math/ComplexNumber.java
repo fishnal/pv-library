@@ -28,8 +28,12 @@ public class ComplexNumber extends Number implements Comparable<Number> {
 	 * @param b the imaginary counter-part.
 	 */
 	public ComplexNumber(double a, double b) {
-		if (Double.isNaN(a)) a = 0;
-		if (Double.isNaN(b)) b = 0;
+		if (Double.isNaN(a)) {
+			a = 0;
+		}
+		if (Double.isNaN(b)) {
+			b = 0;
+		}
 		
 		this.a = a;
 		this.b = b;
@@ -198,7 +202,9 @@ public class ComplexNumber extends Number implements Comparable<Number> {
 			double c = in.a;
 			double d = in.b;
 			
-			if (c == 0 && d == 0) throw new ArithmeticException("divide by 0");
+			if (c == 0 && d == 0) {
+				throw new ArithmeticException("divide by 0");
+			}
 			
 			double f = (b * c - a * d) / (c * c + d * d);
 			double e = (a + f * d) / c;

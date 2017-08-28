@@ -62,9 +62,11 @@ public final class DirectedGraph<T> extends Graph<T> {
 	 * successful addition of the vertex.
 	 */
 	private boolean add0(T vertex, ArrayList<T> links) {
-		if (vertex == null) return false;
-		
-		if (isPlotted(vertex)) return vertices.get(indexOf(vertex)).addLinks(links);
+		if (vertex == null) {
+			return false;
+		} else if (isPlotted(vertex)) {
+			return vertices.get(indexOf(vertex)).addLinks(links);
+		}
 		// TODO Needs to be reviewed
 		// for (int i = 0; i < vertices.size(); i++)
 		// if (vertices.get(i).value.equals(vertex))
@@ -72,8 +74,11 @@ public final class DirectedGraph<T> extends Graph<T> {
 		
 		Vertex vertex0;
 		
-		if (links != null) vertex0 = new DirectedVertex(vertex, links);
-		else vertex0 = new DirectedVertex(vertex);
+		if (links != null) {
+			vertex0 = new DirectedVertex(vertex, links);
+		} else {
+			vertex0 = new DirectedVertex(vertex);
+		}
 		
 		vertices.add(vertex0);
 		
@@ -84,7 +89,9 @@ public final class DirectedGraph<T> extends Graph<T> {
 	
 	@Override
 	protected void updateAdjacencyMatrix() {
-		if (!changesMade) return;
+		if (!changesMade) {
+			return;
+		}
 		
 		changesMade = false;
 		
@@ -93,14 +100,18 @@ public final class DirectedGraph<T> extends Graph<T> {
 	
 	@Override
 	public boolean remove(T vertex) {
-		if (vertex == null) return false;
+		if (vertex == null) {
+			return false;
+		}
 		
 		boolean removed = false;
 		
 		int vertexInd = -1;
 		
 		for (int i = 0; i < vertices.size(); i++) {
-			if (vertices.get(i).value.equals(vertex)) vertexInd = i;
+			if (vertices.get(i).value.equals(vertex)) {
+				vertexInd = i;
+			}
 			for (int j = 0; j < vertices.get(i).links.size(); j++) {
 				if (vertices.get(i).links.get(j).value.equals(vertex)) {
 					vertices.get(i).links.remove(j);
@@ -118,11 +129,15 @@ public final class DirectedGraph<T> extends Graph<T> {
 	
 	@Override
 	public boolean set(T vertex, T... links) {
-		if (vertex == null) return false;
+		if (vertex == null) {
+			return false;
+		}
 		
 		Vertex vertex0 = get(vertex);
 		
-		if (vertex0 == null) return false;
+		if (vertex0 == null) {
+			return false;
+		}
 		
 		ArrayList<T> linksList = new ArrayList<>(java.util.Arrays.asList(links));
 		
@@ -146,9 +161,11 @@ public final class DirectedGraph<T> extends Graph<T> {
 		
 		long sum = 0;
 		
-		for (int r = 0; r < matrix.height; r++)
-			for (int c = 0; c < matrix.width; c++)
+		for (int r = 0; r < matrix.height; r++) {
+			for (int c = 0; c < matrix.width; c++) {
 				sum += matrix.getValue(r, c).longValue();
+			}
+		}
 		
 		return sum;
 	}
@@ -164,18 +181,27 @@ public final class DirectedGraph<T> extends Graph<T> {
 	 */
 	@Override
 	public boolean pathLength(T vertex, int n) {
-		if (vertex == null || n < 0) return false;
+		if (vertex == null || n < 0) {
+			return false;
+		}
 		
 		int ind = indexOf(vertex);
 		
-		if (ind < 0) return false;
+		if (ind < 0) {
+			return false;
+		}
 		
 		RealMatrix matrix = getAdjacencyMatrix();
 		
-		if (n > 1) matrix = matrix.pow(n);
+		if (n > 1) {
+			matrix = matrix.pow(n);
+		}
 		
-		for (int c = 0; c < matrix.width; c++)
-			if (matrix.getValue(ind, c).intValue() == n) return true;
+		for (int c = 0; c < matrix.width; c++) {
+			if (matrix.getValue(ind, c).intValue() == n) {
+				return true;
+			}
+		}
 		
 		return false;
 	}
@@ -196,17 +222,23 @@ public final class DirectedGraph<T> extends Graph<T> {
 	 */
 	@Override
 	public boolean pathLength(T originVertex, T targetVertex, int n) {
-		if (originVertex == null || targetVertex == null || n < 0) return false;
+		if (originVertex == null || targetVertex == null || n < 0) {
+			return false;
+		}
 		
 		int originInd = indexOf(originVertex);
 		int targetInd = indexOf(targetVertex);
 		
-		if (originInd < 0 || targetInd < 0) return false;
+		if (originInd < 0 || targetInd < 0) {
+			return false;
+		}
 		
 		Vertex origin = vertices.get(originInd);
 		Vertex target = vertices.get(targetInd);
 		
-		if (n == 0 && origin != target) return false;
+		if (n == 0 && origin != target) {
+			return false;
+		}
 		
 		RealMatrix matrix = getAdjacencyMatrix();
 		matrix = matrix.pow(n);
@@ -224,11 +256,15 @@ public final class DirectedGraph<T> extends Graph<T> {
 	 * this vertex.
 	 */
 	public List<List<T>> cycle(T vertex) {
-		if (vertex == null) return null;
+		if (vertex == null) {
+			return null;
+		}
 		
 		Vertex cycleVertex = get(vertex);
 		
-		if (cycleVertex == null) return null;
+		if (cycleVertex == null) {
+			return null;
+		}
 		
 		List<List<Vertex>> cycles = new ArrayList<>();
 		cycle0(cycleVertex, cycleVertex, cycles, null);
@@ -239,7 +275,9 @@ public final class DirectedGraph<T> extends Graph<T> {
 			List<Vertex> currCycle = cycles.remove(0);
 			List<T> currCycleValue = new ArrayList<>(currCycle.size());
 			
-			while (!currCycle.isEmpty()) currCycleValue.add(currCycle.remove(0).value);
+			while (!currCycle.isEmpty()) {
+				currCycleValue.add(currCycle.remove(0).value);
+			}
 			
 			cyclesValue.add(currCycleValue);
 		}
@@ -262,7 +300,9 @@ public final class DirectedGraph<T> extends Graph<T> {
 		
 		Iterator<Vertex> currLinks = vertex.links.iterator();
 		
-		if (path == null) path = new ArrayList<>();
+		if (path == null) {
+			path = new ArrayList<>();
+		}
 		
 		path.add(vertex);
 		
@@ -281,7 +321,9 @@ public final class DirectedGraph<T> extends Graph<T> {
 				cycleList.add(new ArrayList<>(path));
 				path.remove(path.size() - 1);
 				continue;
-			} else if (path.contains(next) || path.contains(next)) continue;
+			} else if (path.contains(next) || path.contains(next)) {
+				continue;
+			}
 			
 			cycle0(next, cycleVertex, cycleList, path);
 			
@@ -346,20 +388,25 @@ public final class DirectedGraph<T> extends Graph<T> {
 		@Override
 		protected boolean setLinks(List<T> newLinks) {
 			links.removeIf(v -> {
-				if (!newLinks.contains(v.value)) return true;
+				if (!newLinks.contains(v.value)) {
+					return true;
+				}
 				
 				newLinks.remove(v.value);
 				return false;
 			});
 			
-			if (!newLinks.isEmpty()) changesMade = true;
+			if (!newLinks.isEmpty()) {
+				changesMade = true;
+			}
 			
 			for (T currVal : newLinks) {
 				if (isPlotted(currVal)) {
 					links.add(vertices.get(indexOf(currVal)));
 				} else {
-					if (currVal.equals(value)) links.add(this);
-					else {
+					if (currVal.equals(value)) {
+						links.add(this);
+					} else {
 						Vertex v = new DirectedVertex(currVal);
 						vertices.add(v);
 						links.add(v);
@@ -395,8 +442,9 @@ public final class DirectedGraph<T> extends Graph<T> {
 			additionalLinks.removeAll(links);
 			
 			for (T t : additionalLinks) {
-				if (isPlotted(t)) links.add(vertices.get(indexOf(t)));
-				else {
+				if (isPlotted(t)) {
+					links.add(vertices.get(indexOf(t)));
+				} else {
 					Vertex v = new DirectedVertex(t);
 					vertices.add(v);
 					links.add(v);

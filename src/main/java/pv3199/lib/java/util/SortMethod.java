@@ -29,7 +29,9 @@ public enum SortMethod {
 				}
 			}
 			
-			if (i != smallest) ds.swap(i, smallest);
+			if (i != smallest) {
+				ds.swap(i, smallest);
+			}
 		}
 		
 		return null;
@@ -70,7 +72,9 @@ public enum SortMethod {
 			for (int j = 1; j < ds.size() - i; j++) {
 				int compareResult = comparator.compare(ds.get(j - 1), ds.get(j));
 				
-				if (compareResult > 0) ds.swap(j - 1, j);
+				if (compareResult > 0) {
+					ds.swap(j - 1, j);
+				}
 			}
 		}
 		
@@ -161,7 +165,9 @@ public enum SortMethod {
 		
 		RecursiveCall<DataStructure<Object>, DataStructure<Object>> divide = new RecursiveCall<>();
 		divide.func = ds2 -> {
-			if (ds2.size() == 1) return ds2;
+			if (ds2.size() == 1) {
+				return ds2;
+			}
 			
 			DataStructure<Object> right = ds2.split(0, ds2.size() / 2);
 			DataStructure<Object> left = ds2.split(ds2.size() / 2);
@@ -198,7 +204,9 @@ public enum SortMethod {
 				}
 			}
 			
-			if (!swapped) break;
+			if (!swapped) {
+				break;
+			}
 			
 			swapped = false;
 			for (int i = ds.size() - 2; i > -1; i--) {

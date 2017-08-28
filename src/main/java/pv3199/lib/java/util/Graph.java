@@ -42,10 +42,15 @@ public abstract class Graph<T> implements java.io.Serializable {
 	 * {@link #vertices} otherwise.
 	 */
 	protected final int indexOf(T vertex) {
-		if (vertex == null) return -1;
+		if (vertex == null) {
+			return -1;
+		}
 		
-		for (int i = 0; i < vertices.size(); i++)
-			if (vertices.get(i).value.equals(vertex)) return i;
+		for (int i = 0; i < vertices.size(); i++) {
+			if (vertices.get(i).value.equals(vertex)) {
+				return i;
+			}
+		}
 		
 		return -1;
 	}
@@ -103,8 +108,9 @@ public abstract class Graph<T> implements java.io.Serializable {
 			Vertex vertex = vertices.get(r);
 			List<Vertex> links = vertex.links;
 			
-			for (int c = 0; c < len; c++)
+			for (int c = 0; c < len; c++) {
 				adjacencyMatrix.setValue(r, c, links.contains(vertices.get(c)) ? 1 : 0);
+			}
 		}
 	}
 	
@@ -286,8 +292,11 @@ public abstract class Graph<T> implements java.io.Serializable {
 		 * @return true if this vertex points to itself; false otherwise.
 		 */
 		protected final boolean selfPoints() {
-			for (Vertex v : links)
-				if (v == this) return true;
+			for (Vertex v : links) {
+				if (v == this) {
+					return true;
+				}
+			}
 			
 			return false;
 		}

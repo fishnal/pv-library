@@ -36,7 +36,9 @@ public class ComplexMatrix extends NumberMatrix<ComplexNumber> {
 		
 		int cdr = checkData(this.getRawData());
 		
-		if (cdr == -1) throw new NullPointerException("null values are not allowed");
+		if (cdr == -1) {
+			throw new NullPointerException("null values are not allowed");
+		}
 	}
 	
 	/**
@@ -66,9 +68,11 @@ public class ComplexMatrix extends NumberMatrix<ComplexNumber> {
 	private static ComplexNumber[][] realDataToImaginaryData(Number[][] realData) {
 		ComplexNumber[][] imagData = new ComplexNumber[realData.length][realData[0].length];
 		
-		for (int r = 0; r < imagData.length; r++)
-			for (int c = 0; c < imagData[0].length; c++)
+		for (int r = 0; r < imagData.length; r++) {
+			for (int c = 0; c < imagData[0].length; c++) {
 				imagData[r][c] = new ComplexNumber(realData[r][c]);
+			}
+		}
 		
 		return imagData;
 	}
@@ -82,81 +86,95 @@ public class ComplexMatrix extends NumberMatrix<ComplexNumber> {
 		int size = java.lang.Math.max(width, height);
 		ComplexMatrix id = new ComplexMatrix(size, size);
 		
-		for (int i = 0; i < size; i++)
+		for (int i = 0; i < size; i++) {
 			id.setValue(i, i, new ComplexNumber(1, 0));
+		}
 		
 		return id;
 	}
 	
 	@Override
 	public void add(Number n) {
-		for (int r = 0; r < this.height; r++)
+		for (int r = 0; r < this.height; r++) {
 			for (int c = 0; c < this.width; c++) {
 				this.setValue(r, c, this.getValue(r, c).add(n));
 			}
+		}
 	}
 	
 	@Override
 	public ComplexMatrix add(NumberMatrix<ComplexNumber> matrix) throws IllegalArgumentException {
-		if (matrix == null) throw new NullPointerException("null argument");
-		if (!ComplexMatrix.class.isInstance(matrix))
+		if (matrix == null) {
+			throw new NullPointerException("null argument");
+		} else if (!ComplexMatrix.class.isInstance(matrix)) {
 			throw new IllegalArgumentException("must be of type ComplexMatrix");
-		if (!sameDimensions(matrix)) throw new IllegalArgumentException("matrices must have same dimensions");
+		} else if (!sameDimensions(matrix)) {
+			throw new IllegalArgumentException("matrices must have same dimensions");
+		}
 		
 		ComplexMatrix sum = new ComplexMatrix(this.width, this.height);
 		
-		for (int r = 0; r < sum.height; r++)
+		for (int r = 0; r < sum.height; r++) {
 			for (int c = 0; c < sum.width; c++) {
 				ComplexNumber tn = this.getValue(r, c);
 				ComplexNumber mn = matrix.getValue(r, c);
 				sum.setValue(r, c, tn.add(mn));
 			}
+		}
 		
 		return sum;
 	}
 	
 	@Override
 	public void subtract(Number n) {
-		for (int r = 0; r < this.height; r++)
+		for (int r = 0; r < this.height; r++) {
 			for (int c = 0; c < this.width; c++) {
 				this.setValue(r, c, this.getValue(r, c).subtract(n));
 			}
+		}
 	}
 	
 	@Override
 	public ComplexMatrix subtract(NumberMatrix<ComplexNumber> matrix) throws IllegalArgumentException {
-		if (matrix == null) throw new NullPointerException("null argument");
-		if (!ComplexMatrix.class.isInstance(matrix))
+		if (matrix == null) {
+			throw new NullPointerException("null argument");
+		} else if (!ComplexMatrix.class.isInstance(matrix)) {
 			throw new IllegalArgumentException("must be of type ComplexMatrix");
-		if (!sameDimensions(matrix)) throw new IllegalArgumentException("matrices must have same dimensions");
+		} else if (!sameDimensions(matrix)) {
+			throw new IllegalArgumentException("matrices must have same dimensions");
+		}
 		
 		ComplexMatrix sum = new ComplexMatrix(this.width, this.height);
 		
-		for (int r = 0; r < sum.height; r++)
+		for (int r = 0; r < sum.height; r++) {
 			for (int c = 0; c < sum.width; c++) {
 				ComplexNumber tn = this.getValue(r, c);
 				ComplexNumber mn = matrix.getValue(r, c);
 				sum.setValue(r, c, tn.subtract(mn));
 			}
+		}
 		
 		return sum;
 	}
 	
 	@Override
 	public void multiply(Number n) {
-		for (int r = 0; r < this.height; r++)
+		for (int r = 0; r < this.height; r++) {
 			for (int c = 0; c < this.width; c++) {
 				this.setValue(r, c, this.getValue(r, c).multiply(n));
 			}
+		}
 	}
 	
 	@Override
 	public ComplexMatrix multiply(NumberMatrix<ComplexNumber> matrix) throws IllegalArgumentException {
-		if (matrix == null) throw new NullPointerException("null argument");
-		if (!ComplexMatrix.class.isInstance(matrix))
+		if (matrix == null) {
+			throw new NullPointerException("null argument");
+		} else if (!ComplexMatrix.class.isInstance(matrix)) {
 			throw new IllegalArgumentException("must be of type ComplexMatrix");
-		if (this.width != matrix.height)
+		} else if (this.width != matrix.height) {
 			throw new IllegalArgumentException("number of columns in first matrix must equal number of rows in second matrix");
+		}
 		
 		ComplexMatrix product = new ComplexMatrix(matrix.width, this.height);
 		
@@ -179,27 +197,36 @@ public class ComplexMatrix extends NumberMatrix<ComplexNumber> {
 	
 	@Override
 	public void divide(Number n) {
-		for (int r = 0; r < this.height; r++)
+		for (int r = 0; r < this.height; r++) {
 			for (int c = 0; c < this.width; c++) {
 				this.setValue(r, c, this.getValue(r, c).divide(n));
 			}
+		}
 	}
 	
 	@Override
 	public ComplexMatrix divide(NumberMatrix<ComplexNumber> matrix) throws IllegalArgumentException, IllegalMatrixException {
-		if (matrix == null) throw new NullPointerException("null argument");
+		if (matrix == null) {
+			throw new NullPointerException("null argument");
+		}
 		
 		ComplexMatrix inv = (ComplexMatrix) matrix.inverse();
-		if (inv == null) throw new IllegalMatrixException("second matrix doesn't have an inverse");
+		if (inv == null) {
+			throw new IllegalMatrixException("second matrix doesn't have an inverse");
+		}
 		
 		return this.multiply(inv);
 	}
 	
 	@Override
 	public ComplexMatrix pow(int power) throws IllegalMatrixException {
-		if (power == 0) return this.getIdentityMatrix();
+		if (power == 0) {
+			return this.getIdentityMatrix();
+		}
 		
-		if (!isSquare(this)) throw new IllegalMatrixException("matrix must be square");
+		if (!isSquare(this)) {
+			throw new IllegalMatrixException("matrix must be square");
+		}
 		
 		ComplexMatrix powd = power < 0 ? this.inverse() : this.clone();
 		ComplexMatrix multiplyAgainst = powd.clone();
@@ -213,9 +240,12 @@ public class ComplexMatrix extends NumberMatrix<ComplexNumber> {
 	
 	@Override
 	public ComplexNumber determinant() throws IllegalMatrixException {
-		if (this.height == 0 || this.width == 0)
+		if (this.height == 0 || this.width == 0) {
 			throw new IllegalMatrixException("matrix must have non-zero dimensions");
-		if (!isSquare(this)) throw new IllegalMatrixException("matrix must be square");
+		} else if (!isSquare(this)) {
+			throw new IllegalMatrixException("matrix must be square");
+		}
+
 		return determinant0(this.getData());
 	}
 	
@@ -241,7 +271,9 @@ public class ComplexMatrix extends NumberMatrix<ComplexNumber> {
 	private ComplexNumber determinant0(ComplexNumber[][] data) {
 		int size = data.length;
 		
-		if (size == 1) return data[0][0];
+		if (size == 1) {
+			return data[0][0];
+		}
 		
 		ComplexNumber det = new ComplexNumber(0, 0);
 		
@@ -250,7 +282,9 @@ public class ComplexMatrix extends NumberMatrix<ComplexNumber> {
 			
 			ComplexNumber[][] subData = new ComplexNumber[size - 1][size - 1];
 			for (int csd = 0, c2 = 0; c2 < size; c2++) {
-				if (c2 == c) continue;
+				if (c2 == c) {
+					continue;
+				}
 				
 				for (int rsd = 0, r2 = 1; r2 < size; r2++, rsd++) {
 					subData[rsd][csd] = data[r2][c2];
@@ -267,12 +301,16 @@ public class ComplexMatrix extends NumberMatrix<ComplexNumber> {
 	
 	@Override
 	public ComplexMatrix inverse() throws IllegalMatrixException {
-		if (!isSquare(this)) throw new IllegalMatrixException("matrix must be square");
+		if (!isSquare(this)) {
+			throw new IllegalMatrixException("matrix must be square");
+		}
 		
 		ComplexNumber detOfThis = this.determinant();
 		ComplexMatrix mocfTp = matrixOfCoFactors().transpose();
 		
-		if (detOfThis.equals(0)) return null;
+		if (detOfThis.equals(0)) {
+			return null;
+		}
 		
 		mocfTp.divide(detOfThis);
 		
@@ -303,10 +341,14 @@ public class ComplexMatrix extends NumberMatrix<ComplexNumber> {
 				ComplexNumber[][] subData = new ComplexNumber[this.height - 1][this.width - 1];
 				
 				for (int r2 = 0, rsd = 0; rsd < subData.length; r2++) {
-					if (r2 == r) continue;
+					if (r2 == r) {
+						continue;
+					}
 					
 					for (int c2 = 0, csd = 0; csd < subData[rsd].length; c2++) {
-						if (c2 == c) continue;
+						if (c2 == c) {	
+							continue;
+						}
 						
 						subData[rsd][csd] = this.getValue(r2, c2);
 						csd++;
@@ -326,7 +368,9 @@ public class ComplexMatrix extends NumberMatrix<ComplexNumber> {
 	
 	@Override
 	public ComplexMatrix matrixOfCoFactors() throws IllegalMatrixException {
-		if (!isSquare(this)) throw new IllegalMatrixException("matrix must be square");
+		if (!isSquare(this)) {
+			throw new IllegalMatrixException("matrix must be square");
+		}
 		
 		ComplexMatrix mom = matrixOfMinors();
 		
@@ -343,9 +387,11 @@ public class ComplexMatrix extends NumberMatrix<ComplexNumber> {
 	public ComplexNumber[][] getData() {
 		ComplexNumber[][] copyOfData = new ComplexNumber[this.height][this.width];
 		
-		for (int r = 0; r < this.height; r++)
-			for (int c = 0; c < this.width; c++)
+		for (int r = 0; r < this.height; r++) {
+			for (int c = 0; c < this.width; c++) {
 				copyOfData[r][c] = this.getValue(r, c);
+			}
+		}
 		
 		return copyOfData;
 	}
@@ -359,11 +405,15 @@ public class ComplexMatrix extends NumberMatrix<ComplexNumber> {
 	public boolean equals(Object obj) {
 		ComplexMatrix matrix = (ComplexMatrix) obj;
 		
-		if (this.height != matrix.height || this.width != matrix.width) return false;
+		if (this.height != matrix.height || this.width != matrix.width) {
+			return false;
+		}
 		
-		for (int r = 0; r < this.height; r++)
-			for (int c = 0; c < this.width; c++)
+		for (int r = 0; r < this.height; r++) {
+			for (int c = 0; c < this.width; c++) {
 				if (!this.getValue(r, c).equals(matrix.getValue(r, c))) return false;
+			}
+		}
 		
 		return true;
 	}
@@ -410,7 +460,6 @@ public class ComplexMatrix extends NumberMatrix<ComplexNumber> {
 			s.append(s2).append("\n");
 		}
 		
-		return s.toString().trim();
-		
+		return s.toString().trim();	
 	}
 }

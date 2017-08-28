@@ -43,8 +43,11 @@ public final class Search {
 	 */
 	public static <T> int binarySearch(List<T> list, T target, Comparator<T> comparator) {
 		if (comparator == null) {
-			if (list.size() == 0) return -1;
-			if (!Comparable.class.isAssignableFrom(list.get(0).getClass())) return search(list, target);
+			if (list.size() == 0) {
+				return -1;
+			} else if (!Comparable.class.isAssignableFrom(list.get(0).getClass())) {
+				return search(list, target);
+			}
 			comparator = (o1, o2) -> ((Comparable<T>) o1).compareTo(o2);
 		}
 		
@@ -57,9 +60,13 @@ public final class Search {
 			
 			int res = comparator.compare(target, list.get(m));
 			
-			if (res == 0) return m;
-			else if (res < 0) h = m - 1;
-			else l = m + 1;
+			if (res == 0) {
+				return m;
+			} else if (res < 0) {
+				h = m - 1;
+			} else {
+				l = m + 1;
+			}
 		}
 		
 		return -1;
@@ -76,8 +83,11 @@ public final class Search {
 	 * not be found.
 	 */
 	public static <T> int search(T[] array, T target) {
-		for (int i = 0; i < array.length; i++)
-			if (target == null && array[i] == null || array[i].equals(target)) return i;
+		for (int i = 0; i < array.length; i++) {
+			if (target == null && array[i] == null || array[i].equals(target)) {
+				return i;
+			}
+		}
 		return -1;
 	}
 	
@@ -92,8 +102,11 @@ public final class Search {
 	 * be found.
 	 */
 	public static <T> int search(List<T> list, T target) {
-		for (int i = 0; i < list.size(); i++)
-			if (target == null && list.get(i) == null || list.get(i).equals(target)) return i;
+		for (int i = 0; i < list.size(); i++) {
+			if (target == null && list.get(i) == null || list.get(i).equals(target)) {
+				return i;
+			}
+		}
 		return -1;
 	}
 }

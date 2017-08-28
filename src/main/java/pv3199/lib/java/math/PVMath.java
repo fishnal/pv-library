@@ -30,7 +30,7 @@ public final class PVMath {
 	 * Comparator used to sort the classes; sorts based on the name of the class defined by {@link Class#getName()}.
 	 * Used to binary search the array of accepted types for checking if a data type is accepted by this Math class.
 	 *
-	 * @see #isAccepted(Class)
+	 * @see #isSupported(Class)
 	 */
 	private final static Comparator<Class<? extends Number>> ACCEPTED_TYPES_COMPARATOR = (c1, c2) -> c1.getName().compareTo(c1.getName());
 	
@@ -49,12 +49,12 @@ public final class PVMath {
 	}
 	
 	/**
-	 * Checks if a Number sub-class is accepted by this Math class.
+	 * Checks if a Number sub-class is supported by this Math class.
 	 *
-	 * @param numberSubClass - the sub-class to check if it is accepted.
-	 * @return true if the sub-class is accepted; false otherwise
+	 * @param numberSubClass - the sub-class to check if it is supported.
+	 * @return true if the sub-class is supported; false otherwise
 	 */
-	public static boolean isAccepted(Class<? extends Number> numberSubClass) {
+	public static boolean isSupported(Class<? extends Number> numberSubClass) {
 		return Arrays.binarySearch(ACCEPTED_TYPES, numberSubClass, ACCEPTED_TYPES_COMPARATOR) > 0;
 	}
 	
@@ -66,9 +66,13 @@ public final class PVMath {
 	 * @return the sum of the two numbers (possibly a {@link ComplexNumber}).
 	 */
 	public static Number add(Number n1, Number n2) {
-		if (n1 instanceof ComplexNumber) return ((ComplexNumber) n1).add(n2);
-		else if (n2 instanceof ComplexNumber) return ((ComplexNumber) n2).add(n1);
-		else return n1.doubleValue() + n2.doubleValue();
+		if (n1 instanceof ComplexNumber) {
+			return ((ComplexNumber) n1).add(n2);
+		} else if (n2 instanceof ComplexNumber) {
+			return ((ComplexNumber) n2).add(n1);
+		} else {
+			return n1.doubleValue() + n2.doubleValue();
+		}
 	}
 	
 	/**
@@ -79,9 +83,13 @@ public final class PVMath {
 	 * @return - the difference between the two numbers (possibly a {@link ComplexNumber}).
 	 */
 	public static Number subtract(Number n1, Number n2) {
-		if (n1 instanceof ComplexNumber) return ((ComplexNumber) n1).subtract(n2);
-		else if (n2 instanceof ComplexNumber) return ((ComplexNumber) n2).multiply(-1).add(n1);
-		else return n1.doubleValue() - n2.doubleValue();
+		if (n1 instanceof ComplexNumber) {
+			return ((ComplexNumber) n1).subtract(n2);
+		} else if (n2 instanceof ComplexNumber) {
+			return ((ComplexNumber) n2).multiply(-1).add(n1);
+		} else {
+			return n1.doubleValue() - n2.doubleValue();
+		}
 	}
 	
 	/**
@@ -92,9 +100,13 @@ public final class PVMath {
 	 * @return the product of the two numbers (possibly a {@link ComplexNumber}).
 	 */
 	public static Number multiply(Number n1, Number n2) {
-		if (n1 instanceof ComplexNumber) return ((ComplexNumber) n1).multiply(n2);
-		else if (n2 instanceof ComplexNumber) return ((ComplexNumber) n2).multiply(n1);
-		else return n1.doubleValue() * n2.doubleValue();
+		if (n1 instanceof ComplexNumber) {
+			return ((ComplexNumber) n1).multiply(n2);
+		} else if (n2 instanceof ComplexNumber) {
+			return ((ComplexNumber) n2).multiply(n1);
+		} else {
+			return n1.doubleValue() * n2.doubleValue();
+		}
 	}
 	
 	/**
@@ -105,9 +117,13 @@ public final class PVMath {
 	 * @return the quotient of the two numbers (possibly a {@link ComplexNumber}).
 	 */
 	public static Number divide(Number n1, Number n2) {
-		if (n1 instanceof ComplexNumber) return ((ComplexNumber) n1).divide(n2);
-		else if (n2 instanceof ComplexNumber) return ((ComplexNumber) n2).inverse().multiply(n1);
-		else return n1.doubleValue() / n2.doubleValue();
+		if (n1 instanceof ComplexNumber) {
+			return ((ComplexNumber) n1).divide(n2);
+		} else if (n2 instanceof ComplexNumber) {
+			return ((ComplexNumber) n2).inverse().multiply(n1);
+		} else {
+			return n1.doubleValue() / n2.doubleValue();
+		}
 	}
 	
 	/**
@@ -445,7 +461,9 @@ public final class PVMath {
 		double a = Math.random();
 		double b = Math.random();
 		
-		if (b == 0) return a;
+		if (b == 0) {
+			return a;
+		}
 		return new ComplexNumber(a, b);
 	}
 	
@@ -528,8 +546,11 @@ public final class PVMath {
 	 * complex parts are equal).
 	 */
 	public static boolean equals(Number n1, Number n2) {
-		if (n1 instanceof ComplexNumber) return n1.equals(n2);
-		else if (n2 instanceof ComplexNumber) return n2.equals(n1);
+		if (n1 instanceof ComplexNumber) {
+			return n1.equals(n2);
+		} else if (n2 instanceof ComplexNumber) {
+			return n2.equals(n1);
+		}
 		return new ComplexNumber(n1).equals(n2);
 	}
 
@@ -600,8 +621,11 @@ public final class PVMath {
 	 */
 	public static List<Long> divisors(long l) {
 		List<Long> list = new ArrayList<>();
-		for (long i = l; i > 0; i--)
-			if (l % i == 0) list.add(i);
+		for (long i = l; i > 0; i--) {
+			if (l % i == 0) {
+				list.add(i);
+			}
+		}
 		Collections.reverse(list);
 		return list;
 	}
