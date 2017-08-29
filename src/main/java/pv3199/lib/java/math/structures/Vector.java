@@ -265,6 +265,20 @@ public class Vector {
 	}
 
 	/**
+	 * Projects this vector onto another vector.
+	 *
+	 * @param v the other vector.
+	 * @return this vector projected onto the other vector.
+	 * @throws IllegalVectorException if the vectors are not the same size.
+	 */
+	public Vector project(Vector v) throws IllegalVectorException {
+		Number magsqrd = PVMath.pow(this.magnitude, 2);
+		Number dot = this.dot(v);
+		Vector dot2 = this.multiply(dot);
+		return dot2.divide(magsqrd);
+	}
+
+	/**
 	 * Iterates through each scalar component in this vector, applying a consumer that accepts a
 	 * {@link ForEachHolder} containing the current scalar component value and current iterating index.
 	 * If the consumer implementation does not need to access the indices for each iteration, it is advised
