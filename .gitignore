@@ -13,3 +13,6 @@ target/test-classes
 target/maven-archiver
 target/generate-test-sources
 target/generated-sources
+lib.java.iml
+target/generated-test-sources
+target/surefire-reports

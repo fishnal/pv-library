@@ -232,10 +232,8 @@ public class Fraction implements java.io.Serializable, Comparable<Fraction> {
 	public Fraction simplify(long precision) {
 		// TODO simplify complex numbers
 		try {
-			this.numerator.doubleValue();
-			this.denominator.doubleValue();
 			// both values are real
-			long[] result = simplifyDecimal(this.numerator.doubleValue() / this.denominator.doubleValue(), precision);
+			long[] result = simplifyDecimal(this.getValue().doubleValue(), precision);
 			return new Fraction(result[0], result[1]);
 		} catch (UnsupportedOperationException uoe) {
 			// at least one of the numbers is complex

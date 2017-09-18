@@ -102,20 +102,6 @@ public abstract class Tree<E> implements java.io.Serializable {
 		}
 		
 		/**
-		 * @return the value associated with this node.
-		 */
-		public final E getValue() {
-			return value;
-		}
-		
-		/**
-		 * @return the parent of this node.
-		 */
-		public final Node getParent() {
-			return parent;
-		}
-		
-		/**
 		 * Determines whether or not this node is or can be the root of a tree
 		 * given that it's parent is null.
 		 *

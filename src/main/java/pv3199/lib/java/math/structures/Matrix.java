@@ -113,17 +113,6 @@ public abstract class Matrix<T> implements java.io.Serializable {
 	}
 	
 	/**
-	 * Checks if a 2D array is a square (the lengths of each array in the 2D array are equal to the
-	 * height of the 2D array).
-	 *
-	 * @param array the 2D array.
-	 * @return true if the array is square; false otherwise.
-	 */
-	protected final static boolean isSquare(Object[][] array) {
-		return array != null && array.length == 0 ? true : array.length == array[0].length;
-	}
-	
-	/**
 	 * Checks if a matrix is a square.
 	 *
 	 * @param matrix the matrix.

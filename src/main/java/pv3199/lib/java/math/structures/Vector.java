@@ -14,7 +14,7 @@ import pv3199.lib.java.util.ForEachHolder;
  */
 public class Vector {
 	/**
-	 * The number of scalar components in this vector.
+	 * The number of components in this vector.
 	 */
 	public final int size;
 	/**
@@ -22,28 +22,16 @@ public class Vector {
 	 */
 	public final Number magnitude;
 	/**
-	 * Scalar components.
+	 * Number/space components.
 	 */
 	private Number[] components;
 	/**
 	 * Whether or not this vector is in the complex plane.
 	 */
 	public final boolean isComplex;
-	
-	/**
-	 * Constructs a Vector from an array of doubles, each representing a scalar space.
-	 * The resulting vector will be in the real plane.
-	 *
-	 * @param components the scalar components of the vector.
-	 */
-	public Vector(double... components) {
-		this(Arrays.castArray(components, Double[].class));
-	}
 
 	/**
-	 * Constructs a Vector from an array of Numbers, each representing a scalar space.
-	 * The resulting vector is not guaranteed to be in the real plane (unless called
-	 * from {@link Vector#Vector(double...)})
+	 * Constructs a Vector from an array of Numbers, each representing a space.
 	 * 
 	 * @param components the scalar components of the vector.
 	 */
@@ -57,34 +45,20 @@ public class Vector {
 		this.magnitude = PVMath.sqrt(mag);
 		this.isComplex = this.magnitude instanceof ComplexNumber;
 	}
-	
-	/**
-	 * Constructs a Vector from two arrays of doubles, the first representing the starting coordinates of
-	 * the vector and the second representing the ending coordinates of the vector. These coordinates are
-	 * used in determining the scalar components of the vector. The resulting vector will be in the real plane.
-	 *
-	 * @param start the starting coordinates of the vector.
-	 * @param end   the ending coordinates of the vector.
-	 * @throws IllegalVectorException if the coordinate arrays have different lengths
-	 */
-	public Vector(double[] start, double[] end) throws IllegalVectorException {
-		this(Arrays.castArray(start, Double[].class), Arrays.castArray(end, Double[].class));
-	}
 
 	/**
 	 * Constructs a Vector from two arrays of Numbers, the first representing the starting coordinates of
 	 * the vector and the second representing the ending coordinates of the vector. These coordinates are
-	 * used in determining the scalar components of the vector. The resulting vector is not guaranteed
-	 * to be in the real plane (unless called from {@link Vector#Vector(double[], double[])})
+	 * used in determining the scalar components of the vector.
 	 *
 	 * @param start the starting coordinates of the vector.
 	 * @param end   the ending coordinates of the vector.
-	 * @throws IllegalVectorException if the coordinate arrays have different lengths
+	 * @throws IllegalArgumentException if the coordinate arrays have different lengths
 	 */
-	public Vector(Number[] start, Number[] end) throws IllegalVectorException {
+	public Vector(Number[] start, Number[] end) throws IllegalArgumentException {
 		int length;
 		if ((length = start.length) != end.length) {
-			throw new IllegalVectorException("start and end different lengths");
+			throw new IllegalArgumentException("start and end different lengths");
 		}
 		
 		this.components = new Number[length];
@@ -110,7 +84,7 @@ public class Vector {
 	 * @return the standard vector based on the space index and number of dimensions.
 	 */
 	public static Vector standard(int space, int dimensions) {
-		double[] comps = new double[dimensions];
+		Number[] comps = new Number[dimensions];
 		comps[space] = 1;
 		return new Vector(comps);
 	}
@@ -167,6 +141,7 @@ public class Vector {
 	 * @return the angle, in radians, between this vector and another vector.
 	 */
 	public Number angle(Vector v) {
+		// acos(this.dot(v) / (this.mag * v.mag))
 		return PVMath.acos(PVMath.divide(this.dot(v), PVMath.multiply(this.magnitude, v.magnitude)));
 	}
 
@@ -231,13 +206,9 @@ public class Vector {
 		
 		if (s1 < 2 || s1 > 3 || s2 < 2 || s2 > 3) {
 			throw new IllegalVectorException("vectors are not 2d or 3d");
-		}
-		
-		if (s1 != s2) {
+		} else if (s1 != s2) {
 			throw new IllegalVectorException("vectors are not the same size");
-		}
-		
-		if (s1 == 2) {
+		} else if (s1 == 2) {
 			// 2d vector
 			return new Vector(
 				0, 0,
@@ -272,9 +243,9 @@ public class Vector {
 	 * @throws IllegalVectorException if the vectors are not the same size.
 	 */
 	public Vector project(Vector v) throws IllegalVectorException {
-		Number magsqrd = PVMath.pow(this.magnitude, 2);
+		Number magsqrd = PVMath.pow(v.magnitude, 2);
 		Number dot = this.dot(v);
-		Vector dot2 = this.multiply(dot);
+		Vector dot2 = v.multiply(dot);
 		return dot2.divide(magsqrd);
 	}
 
@@ -319,5 +290,18 @@ public class Vector {
 		}
 		
 		return Arrays.deepEquals(this.components, v.components);
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder("<");
+		for (Number n : this.components) {
+			sb.append(n);
+			if (n != this.components[this.components.length - 1]) {
+				sb.append(", ");
+			}
+		}
+		sb.append(">");
+		return sb.toString();
 	}
 }
