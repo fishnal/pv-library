@@ -71,5 +71,25 @@ class AbstractStructure<E> implements DataStructure<E> {
 	public AbstractStructure<E> clone() {
 		return new AbstractStructure<>(this.data);
 	}
-	
+
+	@Override
+    public boolean equals(Object obj) {
+	    if (!(obj instanceof AbstractStructure)) {
+	        return false;
+        }
+
+        AbstractStructure<?> as = (AbstractStructure<?>) obj;
+
+        if (this.size() != as.size()) {
+	        return false;
+        }
+
+        for (int i = 0; i < this.size(); i++) {
+            if (!this.get(i).equals(as.get(i))) {
+                return false;
+            }
+        }
+
+        return true;
+    }
 }
