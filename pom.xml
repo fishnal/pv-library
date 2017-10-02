@@ -11,7 +11,7 @@
 	<version>1.0</version>
 	<packaging>jar</packaging>
 
-	<name>pv3199.lib</name>
+	<name>lib.java</name>
 
 	<build>
 	<plugins>
