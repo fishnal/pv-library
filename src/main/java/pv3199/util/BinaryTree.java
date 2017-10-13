@@ -27,8 +27,12 @@ public class BinaryTree<E extends Comparable<E>> extends Tree<E> {
 		else {
 			BinaryNode parent = bestParent(value, (BinaryNode) root);
 			BinaryNode node = new BinaryNode(parent, value);
-			if (value.compareTo(parent.value) < 0) parent.left = node;
-			else parent.right = node;
+			
+			if (value.compareTo(parent.value) < 0) {
+				parent.left = node;
+			} else {
+				parent.right = node;
+			}
 		}
 	}
 	
@@ -46,6 +50,7 @@ public class BinaryTree<E extends Comparable<E>> extends Tree<E> {
 	@Override
 	public boolean remove(E value) {
 		BinaryNode node = get(value, (BinaryNode) root);
+		
 		if (node == null) {
 			return false;
 		}
@@ -86,7 +91,9 @@ public class BinaryTree<E extends Comparable<E>> extends Tree<E> {
 	private BinaryNode bestParent(E value, BinaryNode node) {
 		int compare = value.compareTo(node.value);
 		// if this entire if statement is false, then node has no null children
-		if (node.right == null && node.left == null || node.right == null && compare > 0 || node.left == null && compare < 0) {
+		if (node.right == null && node.left == null
+				|| node.right == null && compare > 0
+				|| node.left == null && compare < 0) {
 			return node;
 		} else if (compare < 0) {
 			return bestParent(value, node.left);
@@ -108,10 +115,13 @@ public class BinaryTree<E extends Comparable<E>> extends Tree<E> {
 	 * @return the amount of nodes counted so far.
 	 */
 	private int nodeCount0(BinaryNode n) {
-		if (n == null) return 0;
+		if (n == null) {
+			return 0;
+		}
 		
 		int rc = nodeCount0(n.right);
 		int lc = nodeCount0(n.left);
+		
 		return 1 + rc + lc;
 	}
 	
@@ -128,7 +138,9 @@ public class BinaryTree<E extends Comparable<E>> extends Tree<E> {
 	 * @return the internal path length from the current node.
 	 */
 	private int internalPathLength0(BinaryNode node, int level) {
-		return node != null ? level + internalPathLength0(node.left, level + 1) + internalPathLength0(node.right, level + 1) : 0;
+		return node != null
+				? level + internalPathLength0(node.left, level + 1) + internalPathLength0(node.right, level + 1)
+				: 0;
 	}
 	
 	@Override
@@ -143,7 +155,9 @@ public class BinaryTree<E extends Comparable<E>> extends Tree<E> {
 	 * @return the number of internal nodes from the current node.
 	 */
 	private int internalNodes0(BinaryNode node) {
-		return node == null || node.isLeaf() ? 0 : 1 + internalNodes0(node.left) + internalNodes0(node.right);
+		return node == null || node.isLeaf()
+				? 0
+				: 1 + internalNodes0(node.left) + internalNodes0(node.right);
 	}
 	
 	@Override
@@ -162,26 +176,27 @@ public class BinaryTree<E extends Comparable<E>> extends Tree<E> {
 			return 0;
 		}
 		
-		return node.isLeaf() ? 1 : leafCount0(node.left) + leafCount0(node.right);
+		return node.isLeaf()
+				? 1
+				: leafCount0(node.left) + leafCount0(node.right);
 	}
 	
 	@Override
 	public boolean equals(Object obj) {
-		try {
-			BinaryTree<E> bt = (BinaryTree<E>) obj;
-			
-			if (this.size() != bt.size()) {
-				return false;
-			}
-			
-			BinaryNode n1 = (BinaryNode) root;
-			BinaryNode n2 = (BinaryNode) bt.root;
-			
-			return equals0(n1, n2);
-		} catch (Exception e) {
-			e.printStackTrace();
+		if (obj == null || !BinaryTree.class.isInstance(obj)) {
 			return false;
 		}
+		
+		BinaryTree<E> bt = (BinaryTree<E>) obj;
+		
+		if (this.size() != bt.size()) {
+			return false;
+		}
+		
+		BinaryNode n1 = (BinaryNode) root;
+		BinaryNode n2 = (BinaryNode) bt.root;
+		
+		return equals0(n1, n2);
 	}
 	
 	/**
@@ -208,7 +223,10 @@ public class BinaryTree<E extends Comparable<E>> extends Tree<E> {
 		boolean eq = n1.equals(n2);
 		
 		// if both children of n1 and n2 are null, then compare n1 and n2
-		if (n1.right == null && n2.right == null && n1.left == null && n2.left == null) {
+		if (n1.right == null
+				&& n2.right == null
+				&& n1.left == null
+				&& n2.left == null) {
 			return eq;
 		}
 		
@@ -217,13 +235,15 @@ public class BinaryTree<E extends Comparable<E>> extends Tree<E> {
 		// then we can't make comparisons and must return false (these nodes are
 		// no longer equal, and thus the two trees that n1 and n2 belong to are
 		// no longer equal
-		if ((n1.right == null ^ n2.right == null) || (n1.left == null ^ n2.left == null)) {
+		if ((n1.right == null ^ n2.right == null)
+				|| (n1.left == null ^ n2.left == null)) {
 			return false;
 		}
 		
 		// now if one child is null from one node, then the same-sided child on
 		// the other node is null as well
-		if (n1.right != null && !equals0(n1.right, n2.right) || n1.left != null && !equals0(n1.left, n2.left)) {
+		if (n1.right != null && !equals0(n1.right, n2.right)
+				|| n1.left != null && !equals0(n1.left, n2.left)) {
 			return false;
 		}
 		

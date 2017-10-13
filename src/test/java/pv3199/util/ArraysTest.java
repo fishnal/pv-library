@@ -489,4 +489,21 @@ public class ArraysTest {
         assertFalse(java.util.Arrays.equals(arr, arr2));
         assertTrue(Arrays.deepEquals(arr, arr2));
     }
+    
+    @Test
+	public void reverseTest() {
+    	assertThrows(IAE, () -> Arrays.reverse(0));
+    	
+    	int[] arr = { 5, 3, 2, 0, 7 };
+    	
+    	Arrays.reverse(arr);
+    	
+    	assertArrayEquals(new int[]{ 7, 0, 2, 3, 5 }, arr);
+    	
+    	arr = new int[] { 5, 3, 2, 0 };
+    	
+    	Arrays.reverse(arr);
+    	
+    	assertArrayEquals(new int[]{ 0, 2, 3, 5 }, arr);
+	}
 }

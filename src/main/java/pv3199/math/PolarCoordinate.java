@@ -41,7 +41,7 @@ public class PolarCoordinate implements java.io.Serializable, Comparable<PolarCo
 	 * @return the complex number value of this polar coordinate.
 	 */
 	public ComplexNumber getValue() {
-		return new ComplexNumber(this.r * Math.cos(theta), this.r * Math.sin(theta));
+		return new ComplexNumber(this.x, this.y);
 	}
 
 	/**

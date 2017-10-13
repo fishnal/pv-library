@@ -58,11 +58,8 @@ public final class Arrays {
 		if (!array.getClass().isArray()) {
 			throw new IllegalArgumentException("must pass in an actual array");
 		}
-
-		Iterator<Integer> itr = indices.iterator();
-
-		while (itr.hasNext()) {
-			int i = itr.next();
+		
+		for (Integer i : indices) {
 			array = Array.get(array, i);
 		}
 		
@@ -200,6 +197,7 @@ public final class Arrays {
 			if (clazz == null) {
 				clazz = arr.getClass();
 			}
+			
 			len += Array.getLength(arr);
 		}
 		
@@ -1027,8 +1025,20 @@ public final class Arrays {
             }
 			
 			return true;
-		} catch (IllegalArgumentException | NullPointerException iae) {
+		} catch (IllegalArgumentException | NullPointerException e) {
 			return a == b || a.equals(b);
+		}
+	}
+	
+	public static void reverse(Object array) throws IllegalArgumentException {
+		int length = Array.getLength(array);
+		
+		for (int i = 0; i < length / 2; i++) {
+			Object o1 = Array.get(array, i);
+			Object o2 = Array.get(array, length - 1 - i);
+			
+			Array.set(array, i, o2);
+			Array.set(array, length - 1 - i, o1);
 		}
 	}
 	
