@@ -11,7 +11,7 @@ public class BinaryTree<E extends Comparable<E>> extends Tree<E> {
 	/**
 	 * Constructs a BinaryTree, initializing it's root with a given value.
 	 *
-	 * @param initialRoot - value of the root.
+	 * @param initialRoot value of the root.
 	 */
 	public BinaryTree(E initialRoot) {
 		root = new BinaryNode(null, initialRoot);
@@ -23,8 +23,9 @@ public class BinaryTree<E extends Comparable<E>> extends Tree<E> {
 	 */
 	@Override
 	public void add(E value) {
-		if (root == null) root = new BinaryNode(null, value);
-		else {
+		if (root == null) {
+			root = new BinaryNode(null, value);
+		} else {
 			BinaryNode parent = bestParent(value, (BinaryNode) root);
 			BinaryNode node = new BinaryNode(parent, value);
 			
@@ -36,6 +37,17 @@ public class BinaryTree<E extends Comparable<E>> extends Tree<E> {
 		}
 	}
 	
+	/**
+	 * Adds a set of values to the tree in the order they're presented.
+	 * Because order matters, <code>add(A)</code> and <code>add(B)</code>
+	 * will not result in the same binary tree formation, where <code>A</code>
+	 * and <code>B</code> are sets of type <code>E</code> that contain the
+	 * same elements but are ordered differently. For example,
+	 * <code>add(3, 2, 1)</code> will NOT have the same tree as <code>add(3, 1, 2)</code>
+	 * despite containing the same values.
+	 *
+	 * @param values the set of values to add.
+	 */
 	public void add(E... values) {
 		for (E e : values) {
 			this.add(e);
@@ -63,8 +75,8 @@ public class BinaryTree<E extends Comparable<E>> extends Tree<E> {
 	/**
 	 * Recursively searches for a binary node based on its key.
 	 *
-	 * @param value - the value of the binary node to look for.
-	 * @param node  - the binary node that is currently being evaluated.
+	 * @param value the value of the binary node to look for.
+	 * @param node the binary node that is currently being evaluated.
 	 * @return null if there exists no such binary node in the tree whose key
 	 * matches the one passed in; otherwise the binary node instance
 	 * whose key does match the one passed in.
@@ -83,8 +95,8 @@ public class BinaryTree<E extends Comparable<E>> extends Tree<E> {
 	 * Recursively searches through the binary tree for the best possible parent
 	 * to hold a key.
 	 *
-	 * @param value - the key for the parent to hold.
-	 * @param node  - the current binary node that is being evaluated.
+	 * @param value the key for the parent to hold.
+	 * @param node the current binary node that is being evaluated.
 	 * @return the best possible binary node to hold a child whose key is the
 	 * one passed in.
 	 */
@@ -111,7 +123,7 @@ public class BinaryTree<E extends Comparable<E>> extends Tree<E> {
 	 * Helper method for {@link #size()}. Recursively traverses the tree
 	 * and counts the nodes as it does.
 	 *
-	 * @param n - the current node.
+	 * @param n the current node.
 	 * @return the amount of nodes counted so far.
 	 */
 	private int nodeCount0(BinaryNode n) {
@@ -133,8 +145,8 @@ public class BinaryTree<E extends Comparable<E>> extends Tree<E> {
 	/**
 	 * Recursively computes the internal path length of a node.
 	 *
-	 * @param node  - the node.
-	 * @param level - the current level in the tree.
+	 * @param node the node.
+	 * @param level the current level in the tree.
 	 * @return the internal path length from the current node.
 	 */
 	private int internalPathLength0(BinaryNode node, int level) {
@@ -151,7 +163,7 @@ public class BinaryTree<E extends Comparable<E>> extends Tree<E> {
 	/**
 	 * Recursively computes the number of internal nodes from a node.
 	 *
-	 * @param node - the node.
+	 * @param node the node.
 	 * @return the number of internal nodes from the current node.
 	 */
 	private int internalNodes0(BinaryNode node) {
@@ -168,7 +180,7 @@ public class BinaryTree<E extends Comparable<E>> extends Tree<E> {
 	/**
 	 * Recursively searches for leaves in a node.
 	 *
-	 * @param node - the current node.
+	 * @param node the current node.
 	 * @return the number of leaves in the current node.
 	 */
 	private int leafCount0(BinaryNode node) {
@@ -214,8 +226,8 @@ public class BinaryTree<E extends Comparable<E>> extends Tree<E> {
 	 * these comparisons result in true, then the nodes themselves are finally
 	 * compared.
 	 *
-	 * @param n1 - the node from the first comparing tree.
-	 * @param n2 - the node from the second comparing tree.
+	 * @param n1 the node from the first comparing tree.
+	 * @param n2 the node from the second comparing tree.
 	 * @return true if both trees are completely equal in terms of their nodes;
 	 * false otherwise.
 	 */
@@ -285,9 +297,9 @@ public class BinaryTree<E extends Comparable<E>> extends Tree<E> {
 		/**
 		 * Constructs a BinaryNode given a parent and value.
 		 *
-		 * @param parent - the parent of this BinaryNode; if null, then this is
-		 *               considered the root.
-		 * @param value  - the value.
+		 * @param parent the parent of this BinaryNode; if null, then this is
+		 * considered the root.
+		 * @param value the value.
 		 */
 		BinaryNode(Node parent, E value) {
 			super(parent, value);
@@ -303,7 +315,7 @@ public class BinaryTree<E extends Comparable<E>> extends Tree<E> {
 		/**
 		 * Removes a node from this node's sub-tree.
 		 *
-		 * @param node - the node to remove.
+		 * @param node the node to remove.
 		 */
 		protected void remove(BinaryNode node) {
 			if (node.isLeaf()) {
@@ -319,7 +331,7 @@ public class BinaryTree<E extends Comparable<E>> extends Tree<E> {
 		 * Removes a node from this node's sub-tree assuming that the removal node
 		 * is a leaf node.
 		 *
-		 * @param node - the leaf node to remove.
+		 * @param node the leaf node to remove.
 		 */
 		private void leafRemoval(BinaryNode node) {
 			BinaryNode parent = (BinaryNode) node.parent;
@@ -339,7 +351,7 @@ public class BinaryTree<E extends Comparable<E>> extends Tree<E> {
 		 * Removes a node from this node's sub-tree assuming that the removal node
 		 * has only one child node.
 		 *
-		 * @param node - the single-child node to remove.
+		 * @param node the single-child node to remove.
 		 */
 		private void singleRemoval(BinaryNode node) {
 			BinaryNode parent = (BinaryNode) node.parent;
@@ -362,7 +374,7 @@ public class BinaryTree<E extends Comparable<E>> extends Tree<E> {
 		 * Removes a node from this node's sub-tree assuming that the removal node
 		 * has two children nodes.
 		 *
-		 * @param node - the two-children node to remove.
+		 * @param node the two-children node to remove.
 		 */
 		private void doubleRemoval(BinaryNode node) {
 			BinaryNode minSubRight = node.right;

@@ -18,14 +18,17 @@ public final class PVMath {
 	 * Constant of Math.log(10)
 	 */
 	public final static double LOG10 = Math.log(10);
+	
 	/**
 	 * Constant of Math.log(2)
 	 */
 	public final static double LOG2 = Math.log(2);
+	
 	/**
 	 * Acceptable data types for performing mathematical operations.
 	 */
 	private final static Class<? extends Number>[] ACCEPTED_TYPES = new Class[]{Byte.class, Short.class, Integer.class, Long.class, Float.class, Double.class, ComplexNumber.class};
+	
 	/**
 	 * Comparator used to sort the classes; sorts based on the name of the class defined by {@link Class#getName()}.
 	 * Used to binary search the array of accepted types for checking if a data type is accepted by this Math class.
@@ -42,16 +45,9 @@ public final class PVMath {
 	}
 	
 	/**
-	 * @return an array of Number sub-classes that are accepted by this Math class.
-	 */
-	public static Class<? extends Number>[] getAcceptedTypes() {
-		return ACCEPTED_TYPES == null ? null : java.util.Arrays.copyOf(ACCEPTED_TYPES, ACCEPTED_TYPES.length);
-	}
-	
-	/**
 	 * Checks if a Number sub-class is supported by this Math class.
 	 *
-	 * @param numberSubClass - the sub-class to check if it is supported.
+	 * @param numberSubClass the sub-class to check if it is supported.
 	 * @return true if the sub-class is supported; false otherwise
 	 */
 	public static boolean isSupported(Class<? extends Number> numberSubClass) {
@@ -61,8 +57,8 @@ public final class PVMath {
 	/**
 	 * Adds two numbers together.
 	 *
-	 * @param n1 - the first operand.
-	 * @param n2 - the second operand.
+	 * @param n1 the first operand.
+	 * @param n2 the second operand.
 	 * @return the sum of the two numbers (possibly a {@link ComplexNumber}).
 	 */
 	public static Number add(Number n1, Number n2) {
@@ -78,9 +74,9 @@ public final class PVMath {
 	/**
 	 * Subtracts two numbers from each other.
 	 *
-	 * @param n1 - the first operand.
-	 * @param n2 - the second operand.
-	 * @return - the difference between the two numbers (possibly a {@link ComplexNumber}).
+	 * @param n1 the first operand.
+	 * @param n2 the second operand.
+	 * @return the difference between the two numbers (possibly a {@link ComplexNumber}).
 	 */
 	public static Number subtract(Number n1, Number n2) {
 		if (n1 instanceof ComplexNumber) {
@@ -95,8 +91,8 @@ public final class PVMath {
 	/**
 	 * Multiplies two numbers against each other.
 	 *
-	 * @param n1 - the first operand.
-	 * @param n2 - the second operand.
+	 * @param n1 the first operand.
+	 * @param n2 the second operand.
 	 * @return the product of the two numbers (possibly a {@link ComplexNumber}).
 	 */
 	public static Number multiply(Number n1, Number n2) {
@@ -112,8 +108,8 @@ public final class PVMath {
 	/**
 	 * Divides one number from another.
 	 *
-	 * @param n1 - the first operand.
-	 * @param n2 - the second operand.
+	 * @param n1 the first operand.
+	 * @param n2 the second operand.
 	 * @return the quotient of the two numbers (possibly a {@link ComplexNumber}).
 	 */
 	public static Number divide(Number n1, Number n2) {
@@ -127,7 +123,7 @@ public final class PVMath {
 	}
 	
 	/**
-	 * @param x - a number.
+	 * @param x a number.
 	 * @return the absolute value of the number (complex if input is complex).
 	 */
 	public static Number abs(Number x) {
@@ -144,7 +140,7 @@ public final class PVMath {
 	 * <code>acos(x) = pi / 2 + iln(ix + sqrt(1 - x^2))</code>. The result is complex when the input is
 	 * complex or if the input is not in the range [-1, 1].
 	 *
-	 * @param x - a number.
+	 * @param x a number.
 	 * @return the inverse cosine of the number (possibly a {@link ComplexNumber}).
 	 */
 	public static Number acos(Number x) {
@@ -167,7 +163,7 @@ public final class PVMath {
 	 * following: <code>acosh(x) = ln(sqrt(x-1) * sqrt(x+1) + x)</code>. The result is complex when the input
 	 * is complex or if the input is not in the range [1, infinity].
 	 *
-	 * @param x - a number.
+	 * @param x a number.
 	 * @return the inverse hyperbolic cosine of the number (possibly a {@link ComplexNumber}).
 	 */
 	public static Number acosh(Number x) {
@@ -184,7 +180,7 @@ public final class PVMath {
 	 * <code>asin(x) = -i * ln(ix + sqrt(1 - x^2))</code>. The result is complex when the input is complex
 	 * or if the input is not in the range [-1, 1].
 	 *
-	 * @param x - a number.
+	 * @param x a number.
 	 * @return the inverse sine of the number (possibly a {@link ComplexNumber}).
 	 */
 	public static Number asin(Number x) {
@@ -206,7 +202,7 @@ public final class PVMath {
 	 * Takes the inverse hyperbolic sine of a number. The inverse hyperbolic sine of a number is obtained by the
 	 * following: <code>asinh(x) = ln(x + sqrt(x^2 + 1))</code>. The result is complex when the input is complex.
 	 *
-	 * @param x - a number.
+	 * @param x a number.
 	 * @return the inverse hyperbolic sine of the number (possibly a {@link ComplexNumber}).
 	 */
 	public static Number asinh(Number x) {
@@ -220,7 +216,7 @@ public final class PVMath {
 	 * Takes the inverse tangent of a number. The inverse tangent of a number is obtained by the following:
 	 * <code>atan(x) = i/2 * ln((1-xi)/(1+xi))</code>. The result is complex when the input is complex.
 	 *
-	 * @param x - a number.
+	 * @param x a number.
 	 * @return the inverse tangent of the number (possibly a {@link ComplexNumber}).
 	 */
 	public static Number atan(Number x) {
@@ -243,8 +239,8 @@ public final class PVMath {
 	/**
 	 * Takes the inverse tangent of two numbers composing a vector.
 	 *
-	 * @param y - the y component.
-	 * @param x - the x component.
+	 * @param y the y component.
+	 * @param x the x component.
 	 * @return the inverse tangent of the vector provided (possibly a {@link ComplexNumber}).
 	 * @see #atan(Number)
 	 */
@@ -257,7 +253,7 @@ public final class PVMath {
 	 * by the following: <code>atanh(x) = 1/2 * ln((1+x)/(1-x))</code>. The result is complex when the input is
 	 * complex or not in the range (-1, 1).
 	 *
-	 * @param x - a number.
+	 * @param x a number.
 	 * @return the inverse hyperbolic tangent of the number (possibly a {@link ComplexNumber}).
 	 */
 	public static Number atanh(Number x) {
@@ -272,7 +268,7 @@ public final class PVMath {
 	/**
 	 * Takes the cube root a number. The result is complex if the input is complex.
 	 *
-	 * @param x - a number.
+	 * @param x a number.
 	 * @return the cube root of the number (possibly a {@link ComplexNumber}).
 	 */
 	public static Number cbrt(Number x) {
@@ -283,7 +279,7 @@ public final class PVMath {
 	 * Performs a ceiling operation on a number. For complex values, the ceiling operation is performed
 	 * on both the real and complex parts of the value.
 	 *
-	 * @param x - a number.
+	 * @param x a number.
 	 * @return the ceiling value of the number (possibly a {@link ComplexNumber}).
 	 */
 	public static Number ceil(Number x) {
@@ -300,7 +296,7 @@ public final class PVMath {
 	 * <code>cos(a+bi) = cos(a)cosh(b) - isin(a)sinh(b)</code>. The result is complex if the input
 	 * is complex.
 	 *
-	 * @param x - a number.
+	 * @param x a number.
 	 * @return the cosine of the number (possibly a {@link ComplexNumber}).
 	 */
 	public static Number cos(Number x) {
@@ -316,7 +312,7 @@ public final class PVMath {
 	/**
 	 * Takes the hyperbolic cosine of a number. The result is complex if the input is complex.
 	 *
-	 * @param x - a number.
+	 * @param x a number.
 	 * @return the hyperbolic cosine of the number (possibly a {@link ComplexNumber}).
 	 */
 	public static Number cosh(Number x) {
@@ -326,7 +322,7 @@ public final class PVMath {
 	/**
 	 * Raises Euler's number by a number. The result is complex if the input is complex.
 	 *
-	 * @param x - a number.
+	 * @param x a number.
 	 * @return Euler's number raised by the number (possibly a {@link ComplexNumber}).
 	 */
 	public static Number exp(Number x) {
@@ -342,7 +338,7 @@ public final class PVMath {
 	 * Raises Euler's number by a number and subtracts that result by 1. The result is complex if the input
 	 * is complex.
 	 *
-	 * @param x - a number.
+	 * @param x a number.
 	 * @return Euler's number raised by the number and subtracted by 1 (possibly a {@link ComplexNumber}).
 	 */
 	public static Number expmp1(Number x) {
@@ -353,7 +349,7 @@ public final class PVMath {
 	 * Performs a flooring operation on a number. For complex values, the flooring operation is performed on both
 	 * the real and complex parts of the value.
 	 *
-	 * @param x - a value.
+	 * @param x a value.
 	 * @return the flooring value of the number (possibly a {@link ComplexNumber}).
 	 */
 	public static Number floor(Number x) {
@@ -369,8 +365,8 @@ public final class PVMath {
 	 * Calculates the hypotenuse given two side values; <code>sqrt(a^2, b^2)</code>. The result is complex
 	 * if one of the inputs is complex.
 	 *
-	 * @param a - the first value.
-	 * @param b - the second value.
+	 * @param a the first value.
+	 * @param b the second value.
 	 * @return the hypotenuse of the resulting right triangle formed by the two values provided (possibly a
 	 * {@link ComplexNumber}).
 	 */
@@ -383,7 +379,7 @@ public final class PVMath {
 	 * <code>log(x) = ln(||x||) + arg(x) * i</code>. The result is complex if the input is complex
 	 * or is not in the range of (0, infinity).
 	 *
-	 * @param x - a number.
+	 * @param x a number.
 	 * @return the natural logarithm of the number (possibly a {@link ComplexNumber}).
 	 */
 	public static Number log(Number x) {
@@ -400,7 +396,7 @@ public final class PVMath {
 	 * Takes the natural logarithm of the sum of a number and 1. The result is complex if the input is complex or if
 	 * the sum of the input and 1 is not in the range of (0, infinity).
 	 *
-	 * @param x - a number.
+	 * @param x a number.
 	 * @return the natural logarithm of the sum of a number and 1 (possibly a {@link ComplexNumber}).
 	 */
 	public static Number log1p(Number x) {
@@ -411,7 +407,7 @@ public final class PVMath {
 	 * Takes the base-2 logarithm of a number. The result is complex if the input is complex or is not in the range
 	 * (0, infinity).
 	 *
-	 * @param x - a number.
+	 * @param x a number.
 	 * @return the base-2 logarithm of a number (possibly a {@link ComplexNumber}).
 	 */
 	public static Number log2(Number x) {
@@ -422,7 +418,7 @@ public final class PVMath {
 	 * Takes the base-10 logarithm of a number. The result is complex if the input is complex or is not in the range
 	 * (0, infinity).
 	 *
-	 * @param x - a number.
+	 * @param x a number.
 	 * @return the base-10 logarithm of a number (possibly a {@link ComplexNumber}).
 	 */
 	public static Number log10(Number x) {
@@ -432,8 +428,8 @@ public final class PVMath {
 	/**
 	 * Raises a number by another number.
 	 *
-	 * @param n     - the base.
-	 * @param power - the exponent.
+	 * @param n the base.
+	 * @param power the exponent.
 	 * @return the base raised to the power of the exponent (possibly a {@link ComplexNumber}).
 	 */
 	public static Number pow(Number n, Number power) {
@@ -470,7 +466,7 @@ public final class PVMath {
 	/**
 	 * Rounds a number. If the value is complex, then both the real and complex parts are rounded.
 	 *
-	 * @param x - a number.
+	 * @param x a number.
 	 * @return the rounded number (possibly a {@link ComplexNumber}).
 	 */
 	public static Number round(Number x) {
@@ -486,7 +482,7 @@ public final class PVMath {
 	 * Takes the sine of a number and is obtained by the following:
 	 * <code>sin(a+bi) = sin(a)cosh(b) - icos(a)sinh(b)</code>. The result is complex if the input is complex.
 	 *
-	 * @param x - a number.
+	 * @param x a number.
 	 * @return the sine of the number (possibly a {@link ComplexNumber}).
 	 */
 	public static Number sin(Number x) {
@@ -502,7 +498,7 @@ public final class PVMath {
 	/**
 	 * Takes the hyperbolic sine of a number. The result is complex if the input is complex.
 	 *
-	 * @param x - a number.
+	 * @param x a number.
 	 * @return the hyperbolic sine of a number (possibly a {@link ComplexNumber}).
 	 */
 	public static Number sinh(Number x) {
@@ -512,7 +508,7 @@ public final class PVMath {
 	/**
 	 * Takes the square root of a number. The result is complex if the input is less than 0.
 	 *
-	 * @param x - a number.
+	 * @param x a number.
 	 * @return the square root of the number (possibly a {@link ComplexNumber}).
 	 */
 	public static Number sqrt(Number x) {
@@ -522,7 +518,7 @@ public final class PVMath {
 	/**
 	 * Takes the tangent of a number. The result is complex if the input is complex.
 	 *
-	 * @param x - a number.
+	 * @param x a number.
 	 * @return the tangent of the number (possibly a {@link ComplexNumber}).
 	 */
 	public static Number tan(Number x) {
@@ -540,8 +536,8 @@ public final class PVMath {
 	}
 	
 	/**
-	 * @param n1 - the first number.
-	 * @param n2 - the second number.
+	 * @param n1 the first number.
+	 * @param n2 the second number.
 	 * @return true if the two numbers are equal (complex numbers are equal if both the real and
 	 * complex parts are equal).
 	 */
@@ -593,8 +589,8 @@ public final class PVMath {
 	/**
 	 * Gets the greatest common divisor between two integers.
 	 *
-	 * @param a - the first number.
-	 * @param b - the second number.
+	 * @param a the first number.
+	 * @param b the second number.
 	 * @return the greatest common divisor between two numbers.
 	 */
 	public static Long gcd(long a, long b) {
@@ -616,7 +612,7 @@ public final class PVMath {
 	/**
 	 * Gets the divisors of an integer.
 	 *
-	 * @param l - the integer.
+	 * @param l the integer.
 	 * @return a list of divisors for this number.
 	 */
 	public static List<Long> divisors(long l) {
@@ -633,7 +629,7 @@ public final class PVMath {
 	/**
 	 * Takes the average of a set of numbers.
 	 *
-	 * @param values - a set of numbers
+	 * @param values a set of numbers
 	 * @return the average of a set of numbers.
 	 */
 	public static Number average(Number... values) {
@@ -681,9 +677,9 @@ public final class PVMath {
 	 * to <code>summation(function, 0, 3.4)</code>. Kahan's Summation Algorithm is utilized to reduce
 	 * numerical errors.
 	 *
-	 * @param function - the function applied to each summation iteration.
-	 * @param start    - the starting bound (inclusive).
-	 * @param end      - the ending bound (inclusive).
+	 * @param function the function applied to each summation iteration.
+	 * @param start then starting bound (inclusive).
+	 * @param end the ending bound (inclusive).
 	 * @return the sum of the sequence of numbers provided by a function and two bounds.
 	 */
 	public static Number summation(DoubleFunction<Number> function, double start, double end) {
@@ -706,7 +702,7 @@ public final class PVMath {
 	 * (see <a href=https://en.wikipedia.org/wiki/Standard_deviation#Discrete_random_variable>this wikipedia page
 	 * for more information</a>)
 	 *
-	 * @param values - the set of numbers.
+	 * @param values the set of numbers.
 	 * @return the standard deviation amongst the set of numbers
 	 */
 	public static Number stdDeviation(Number... values) {

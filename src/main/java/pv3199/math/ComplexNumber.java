@@ -8,14 +8,17 @@ public class ComplexNumber extends Number implements Comparable<Number> {
 	 * Real counter-part.
 	 */
 	public final double a;
+	
 	/**
 	 * Imaginary counter-part.
 	 */
 	public final double b;
+	
 	/**
 	 * R-value
 	 */
 	public final double r;
+	
 	/**
 	 * Theta-value in radians
 	 */
@@ -236,6 +239,7 @@ public class ComplexNumber extends Number implements Comparable<Number> {
 	public ComplexNumber pow(double power) {
 		double rp = Math.pow(this.r, power);
 		double ang = this.theta * power;
+		
 		return new ComplexNumber(rp * Math.cos(ang), rp * Math.sin(ang));
 	}
 	
@@ -283,6 +287,7 @@ public class ComplexNumber extends Number implements Comparable<Number> {
 		// if real values are equal, compare complex parts
 		double real;
 		double complex;
+		
 		if (n instanceof ComplexNumber) {
 			ComplexNumber in = (ComplexNumber) n;
 			real = this.a - in.a;
@@ -291,6 +296,7 @@ public class ComplexNumber extends Number implements Comparable<Number> {
 			real = this.a - n.doubleValue();
 			complex = b;
 		}
+		
 		int rc = real == 0 ? 0 : real > 0 ? 1 : -1;
 		int cc = complex == 0 ? 0 : complex > 0 ? 1 : -1;
 		

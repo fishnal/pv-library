@@ -1,9 +1,7 @@
 package pv3199.math.structures;
 
-import pv3199.util.ConsumerHolder;
-import pv3199.util.ForEachHolder;
+import pv3199.util.ConsumerLooper;
 
-import java.lang.reflect.Array;
 import java.util.function.Consumer;
 
 /**
@@ -16,14 +14,17 @@ public abstract class Matrix<T> implements java.io.Serializable {
 	 * If this matrix allows null values.
 	 */
 	public final boolean allowsNull;
+	
 	/**
 	 * The height of this matrix.
 	 */
 	public final int height;
+	
 	/**
 	 * The width of this matrix.
 	 */
 	public final int width;
+	
 	/**
 	 * The raw, backing Object data of this matrix.
 	 */
@@ -33,8 +34,8 @@ public abstract class Matrix<T> implements java.io.Serializable {
 	 * Constructs a Matrix with a boolean indicating whether it will accept null values or not and width
 	 * and height dimensions.
 	 *
-	 * @param width      the width of the matrix.
-	 * @param height     the height of the matrix.
+	 * @param width the width of the matrix.
+	 * @param height the height of the matrix.
 	 * @param allowsNull if this matrix will accept null values or not.
 	 * @throws IllegalArgumentException if the dimensions are negative.
 	 */
@@ -53,21 +54,19 @@ public abstract class Matrix<T> implements java.io.Serializable {
 	 *
 	 * @param initialData the initial data for this matrix to hold.
 	 * @param allowsNull  if this matrix will accept null values or not.
-	 * @throws NullPointerException     if the initial data is null
 	 * @throws IllegalArgumentException if the initial data array is not rectangular or if the initial data contains
-	 *                                  null values and this matrix is not intended to accept null values.
+	 * null values and this matrix is not intended to accept null values.
 	 */
 	public Matrix(T[][] initialData, boolean allowsNull) throws NullPointerException, IllegalArgumentException {
-		if (initialData == null) {
-			throw new NullPointerException();
-		} else if (!isRectangle(initialData)) {
+		if (!isRectangle(initialData)) {
 			throw new IllegalArgumentException("initialData must be a rectangular array");
 		}
 		
 		this.allowsNull = allowsNull;
 		int cdr = checkData(initialData);
+		
 		if (cdr == -1) {
-			throw new IllegalArgumentException("initialData contains null values and matrix does" + "not accept null values");
+			throw new IllegalArgumentException("matrix does not accept null values");
 		}
 		
 		this.data = new Object[this.height = initialData.length][];
@@ -83,13 +82,8 @@ public abstract class Matrix<T> implements java.io.Serializable {
 	 * Constructs a Matrix from another matrix.
 	 *
 	 * @param matrix the other matrix.
-	 * @throws NullPointerException if the initial matrix is null.
 	 */
 	public Matrix(Matrix<T> matrix) throws NullPointerException {
-		if (matrix == null) {
-			throw new NullPointerException();
-		}
-		
 		this.data = matrix.getRawData();
 		this.height = matrix.height;
 		this.width = matrix.width;
@@ -129,9 +123,11 @@ public abstract class Matrix<T> implements java.io.Serializable {
 	 * @return if the 2D array has null values.
 	 */
 	protected final static int checkData(Object[][] data) {
-		for (int r = 0; r < data.length; r++) {
-			for (int c = 0; c < data[r].length; c++) {
-				if (data[r][c] == null) return -1;
+		for (Object[] row : data) {
+			for (Object col : row) {
+				if (col == null) {
+					return -1;
+				}
 			}
 		}
 		
@@ -141,8 +137,8 @@ public abstract class Matrix<T> implements java.io.Serializable {
 	/**
 	 * Sets the value at a particular row-column index.
 	 *
-	 * @param row   the row index.
-	 * @param col   the column.
+	 * @param row the row index.
+	 * @param col the column.
 	 * @param value the new value.
 	 * @throws NullPointerException if this matrix does not accept null values and the new value is null.
 	 */
@@ -161,6 +157,7 @@ public abstract class Matrix<T> implements java.io.Serializable {
 	 * @param col the column index.
 	 * @return the value at the row-column index.
 	 */
+	@SuppressWarnings("unchecked")
 	public final T getValue(int row, int col) {
 		return (T) data[row][col];
 	}
@@ -183,31 +180,35 @@ public abstract class Matrix<T> implements java.io.Serializable {
 	/**
 	 * Gets the elements in a row of this matrix.
 	 *
-	 * @param row   - the row index
-	 * @param clazz - the type this matrix holds.
+	 * @param row the row index
 	 * @return an array of the elements in a row.
 	 */
-	public final T[] getRow(int row, Class<T> clazz) {
-		Object data = Array.newInstance(clazz, this.width);
+	@SuppressWarnings("unchecked")
+	public final T[] getRow(int row) {
+		T[] data = (T[]) new Object[this.width];
+
 		for (int c = 0; c < this.width; c++) {
-			Array.set(data, c, this.getValue(row, c));
+			data[c] = this.getValue(row, c);
 		}
-		return (T[]) data;
+
+		return data;
 	}
 	
 	/**
 	 * Gets the elements in a column of this matrix.
 	 *
-	 * @param column - the column index
-	 * @param clazz  - the type this matrix holds.
+	 * @param column the column index.
 	 * @return an array of the elements in a column.
 	 */
-	public final T[] getColumn(int column, Class<T> clazz) {
-		Object data = Array.newInstance(clazz, this.height);
+	@SuppressWarnings("unchecked")
+	public final T[] getColumn(int column) {
+		T[] data = (T[]) new Object[this.height];
+		
 		for (int r = 0; r < this.height; r++) {
-			Array.set(data, r, this.getValue(r, column));
+			data[r] = this.getValue(r, column);
 		}
-		return (T[]) data;
+
+		return data;
 	}
 	
 	/**
@@ -215,7 +216,14 @@ public abstract class Matrix<T> implements java.io.Serializable {
 	 *
 	 * @return a 2D T-array containing the casted values of this matrix.
 	 */
-	public abstract T[][] getData();
+	@SuppressWarnings("unchecked")
+	public final T[][] getData() {
+		T[][] data = (T[][]) new Object[this.height][this.width];
+		
+		this.forEach((t, inds) -> data[inds[0]][inds[1]] = t);
+		
+		return data;
+	}
 	
 	/**
 	 * Checks if this and another matrix have the same width and height.
@@ -229,24 +237,23 @@ public abstract class Matrix<T> implements java.io.Serializable {
 	
 	/**
 	 * Iterates through each element in the matrix. Instead of using a {@link Consumer}
-	 * that accepts the generic type of this matrix, the consumer accepts a {@link ForEachHolder}
-	 * that has the same generic type of this matrix. The {@code ForEachHolder} allows for the
+	 * that accepts the generic type of this matrix, the consumer is a {@link ConsumerLooper}
+	 * that has the same generic type of this matrix. The looper allows for the
 	 * consumer implementation to access what indices the matrix is currently iterating at.
 	 * The iteration goes from rows to columns (top to bottom, left to right), similar to a
-	 * 2D-array. As such, the {@code ForEachHolder}'s indices will have the row index in the
+	 * 2D-array. As such, the {@code ConsumerLooper}'s indices will have the row index in the
 	 * first element, column index in the second element, and the matrix element as it's data.
 	 * If the implementation does not need to access the indices of each iteration, then it is
 	 * advised to utilize {@link #forEach(Consumer)} for efficiency.
 	 *
-	 * @param action - the consumer to utilize when iterating through each element.
-	 * @see ForEachHolder
+	 * @param action the consumer to utilize when iterating through each element.
 	 * @see Consumer
-	 * @see ConsumerHolder
+	 * @see ConsumerLooper
 	 */
-	public final void forEachIndex(ConsumerHolder<T> action) {
+	public final void forEach(ConsumerLooper<T> action) {
 		for (int r = 0; r < this.height; r++) {
 			for (int c = 0; c < this.width; c++) {
-				action.accept(new ForEachHolder<>(this.getValue(r, c), r, c));
+				action.accept(this.getValue(r, c), r, c);
 			}
 		}
 	}
@@ -254,7 +261,7 @@ public abstract class Matrix<T> implements java.io.Serializable {
 	/**
 	 * Iterates through each element in the matrix, performing a consumer operation on each.
 	 * Iteration goes from rows to columns (top to bottom, left to right), similar to a 2D-array.
-	 * This is a more efficient alternative to {@link #forEachIndex(ConsumerHolder)}.
+	 * This is a more efficient alternative to {@link #forEach(ConsumerLooper)}.
 	 *
 	 * @param action the consumer to utilize when iterating through each element.
 	 */
@@ -268,73 +275,67 @@ public abstract class Matrix<T> implements java.io.Serializable {
 	
 	/**
 	 * Iterates through each row in the matrix. Instead of using a {@link Consumer} that accepts
-	 * the generic type of this matrix, the consumer accepts a {@link ForEachHolder}
-	 * that has the same generic type of this matrix. The {@code ForEachHolder} allows for the consumer
+	 * the generic type of this matrix, the consumer is a {@link ConsumerLooper}
+	 * that has the same generic type of this matrix. The looper allows for the consumer
 	 * implementation to access the row-index the matrix is currently iterating at. The iteration
-	 * goes from top to bottom. As such the {@code ForEachHolder}'s indices will have the row index
+	 * goes from top to bottom. As such the {@code ConsumerLooper}'s indices will have the row index
 	 * in the first element, and will contain a {@code T} array, representing the current row, as it's data.
 	 * If the implementation does not need to access the indices of each iteration, then it is
 	 * advised to utilize {@link #forEach(Consumer)} for efficiency.
 	 *
-	 * @param action - the consumer to utilize when iterating through each row.
-	 * @param clazz  - the type the matrix holds.
-	 * @see ForEachHolder
+	 * @param action the consumer to utilize when iterating through each row.
 	 * @see Consumer
-	 * @see ConsumerHolder
+	 * @see ConsumerLooper
 	 */
-	public final void forEachRowIndex(ConsumerHolder<T[]> action, Class<T> clazz) {
+	public final void forEachRow(ConsumerLooper<T[]> action) {
 		for (int r = 0; r < this.height; r++) {
-			action.accept(new ForEachHolder<>(this.getRow(r, clazz), r));
+			action.accept(this.getRow(r), r);
 		}
 	}
 
 	/**
 	 * Iterates through each row in the matrix, performing a consumer operation on each.
 	 * Iteration goes from top to bottom. This is a more efficient alternative to
-	 * {@link #forEachRowIndex(ConsumerHolder, Class)}.
+	 * {@link #forEachRow(ConsumerLooper)}.
 	 *
 	 * @param action the consumer to utilize when iterating through each row.
-	 * @param clazz the type the matrix holds.
 	 */
-	public final void forEachRow(Consumer<T[]> action, Class<T> clazz) {
+	public final void forEachRow(Consumer<T[]> action) {
 		for (int r = 0; r < this.height; r++) {
-			action.accept(this.getRow(r, clazz));
+			action.accept(this.getRow(r));
 		}
 	}
 	
 	/**
 	 * Iterates through each column in the matrix. Instead of using a {@link Consumer} that accepts
-	 * the generic type of this matrix, the consumer accepts a {@link ForEachHolder}
-	 * that has the same generic type of this matrix. The {@code ForEachHolder} allows for the consumer
+	 * the generic type of this matrix, the consumer is a {@link ConsumerLooper}
+	 * that has the same generic type of this matrix. The looper allows for the consumer
 	 * implementation to access the column-index the matrix is currently iterating at. The iteration
-	 * goes from left to right. As such the {@code ForEachHolder}'s indices will have the column index
+	 * goes from left to right. As such the {@code ConsumerLooper}'s indices will have the column index
 	 * in the first element, and will contain a {@code T} array, representing the current column, as it's data.
 	 * If the implementation does not need to access the indices of each iteration, then it is
 	 * advised to utilize {@link #forEach(Consumer)} for efficiency.
 	 *
-	 * @param action - the consumer to utilize when iterating through each column.
-	 * @param clazz  - the type the matrix holds.
-	 * @see ForEachHolder
+	 * @param action the consumer to utilize when iterating through each column.
 	 * @see Consumer
-	 * @see ConsumerHolder
+	 * @see ConsumerLooper
 	 */
-	public final void forEachColumnIndex(ConsumerHolder<T[]> action, Class<T> clazz) {
+	public final void forEachColumn(ConsumerLooper<T[]> action) {
 		for (int c = 0; c < this.width; c++) {
-			action.accept(new ForEachHolder<>(this.getColumn(c, clazz), c));
+			action.accept(this.getColumn(c), c);
 		}
 	}
 	
 	/**
 	 * Iterates through each column in the matrix, performing a consumer operation on each.
 	 * Iteration goes from left to right. This is a more efficient alternative to
-	 * {@link #forEachColumnIndex(ConsumerHolder, Class)}.
+	 * {@link #forEachColumn(ConsumerLooper)}.
 	 *
 	 * @param action the consumer to utilize when iterating through each column.
-	 * @param clazz the type the matrix holds.
 	 */
-	public final void forEachColumn(Consumer<T[]> action, Class<T> clazz) {
+	public final void forEachColumn(Consumer<T[]> action) {
 		for (int c = 0; c < this.width; c++) {
-			action.accept(this.getColumn(c, clazz));
+			action.accept(this.getColumn(c));
 		}
 	}
 	

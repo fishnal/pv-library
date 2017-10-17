@@ -27,7 +27,7 @@ public class PolarCoordinate implements java.io.Serializable, Comparable<PolarCo
 	/**
 	 * Constructs a PolarCoordinate from an r and theta-value.
 	 *
-	 * @param r     the r-value
+	 * @param r the r-value
 	 * @param theta the theta-value
 	 */
 	public PolarCoordinate(double r, double theta) {

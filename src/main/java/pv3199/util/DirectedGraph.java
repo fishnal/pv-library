@@ -10,7 +10,7 @@ import java.util.List;
  * Directed graph of vertices. Various graph-theory properties and calculations are provided, such as cycles
  * and path lengths.
  *
- * @param <T> - The type of vertex that the graph will hold.
+ * @param <T> the type of vertex that the graph will hold.
  * @author Vishal Patel
  */
 public final class DirectedGraph<T> extends Graph<T> {
@@ -56,9 +56,9 @@ public final class DirectedGraph<T> extends Graph<T> {
 	 * with no links and then this vertex will point to this newly created
 	 * vertex.
 	 *
-	 * @param vertex - the vertex to add.
-	 * @param links  - the set of vertices that <code>vertex</code> will point to.
-	 * @return - false if the vertex to add is null; true otherwise indicating a
+	 * @param vertex the vertex to add.
+	 * @param links  the set of vertices that <code>vertex</code> will point to.
+	 * @return false if the vertex to add is null; true otherwise indicating a
 	 * successful addition of the vertex.
 	 */
 	private boolean add0(T vertex, ArrayList<T> links) {
@@ -249,7 +249,7 @@ public final class DirectedGraph<T> extends Graph<T> {
 	/**
 	 * Determines all different cycles for a certain vertex on the graph.
 	 *
-	 * @param vertex - the vertex to cycle from.
+	 * @param vertex the vertex to cycle from.
 	 * @return null if the specified vertex is null or not in the graph;
 	 * otherwise a set of cycles for this vertex in a list of list of
 	 * vertex form, where each list in this list represents a cycle for
@@ -289,10 +289,10 @@ public final class DirectedGraph<T> extends Graph<T> {
 	 * Helper method for {@link #cycle(Object)}. Recursively passes through each
 	 * vertex in the graph and seeks out every unique cycle from a given vertex.
 	 *
-	 * @param vertex      - the vertex currently being looked at.
-	 * @param cycleVertex - the vertex to cycle from.
-	 * @param cycleList   - the list of cycles from cycleVertex.
-	 * @param path        - the current path that this method is currently pursuing.
+	 * @param vertex the vertex currently being looked at.
+	 * @param cycleVertex the vertex to cycle from.
+	 * @param cycleList the list of cycles from cycleVertex.
+	 * @param path the current path that this method is currently pursuing.
 	 * @return the number of unique cycles from cycleVertex.
 	 */
 	private int cycle0(Vertex vertex, Vertex cycleVertex, List<List<Vertex>> cycleList, List<Vertex> path) {
@@ -368,7 +368,7 @@ public final class DirectedGraph<T> extends Graph<T> {
 		 * Constructs a DirectedVertex object from a given value of type T and
 		 * initializes the vertices that this vertex points to to an empty list.
 		 *
-		 * @param value - the value of this vertex.
+		 * @param value the value of this vertex.
 		 */
 		DirectedVertex(T value) {
 			super(value);
@@ -378,8 +378,8 @@ public final class DirectedGraph<T> extends Graph<T> {
 		 * Constructs a DirectedVertex object from a given value of type T and a
 		 * list of T objects that this vertex will point to.
 		 *
-		 * @param value - the value of this vertex.
-		 * @param links - the vertices that this vertex will point to.
+		 * @param value the value of this vertex.
+		 * @param links the vertices that this vertex will point to.
 		 */
 		DirectedVertex(T value, List<T> links) {
 			super(value, links);

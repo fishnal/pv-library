@@ -36,7 +36,7 @@ public abstract class Graph<T> implements java.io.Serializable {
 	/**
 	 * The index of this vertex within the vertices list, {@link #vertices}
 	 *
-	 * @param vertex - the vertex to look for.
+	 * @param vertex the vertex to look for.
 	 * @return -1 if this vertex is not on the graph or if the vertex is null; a
 	 * non-negative index where this vertex is located within
 	 * {@link #vertices} otherwise.
@@ -58,7 +58,7 @@ public abstract class Graph<T> implements java.io.Serializable {
 	/**
 	 * Gets the vertex associated with this vertex value
 	 *
-	 * @param vertexValue - the specified vertex value to look for
+	 * @param vertexValue the specified vertex value to look for
 	 * @return null if this vertex value is not associated with any vertex; a
 	 * Vertex object otherwise.
 	 */
@@ -71,7 +71,7 @@ public abstract class Graph<T> implements java.io.Serializable {
 	/**
 	 * Determines whether a vertex with this value is plotted on the graph.
 	 *
-	 * @param value - the value for said vertex.
+	 * @param value the value for said vertex.
 	 * @return true if there exists such a vertex with the specified value on
 	 * the graph; false otherwise.
 	 */
@@ -86,8 +86,8 @@ public abstract class Graph<T> implements java.io.Serializable {
 	 * with no links and then this vertex will point to this newly created
 	 * vertex.
 	 *
-	 * @param vertex - the vertex to add.
-	 * @param links  - the set of vertices that <code>vertex</code> will point to.
+	 * @param vertex the vertex to add.
+	 * @param links the set of vertices that <code>vertex</code> will point to.
 	 * @return - false if the vertex to add is null; true otherwise indicating a
 	 * successful addition of the vertex.
 	 */
@@ -129,7 +129,7 @@ public abstract class Graph<T> implements java.io.Serializable {
 	 * BC, CA, CB} and the vertex {A} is removed from the graph, then the
 	 * remaining edges are {BC, CB}
 	 *
-	 * @param vertex - the vertex to remove.
+	 * @param vertex the vertex to remove.
 	 * @return false if the vertex is null or is not in the graph; true
 	 * otherwise.
 	 */
@@ -140,8 +140,8 @@ public abstract class Graph<T> implements java.io.Serializable {
 	 * are erased and replaced with the links specified by the parameter
 	 * <code>links</code>.
 	 *
-	 * @param vertex - the vertex's links to change
-	 * @param links  - the new links
+	 * @param vertex the vertex's links to change
+	 * @param links the new links
 	 * @return false if the vertex is null or is not plotted on the graph; true
 	 * otherwise.
 	 */
@@ -151,7 +151,7 @@ public abstract class Graph<T> implements java.io.Serializable {
 	 * Returns the amount of different paths of length <code>n</code> within the
 	 * graph.
 	 *
-	 * @param n - the path length to look for.
+	 * @param n the path length to look for.
 	 * @return -1 if an error is caught; the amount of different paths of a
 	 * given length otherwise.
 	 */
@@ -161,8 +161,8 @@ public abstract class Graph<T> implements java.io.Serializable {
 	 * Returns whether or not a vertex has a path length <code>n</code> to
 	 * another vertex.
 	 *
-	 * @param vertex - the vertex to traverse from.
-	 * @param n      - the path length
+	 * @param vertex the vertex to traverse from.
+	 * @param n the path length
 	 * @return true if this vertex has a certain path length to another vertex.
 	 */
 	public abstract boolean pathLength(T vertex, int n);
@@ -171,9 +171,9 @@ public abstract class Graph<T> implements java.io.Serializable {
 	 * Determines whether a vertex, <code>originVertex</code>, has a path length
 	 * of <code>n</code> to another vertex, <code>targetVertex</code>.
 	 *
-	 * @param originVertex - the first/origin vertex
-	 * @param targetVertex - the second/target vertex
-	 * @param n            - the path length
+	 * @param originVertex the first/origin vertex
+	 * @param targetVertex the second/target vertex
+	 * @param n the path length
 	 * @return false if:
 	 * <ul>
 	 * <li>the origin vertex or the target vertex is null</li>
@@ -247,7 +247,7 @@ public abstract class Graph<T> implements java.io.Serializable {
 		/**
 		 * Constructs a vertex from a given value.
 		 *
-		 * @param value - value for the vertex.
+		 * @param value value for the vertex.
 		 */
 		Vertex(T value) {
 			this.value = value;
@@ -258,8 +258,8 @@ public abstract class Graph<T> implements java.io.Serializable {
 		 * Constructs a vertex from a given value and a set of vertices that
 		 * this vertex points to.
 		 *
-		 * @param value - the value for the vertex.
-		 * @param links - the set of pointed vertices.
+		 * @param value the value for the vertex.
+		 * @param links the set of pointed vertices.
 		 */
 		Vertex(T value, List<T> links) {
 			this(value);
@@ -269,8 +269,8 @@ public abstract class Graph<T> implements java.io.Serializable {
 		/**
 		 * Changes the vertices that this vertex points to.
 		 *
-		 * @param newLinks - the set of new vertices to point to.
-		 * @return - true if the changes were made; false otherwise.
+		 * @param newLinks the set of new vertices to point to.
+		 * @return true if the changes were made; false otherwise.
 		 */
 		protected abstract boolean setLinks(List<T> newLinks);
 		
@@ -279,7 +279,7 @@ public abstract class Graph<T> implements java.io.Serializable {
 		 * vertices that are to be added are already pointed to by this vertex,
 		 * then nothing changes.
 		 *
-		 * @param additionalLinks - the additional set of vertices to point to.
+		 * @param additionalLinks the additional set of vertices to point to.
 		 * @return true if the changes could be made (regardless if vertices
 		 * were added); false otherwise
 		 */

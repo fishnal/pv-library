@@ -33,7 +33,7 @@ public final class Classes {
 	/**
 	 * Checks if an object is an instance of a wrapper class.
 	 *
-	 * @param obj - the object to check.
+	 * @param obj the object to check.
 	 * @return true if the object is an instance of a wrapper class; false if
 	 * the object is null or if it is not an instance of a wrapper
 	 * class.
@@ -46,7 +46,7 @@ public final class Classes {
 	/**
 	 * Checks if a class type is a wrapper class.
 	 *
-	 * @param type - the class type to check.
+	 * @param type the class type to check.
 	 * @return true if the class type is a wrapper class.
 	 * @see #isWrapper(Object)
 	 */
@@ -62,7 +62,7 @@ public final class Classes {
 	/**
 	 * Gets the primitive class associated with a wrapper class.
 	 *
-	 * @param wrapper - the wrapper class.
+	 * @param wrapper the wrapper class.
 	 * @return the primitive class associated with the given wrapper class.
 	 */
 	public static Class<?> wrapperClassToPrimitiveClass(Class<?> wrapper) {
@@ -82,7 +82,7 @@ public final class Classes {
 	/**
 	 * Gets the wrapper class associated with a primitive class.
 	 *
-	 * @param prim - the primitive class.
+	 * @param prim the primitive class.
 	 * @return the wrapper class associated with the given primitive class.
 	 */
 	public static Class<?> primitiveClassToWrapperClass(Class<?> prim) {
@@ -101,7 +101,7 @@ public final class Classes {
 	 * <b>boolean.class</b> while any other primitive data type returns all
 	 * other primitive classes.
 	 *
-	 * @param prim - the primitive class.
+	 * @param prim the primitive class.
 	 * @return null if the primitive class is null or is not actually a
 	 * primitive class; <b>boolean.class</b> if
 	 * <code>prim == <b>boolean.class</b></code> in an array of unknown
@@ -131,8 +131,8 @@ public final class Classes {
 	 * Checks whether one primitive type can be casted into another primitive
 	 * type.
 	 *
-	 * @param prim1 - the first primitive type to cast.
-	 * @param prim2 - the second primitive type to be casted to.
+	 * @param prim1 the first primitive type to cast.
+	 * @param prim2 the second primitive type to be casted to.
 	 * @return true if the cast is possible; false if either of the parameters
 	 * are null or if the cast is not possible.
 	 */
@@ -162,8 +162,8 @@ public final class Classes {
 	 * while Character, Byte, Short, Integer, Long, Float, and Double can all
 	 * cast into one another).
 	 *
-	 * @param obj1 - the object type to cast.
-	 * @param obj2 - the object type to cast to.
+	 * @param obj1 the object type to cast.
+	 * @param obj2 the object type to cast to.
 	 * @return true if the first object type can cast into the second object
 	 * type; false otherwise.
 	 */
@@ -189,8 +189,8 @@ public final class Classes {
 	 * Checks if one class can be casted to another class. Includes cross-primitive-wrapper casts such
 	 * as a primitive int to a wrapper Double.
 	 *
-	 * @param clazz1 - the original class.
-	 * @param clazz2 - the desired casted class.
+	 * @param clazz1 the original class.
+	 * @param clazz2 the desired casted class.
 	 * @return true if the original class can be casted to the desired class.
 	 */
 	public static boolean canCast(Class<?> clazz1, Class<?> clazz2) {
@@ -221,8 +221,8 @@ public final class Classes {
 	/**
 	 * Casts a primitive data into another primitive data.
 	 *
-	 * @param primitive        - the primitive data to cast.
-	 * @param newPrimitiveType - the primitive data type to cast to.
+	 * @param primitive the primitive data to cast.
+	 * @param newPrimitiveType the primitive data type to cast to.
 	 * @return null if either of the parameters are null, if the primitive data
 	 * given was not wrapped, or if the primitive data cannot be casted
 	 * into the new specified primitive data type; an Object wrapping
@@ -275,8 +275,8 @@ public final class Classes {
 	/**
 	 * Casts an object to a new type.
 	 *
-	 * @param obj     - the object to cast.
-	 * @param newType - the new type to cast the object to.
+	 * @param obj the object to cast.
+	 * @param newType the new type to cast the object to.
 	 * @return null if the object or the new type is null; otherwise the newly
 	 * casted object.
 	 * @throws ClassCastException if the object could not be casted.
@@ -310,7 +310,7 @@ public final class Classes {
 	 * Retrieves the class of the deepest component of a class (used for array
 	 * classes).
 	 *
-	 * @param clazz - the class to get the deepest component from.
+	 * @param clazz the class to get the deepest component from.
 	 * @return the class of the deepest component of <code>clazz</code>.
 	 */
 	public static Class<?> getDeepestComponent(Class<?> clazz) {
@@ -327,8 +327,8 @@ public final class Classes {
 	 * for data equality against primitive classes and utilizes the
 	 * <code>==</code> comparison operator.
 	 *
-	 * @param array - the array to check upon.
-	 * @param clazz - the given class to check the array's element with.
+	 * @param array the array to check upon.
+	 * @param clazz the given class to check the array's element with.
 	 * @return true if the array has some element in any of its dimensions whose
 	 * class is the EXACT same as the given class.
 	 */
@@ -343,8 +343,8 @@ public final class Classes {
 	 * example, given <code>Double[][].class</code> and
 	 * <code>double.class</code>, the method returns true.
 	 *
-	 * @param array - the array to check upon.
-	 * @param clazz - the given class to check the array's element with.
+	 * @param array the array to check upon.
+	 * @param clazz the given class to check the array's element with.
 	 * @return true if the array has some element in any of its dimensions whose
 	 * class is equivalent to the given class.
 	 */

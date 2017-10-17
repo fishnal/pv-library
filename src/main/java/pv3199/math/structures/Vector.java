@@ -1,12 +1,12 @@
 package pv3199.math.structures;
 
+import java.util.Objects;
 import java.util.function.Consumer;
 
 import pv3199.math.ComplexNumber;
 import pv3199.math.PVMath;
 import pv3199.util.Arrays;
-import pv3199.util.ConsumerHolder;
-import pv3199.util.ForEachHolder;
+import pv3199.util.ConsumerLooper;
 
 /**
  * An immutable Euclidean vector. Vectors can be in the real or complex plane depending on how they are
@@ -17,14 +17,17 @@ public class Vector {
 	 * The number of components in this vector.
 	 */
 	public final int size;
+	
 	/**
 	 * The magnitude of this vector.
 	 */
 	public final Number magnitude;
+	
 	/**
 	 * Number/space components.
 	 */
 	private Number[] components;
+	
 	/**
 	 * Whether or not this vector is in the complex plane.
 	 */
@@ -59,6 +62,7 @@ public class Vector {
 	 */
 	public Vector(Number[] start, Number[] end) throws IllegalArgumentException {
 		int length;
+		
 		if ((length = start.length) != end.length) {
 			throw new IllegalArgumentException("start and end different lengths");
 		}
@@ -97,7 +101,7 @@ public class Vector {
 	 * <code>standard(2, 5)</code> produces a 5-dimensional vector with its third component equal to 1.
 	 * All standard vectors are unit, or have a magnitude of 1.
 	 *
-	 * @param space      the space index.
+	 * @param space the space index.
 	 * @param dimensions the size of the vector.
 	 * @return the standard vector based on the space index and number of dimensions.
 	 */
@@ -278,21 +282,21 @@ public class Vector {
 
 	/**
 	 * Iterates through each scalar component in this vector, applying a consumer that accepts a
-	 * {@link ForEachHolder} containing the current scalar component value and current iterating index.
+	 * {@link ConsumerLooper} containing the current scalar component value and current iterating index.
 	 * If the consumer implementation does not need to access the indices for each iteration, it is advised
 	 * to utilize {@link #forEach(Consumer)}.
-	 * 
+	 *
 	 * @param action the consumer action to apply on each scalar component value.
 	 */
-	public void forEachIndex(ConsumerHolder<Number> action) {
+	public void forEach(ConsumerLooper<Number> action) {
 		for (int i = 0; i < this.size; i++) {
-			action.accept(new ForEachHolder<>(this.components[i], i));
+			action.accept(this.components[i], i);
 		}
 	}
 	
 	/**
 	 * Iterates through each scalar component in this vector, applying a consumer operation on each
-	 * number. This is a more efficient alternative to {@link #forEachIndex(ConsumerHolder)}.
+	 * number. This is a more efficient alternative to {@link #forEach(ConsumerLooper)}.
 	 *
 	 * @param action the consumer action to apply on each scalar component value.
 	 */
@@ -310,25 +314,29 @@ public class Vector {
 	 */
 	@Override
 	public boolean equals(Object obj) {
-		Vector v = (Vector) obj;
-		
-		if (this.size != v.size) {
+		if (obj == null || !Vector.class.isInstance(obj)) {
 			return false;
 		}
 		
-		return Arrays.deepEquals(this.components, v.components);
+		Vector v = (Vector) obj;
+		
+		return this.size == v.size && Arrays.deepEquals(this.components, v.components);
+		
 	}
 
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder("<");
+		
 		for (Number n : this.components) {
 			sb.append(n);
-			if (n != this.components[this.components.length - 1]) {
+			if (!Objects.equals(n, this.components[this.components.length - 1])) {
 				sb.append(", ");
 			}
 		}
+		
 		sb.append(">");
+		
 		return sb.toString();
 	}
 }

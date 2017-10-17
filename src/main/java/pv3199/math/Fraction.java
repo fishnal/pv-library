@@ -39,7 +39,7 @@ public class Fraction implements java.io.Serializable, Comparable<Fraction> {
 	 * not simplified, and the numerator is set equal to decimal and denominator
 	 * to 1.
 	 *
-	 * @param value - the value to construct this Fraction object from.
+	 * @param value the value to construct this Fraction object from.
 	 */
 	public Fraction(Number value) {
 		this(value, 1);
@@ -49,8 +49,8 @@ public class Fraction implements java.io.Serializable, Comparable<Fraction> {
 	 * Constructs a Fraction from a numerator number and denominator number. The fraction
 	 * is not simplified
 	 *
-	 * @param numerator   - the numerator
-	 * @param denominator - the denominator
+	 * @param numerator the numerator
+	 * @param denominator the denominator
 	 * @throws ArithmeticException if the denominator is 0
 	 */
 	public Fraction(Number numerator, Number denominator) throws ArithmeticException {
@@ -64,8 +64,8 @@ public class Fraction implements java.io.Serializable, Comparable<Fraction> {
 	/**
 	 * Simplifies a decimal given a precision value. Larger precision values sacrifice time for accuracy.
 	 *
-	 * @param decimal   - the decimal to simplify.
-	 * @param precision - the precision value
+	 * @param decimal the decimal to simplify.
+	 * @param precision the precision value
 	 * @return the simplified decimal using the given precision value.
 	 */
 	private static long[] simplifyDecimal(double decimal, long precision) {
@@ -103,8 +103,7 @@ public class Fraction implements java.io.Serializable, Comparable<Fraction> {
 	/**
 	 * Adds this fraction with another.
 	 *
-	 * @param f -
-	 *          the other fraction to add with this fraction.
+	 * @param f the other fraction to add with this fraction.
 	 * @return the sum of this fraction and the other fraction.
 	 */
 	public Fraction add(Fraction f) {
@@ -119,7 +118,7 @@ public class Fraction implements java.io.Serializable, Comparable<Fraction> {
 	/**
 	 * Adds a number to this fraction.
 	 *
-	 * @param n - the number to add
+	 * @param n the number to add
 	 * @return the sum of this fraction and the number.
 	 */
 	public Fraction add(Number n) {
@@ -129,8 +128,7 @@ public class Fraction implements java.io.Serializable, Comparable<Fraction> {
 	/**
 	 * Subtracts another fraction from this fraction.
 	 *
-	 * @param f -
-	 *          the other fraction to subtract from this fraction.
+	 * @param f the other fraction to subtract from this fraction.
 	 * @return the difference between this fraction and the other fraction.
 	 */
 	public Fraction subtract(Fraction f) {
@@ -140,7 +138,7 @@ public class Fraction implements java.io.Serializable, Comparable<Fraction> {
 	/**
 	 * Subtracts a number from this fraction.
 	 *
-	 * @param n - the number to subtract by
+	 * @param n the number to subtract by
 	 * @return the difference of this fraction and the number.
 	 */
 	public Fraction subtract(Number n) {
@@ -150,7 +148,7 @@ public class Fraction implements java.io.Serializable, Comparable<Fraction> {
 	/**
 	 * Multiplies this fraction with another.
 	 *
-	 * @param f - the other fraction to multiply with this fraction.
+	 * @param f the other fraction to multiply with this fraction.
 	 * @return the product of this fraction and the other fraction.
 	 */
 	public Fraction multiply(Fraction f) {
@@ -160,7 +158,7 @@ public class Fraction implements java.io.Serializable, Comparable<Fraction> {
 	/**
 	 * Multiplies a number to this fraction.
 	 *
-	 * @param n - the number to multiply by
+	 * @param n the number to multiply by
 	 * @return the product of this fraction and the number.
 	 */
 	public Fraction multiply(Number n) {
@@ -170,7 +168,7 @@ public class Fraction implements java.io.Serializable, Comparable<Fraction> {
 	/**
 	 * Divides this fraction by another.
 	 *
-	 * @param f - the other fraction to divide this fraction by.
+	 * @param f the other fraction to divide this fraction by.
 	 * @return the quotient of this fraction and the other fraction.
 	 */
 	public Fraction divide(Fraction f) {
@@ -180,7 +178,7 @@ public class Fraction implements java.io.Serializable, Comparable<Fraction> {
 	/**
 	 * Multiplies a number to this fraction.
 	 *
-	 * @param n - the number to multiply by
+	 * @param n the number to multiply by
 	 * @return the product of this fraction and the number.
 	 */
 	public Fraction divide(Number n) {
@@ -197,7 +195,7 @@ public class Fraction implements java.io.Serializable, Comparable<Fraction> {
 	/**
 	 * Raises this fraction to a power.
 	 *
-	 * @param power - the value to raise this fraction to.
+	 * @param power the value to raise this fraction to.
 	 * @return this fraction raised to some power.
 	 */
 	public Fraction pow(Number power) {
@@ -226,7 +224,7 @@ public class Fraction implements java.io.Serializable, Comparable<Fraction> {
 	 * simplification is. Simplification immediately stops when the simplified
 	 * fraction's decimal value is equal to the original fraction.
 	 *
-	 * @param precision - the precision value.
+	 * @param precision the precision value.
 	 * @return the simplified fraction using a given precision value.
 	 */
 	public Fraction simplify(long precision) {
@@ -248,15 +246,18 @@ public class Fraction implements java.io.Serializable, Comparable<Fraction> {
 			ComplexNumber cn1Num = new ComplexNumber(cn1A[0] * cn1B[1], cn1A[1] * cn1B[0]);
 			long cn1CF = PVMath.gcd(abs((long) cn1Num.a), abs((long) cn1Num.b));
 			cn1Num = cn1Num.divide(cn1CF);
+			
 			ComplexNumber cn2Num = new ComplexNumber(cn2A[0] * cn2B[1], cn2A[1] * cn2B[0]);
 			long cn2CF = PVMath.gcd(abs((long) cn2Num.a), abs((long) cn2Num.b));
 			cn2Num = cn2Num.divide(cn2CF);
+			
 			double cn1Denom = cn1A[1] * cn1B[1] * cn2CF;
 			double cn2Denom = cn2A[1] * cn2B[1] * cn1CF;
 
 			long[] sim = simplifyDecimal(cn2Denom / cn1Denom, precision);
 			long n = sim[0];
 			long d = sim[1];
+			
 			return new Fraction(cn1Num.multiply(n), cn2Num.multiply(d));
 		}
 	}
