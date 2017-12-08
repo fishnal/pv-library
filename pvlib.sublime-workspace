@@ -1,0 +1,578 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"binar",
+				"BinaryInteger"
+			],
+			[
+				"Pro",
+				"ProcessListener"
+			],
+			[
+				"com",
+				"compareTo"
+			],
+			[
+				"active",
+				"activeManager"
+			],
+			[
+				"Sys",
+				"SystemManager"
+			],
+			[
+				"acti",
+				"activeManagerId"
+			],
+			[
+				"mana",
+				"managers"
+			],
+			[
+				"man",
+				"managerId"
+			],
+			[
+				"mii",
+				"minimumGrade"
+			],
+			[
+				"po",
+				"positionOfElementInList"
+			],
+			[
+				"sl",
+				"splitName"
+			],
+			[
+				"dep",
+				"dependencies"
+			],
+			[
+				"price",
+				"price_levels"
+			],
+			[
+				"pr",
+				"price_levels"
+			],
+			[
+				"query",
+				"query_api2"
+			],
+			[
+				"berer",
+				"bearer_token"
+			],
+			[
+				"ov",
+				"overflow"
+			],
+			[
+				"res",
+				"resizeSideBars"
+			],
+			[
+				"overflow",
+				"overflow-y"
+			],
+			[
+				"uniq",
+				"uniquePermute"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "src/main/java/pv3199/util/BinaryArray.java",
+			"settings":
+			{
+				"buffer_size": 6114,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "src/test/java/pv3199/util/BinaryArrayTest.java",
+			"settings":
+			{
+				"buffer_size": 1882,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "src/main/java/pv3199/util/HeapImpl.java",
+			"settings":
+			{
+				"buffer_size": 6500,
+				"line_ending": "Windows"
+			}
+		}
+	],
+	"build_system": "Maven Package",
+	"build_system_choices":
+	[
+		[
+			[
+				[
+					"Maven Package",
+					""
+				],
+				[
+					"Packages/User/Latex.sublime-build",
+					""
+				]
+			],
+			[
+				"Maven Package",
+				""
+			]
+		],
+		[
+			[
+				[
+					"Packages/Java/Ant.sublime-build",
+					""
+				],
+				[
+					"Packages/Java/JavaC.sublime-build",
+					""
+				]
+			],
+			[
+				"Packages/Java/JavaC.sublime-build",
+				""
+			]
+		]
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 173.0,
+		"last_filter": "install",
+		"selected_items":
+		[
+			[
+				"install",
+				"Package Control: Install Package"
+			],
+			[
+				"pack",
+				"Package Control: Remove Package"
+			],
+			[
+				"package",
+				"Package Control: Remove Package"
+			],
+			[
+				"preferences",
+				"Preferences: Terminal Settings – Default"
+			],
+			[
+				"remove pac",
+				"Package Control: Remove Package"
+			],
+			[
+				"package controlremove",
+				"Package Control: Remove Package"
+			],
+			[
+				"install pac",
+				"Package Control: Install Package"
+			]
+		],
+		"width": 609.0
+	},
+	"console":
+	{
+		"height": 0.0,
+		"history":
+		[
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"expanded_folders":
+	[
+		"/C/Users/vpxbo/Documents/Github/pv-library-java",
+		"/C/Users/vpxbo/Documents/Github/pv-library-java/src",
+		"/C/Users/vpxbo/Documents/Github/pv-library-java/src/main",
+		"/C/Users/vpxbo/Documents/Github/pv-library-java/src/main/java",
+		"/C/Users/vpxbo/Documents/Github/pv-library-java/src/main/java/pv3199",
+		"/C/Users/vpxbo/Documents/Github/pv-library-java/src/main/java/pv3199/util",
+		"/C/Users/vpxbo/Documents/Github/pv-library-java/src/test",
+		"/C/Users/vpxbo/Documents/Github/pv-library-java/src/test/java",
+		"/C/Users/vpxbo/Documents/Github/pv-library-java/src/test/java/pv3199",
+		"/C/Users/vpxbo/Documents/Github/pv-library-java/src/test/java/pv3199/util"
+	],
+	"file_history":
+	[
+		"/C/Users/vpxbo/Documents/Github/pv-library-java/.gitignore",
+		"/C/Users/vpxbo/Documents/Github/pv-library-java/src/test/java/pv3199/util/ArraysTest.java",
+		"/C/Users/vpxbo/Documents/Github/pv-library-java/src/test/java/pv3199/util/Arrays.randFillArray.out",
+		"/Z/sgc/gallery.html",
+		"/D/tecanal/bundle-modified.js",
+		"/C/Users/vpxbo/Documents/CMSC 132/Project 9 - Graphs/src/graphs/Graph.java",
+		"/C/Users/vpxbo/Documents/Github/pv-library-java/src/main/java/pv3199/math/BinaryInteger.java",
+		"/C/Users/vpxbo/Documents/CMSC 132/Project 8 - OrdersProcessor/DataSetOne",
+		"/C/Users/vpxbo/Documents/Github/pv-library-java/src/main/java/pv3199/image/ImageUtils.java",
+		"/C/Users/vpxbo/AppData/Roaming/Sublime Text 3/Packages/Terminal/Terminal.sublime-settings",
+		"/C/Users/vpxbo/Documents/Github/pv-library-java/pvlib.sublime-project",
+		"/C/Users/vpxbo/Downloads/fieojfowi/Talk.java",
+		"/C/Users/vpxbo/Downloads/fieojfowi/ScheduleTest.java",
+		"/C/Users/vpxbo/Downloads/fieojfowi/Scheduler.java",
+		"/C/Users/vpxbo/Downloads/ScheduleTest.java",
+		"/C/Users/vpxbo/Downloads/Scheduler(1).java",
+		"/C/Users/vpxbo/Downloads/Scheduler.java",
+		"/C/Users/vpxbo/Downloads/DataGenerator/src/tools/DataFilesGenerator.java",
+		"/C/Users/vpxbo/Documents/Github/pv-library-java/src/main/java/pv3199/util/HeapImpl.java",
+		"/C/Users/vpxbo/Desktop/Foo.java",
+		"/C/Users/vpxbo/Documents/CMSC 132/Project 8 - OrdersProcessor/src/processor/OrderTask.java",
+		"/C/Users/vpxbo/Documents/CMSC 132/Project 8 - OrdersProcessor/src/processor/OrdersProcessor.java",
+		"/C/Users/vpxbo/AppData/Local/Temp/ProcessListener.java",
+		"/C/Users/vpxbo/AppData/Local/Temp/InvariantExample.java",
+		"/C/Users/vpxbo/Documents/CMSC 132/Project 7 - PolymorphicBST/performanceResults.txt",
+		"/C/Users/vpxbo/Desktop/LinkedList.java",
+		"/C/Users/vpxbo/Documents/MATLAB/Assignment 2/html/assignment2.html",
+		"/C/Users/vpxbo/Documents/CMSC 132/Project 7 - PolymorphicBST/src/tests/StudentTests.java",
+		"/C/Users/vpxbo/Desktop/BinaryHeap.java",
+		"/C/Users/vpxbo/Documents/MATLAB/Assignment 2/assignment2.m",
+		"/C/Users/vpxbo/Documents/CMSC 132/Project 6 - OnlineTest/src/cmdLineInterpreter/Interpreter.java",
+		"/C/Users/vpxbo/Documents/CP Scholars - SGC/gallery.html",
+		"/C/Users/vpxbo/Documents/CP Scholars - SGC/portfolio.html",
+		"/C/Users/vpxbo/Documents/CMSC 132/Project 6 - OnlineTest/src/onlineTest/SystemManager.java",
+		"/C/Users/vpxbo/Documents/CMSC 132/Project 6 - OnlineTest/terminal.glue",
+		"/C/Users/vpxbo/Desktop/BST.java",
+		"/C/Users/vpxbo/Documents/CMSC 132/Project 6 - OnlineTest/src/onlineTest/Exam.java",
+		"/C/Users/vpxbo/Documents/CMSC 132/Project 6 - OnlineTest/studentTests/interpreterOut1.txt",
+		"/C/Users/vpxbo/Desktop/Driver.java",
+		"/C/Users/vpxbo/Desktop/Car.java",
+		"/C/Users/vpxbo/Desktop/MyLinkedList.java",
+		"/C/Users/vpxbo/Documents/CP Scholars - SGC/index.html",
+		"/C/Users/vpxbo/Documents/CMSC 132/Project 6 - OnlineTest/src/onlineTest/Student.java",
+		"/C/Users/vpxbo/Documents/sgc/index.html",
+		"/C/Users/vpxbo/Documents/Github/FooBar/src/Lamb.java",
+		"/C/Users/vpxbo/Documents/CMSC 132/Project 5 - LinkedLists/src/tests/TestUtils.java",
+		"/C/Users/vpxbo/Documents/CMSC 132/Project 5 - LinkedLists/src/tests/StudentTests.java",
+		"/C/Users/vpxbo/Documents/CMSC 132/Project 5 - LinkedLists/src/listClasses/BasicLinkedList.java",
+		"/C/Users/vpxbo/Documents/CMSC 132/Project 5 - LinkedLists/src/listClasses/SortedLinkedList.java",
+		"/Z/sgc/.idea/workspace.xml",
+		"/C/Users/vpxbo/Desktop/a.reg",
+		"/Z/sgc/.gitignore",
+		"/C/Users/vpxbo/Desktop/FooBar/Lamb.java",
+		"/C/Users/vpxbo/Desktop/Salute.java",
+		"/C/Users/vpxbo/Desktop/Stack.java",
+		"/C/Users/vpxbo/Documents/CMSC 132/Calculator Lab/exportToHTML/vzi/calculator/Controller.java.html",
+		"/C/Users/vpxbo/Desktop/A.java",
+		"/C/Users/vpxbo/Documents/MATLAB/Assigment 1/html/Child.java",
+		"/C/Users/vpxbo/Documents/MATLAB/Assigment 1/html/Parent.java",
+		"/C/Users/vpxbo/Documents/MATLAB/Assigment 1/html/assignment_1.html",
+		"/C/Users/vpxbo/Desktop/MATLAB/assignment_1.m",
+		"/C/Users/vpxbo/Documents/CMSC 132/Project 4 - Interest Table/src/patelvishal/interest/Controller.java",
+		"/C/Users/vpxbo/Documents/CMSC 132/Project 4 - Interest Table/src/patelvishal/interest/InterestTableGUI.java",
+		"/C/Users/vpxbo/Documents/CMSC 132/Project 4 - Interest Table/src/patelvishal/interest/View.java",
+		"/C/Users/vpxbo/Documents/Github/pv-library-java/pom.xml",
+		"/C/Users/vpxbo/Documents/Github/Windows-10-Package-Remover/ParsePackages.java",
+		"/C/Users/vpxbo/Documents/Github/pv-library-java/src/main/java/pv3199/util/DataStructure.java",
+		"/C/Users/vpxbo/Documents/Github/Windows-10-Package-Remover/RemovePackages.java",
+		"/C/Users/vpxbo/Documents/Github/Windows-10-Package-Remover/RemoveWin10Packages.java",
+		"/C/Users/vpxbo/Desktop/test.txt",
+		"/C/Users/vpxbo/Desktop/RemoveWin10Packages.java",
+		"/C/Users/vpxbo/Desktop/ParseWin10Packages.java",
+		"/C/Users/vpxbo/Desktop/test2.txt",
+		"/C/Users/vpxbo/Desktop/ImageTest.java",
+		"/C/Users/vpxbo/Documents/CMSC 132/Project 3 - ClearCellGame/src/model/ClearCellGame.java",
+		"/C/Users/vpxbo/Documents/Github/PNG-Compressor/PNGCompressor.java",
+		"/C/Users/vpxbo/AppData/Local/Packages/SpotifyAB.SpotifyMusic_zpdnekdrzrea0/LocalState/Spotify/mercury.db",
+		"/C/Users/vpxbo/AppData/Local/Packages/SpotifyAB.SpotifyMusic_zpdnekdrzrea0/LocalState/Spotify/Users/fishnal-user/abba.json",
+		"/C/Users/vpxbo/Documents/Github/pv-library-java/src/test/java/pv3199/lib/java/util/ArraysTest.java",
+		"/C/Users/vpxbo/Desktop/ClearCellGame/src/model/Game.java",
+		"/C/Users/vpxbo/Documents/Github/pv-library-java/src/main/java/pv3199/lib/java/util/BinaryTree.java",
+		"/C/Users/vpxbo/Desktop/drive-download-20170922T053147Z-001/BSTInterface.java",
+		"/C/Users/vpxbo/Desktop/drive-download-20170922T053147Z-001/Driver.java",
+		"/C/Users/vpxbo/Desktop/drive-download-20170922T053147Z-001/BSTTestsSanath.java",
+		"/C/Users/vpxbo/Desktop/drive-download-20170922T053147Z-001/BSTNode.java",
+		"/C/Users/vpxbo/Desktop/drive-download-20170922T053147Z-001/BSTStudentTests.java",
+		"/C/Users/vpxbo/Desktop/drive-download-20170922T053147Z-001/BonBSTTests.java",
+		"/C/Users/vpxbo/Desktop/drive-download-20170922T053147Z-001/BST.java",
+		"/C/Users/vpxbo/AppData/Roaming/Sublime Text 3/Packages/User/Default (Windows).sublime-keymap",
+		"/C/Users/vpxbo/AppData/Roaming/Sublime Text 3/Packages/Glue/keymaps/Default (Windows).sublime-keymap",
+		"/C/Users/vpxbo/AppData/Roaming/Sublime Text 3/Packages/User/Glue.sublime-settings",
+		"/C/Users/vpxbo/Desktop/Factorial.java",
+		"/C/Users/vpxbo/Documents/CMSC 132/ClearCellGame/src/model/Game.java",
+		"/C/Users/vpxbo/Documents/Github/pv-library-java/src/main/java/pv3199/lib/java/math/structures/ComplexMatrix.java",
+		"/C/Users/vpxbo/Documents/Github/pv-library-java/src/main/java/pv3199/lib/java/math/structures/NumberMatrix.java",
+		"/C/Users/vpxbo/Documents/Github/pv-library-java/src/main/java/pv3199/lib/java/math/structures/Matrix.java",
+		"/C/Users/vpxbo/Documents/Github/pv-library-java/src/main/java/pv3199/lib/java/math/ComplexNumber.java",
+		"/C/Users/vpxbo/Documents/Github/pv-library-java/src/main/java/pv3199/lib/java/image/ImageUtils.java",
+		"/C/Users/vpxbo/Documents/Github/pv-library-java/.classpath",
+		"/C/Users/vpxbo/AppData/Local/Temp/dino-comic-induction.png",
+		"/C/Users/vpxbo/Documents/CMSC 132/WebPageGen/src/tests/StudentTests.java",
+		"/C/Users/vpxbo/Documents/CMSC 132/WebPageGen/src/model/HeadingElement.java",
+		"/C/Users/vpxbo/Documents/CMSC 132/WebPageGen/src/model/AnchorElement.java",
+		"/C/Users/vpxbo/Documents/CMSC 132/WebPageGen/src/model/Utilities.java",
+		"/C/Users/vpxbo/Documents/CMSC 132/WebPageGen/src/model/TagElement.java",
+		"/C/Users/vpxbo/Documents/CMSC 132/WebPageGen/src/tests/PublicTests.java",
+		"/C/Users/vpxbo/Documents/Github/Foodie-Run-Mapper-BRH-2017/public/new_index.html",
+		"/C/Users/vpxbo/Documents/Github/Foodie-Run-Mapper-BRH-2017/public/main.js",
+		"/C/Users/vpxbo/Documents/Github/Foodie-Run-Mapper-BRH-2017/test/sample.py",
+		"/C/Users/vpxbo/Documents/Github/Foodie-Run-Mapper-BRH-2017/test/a.js",
+		"/C/Users/vpxbo/Documents/Github/Foodie-Run-Mapper-BRH-2017/test/response.json",
+		"/C/Users/vpxbo/Documents/Github/Foodie-Run-Mapper-BRH-2017/public/response.js",
+		"/C/Users/vpxbo/Documents/Github/Foodie-Run-Mapper-BRH-2017/public/new_ui/new_index.html",
+		"/C/Users/vpxbo/Documents/Github/Foodie-Run-Mapper-BRH-2017/public/new_ui/main.js",
+		"/C/Users/vpxbo/Documents/Github/Foodie-Run-Mapper-BRH-2017/public/new_ui/style.css",
+		"/C/Users/vpxbo/Documents/Github/Foodie-Run-Mapper-BRH-2017/public/new_ui/index.html",
+		"/C/Users/vpxbo/Documents/Github/Foodie-Run-Mapper-BRH-2017/public/style.css",
+		"/C/Users/vpxbo/Documents/Github/Foodie-Run-Mapper-BRH-2017/public/index.html",
+		"/C/Users/vpxbo/Downloads/python-docs-samples/appengine/standard/django/mysite/settings.py",
+		"/D/Java/Gif Tools (Maven)/gifs2.txt",
+		"/D/Java/Gif Tools (Maven)/gifs.txt",
+		"/C/Users/vpxbo/Desktop/B.java",
+		"/C/Users/vpxbo/Documents/CMSC 132/WebPageGen/pubListElementTest1.txt",
+		"/C/Users/vpxbo/Documents/CMSC 132/WebPageGen/student_tests_answers/test2.html",
+		"/C/Users/vpxbo/Documents/CMSC 132/WebPageGen/student_tests_answers/test1.html",
+		"/C/Users/vpxbo/Documents/CMSC 132/WebPageGen/src/model/WebPage.java",
+		"/C/Users/vpxbo/Documents/CMSC 132/WebPageGen/src/model/TextElement.java",
+		"/C/Users/vpxbo/Documents/CMSC 132/WebPageGen/src/model/TableElement.java"
+	],
+	"find":
+	{
+		"height": 53.0
+	},
+	"find_in_files":
+	{
+		"height": 701.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"makeTalks",
+			"scheduleTalks",
+			"size",
+			"   ",
+			"font-size",
+			"}\n",
+			"font-size",
+			"last",
+			"font-size",
+			"\t",
+			" ",
+			"    ",
+			"forEachIndex",
+			"paint",
+			"Note",
+			"spotify"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": true,
+		"replace_history":
+		[
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 1,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "src/main/java/pv3199/util/BinaryArray.java",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 6114,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								5570,
+								5570
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Java/Java.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 5271.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "src/test/java/pv3199/util/BinaryArrayTest.java",
+					"semi_transient": true,
+					"settings":
+					{
+						"buffer_size": 1882,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Java/Java.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "src/main/java/pv3199/util/HeapImpl.java",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 6500,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								801,
+								801
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Java/Java.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 41.0
+	},
+	"input":
+	{
+		"height": 237.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.exec":
+	{
+		"height": 248.0
+	},
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"pinned_build_system": "",
+	"project": "pvlib.sublime-project",
+	"replace":
+	{
+		"height": 77.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 284.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}

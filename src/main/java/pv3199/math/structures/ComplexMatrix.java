@@ -384,19 +384,6 @@ public class ComplexMatrix extends NumberMatrix<ComplexNumber> {
 	}
 	
 	@Override
-	public ComplexNumber[][] getData() {
-		ComplexNumber[][] copyOfData = new ComplexNumber[this.height][this.width];
-		
-		for (int r = 0; r < this.height; r++) {
-			for (int c = 0; c < this.width; c++) {
-				copyOfData[r][c] = this.getValue(r, c);
-			}
-		}
-		
-		return copyOfData;
-	}
-	
-	@Override
 	public ComplexMatrix clone() {
 		return new ComplexMatrix(this);
 	}

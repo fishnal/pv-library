@@ -400,19 +400,6 @@ public final class RealMatrix extends NumberMatrix<Double> {
 		return det;
 	}
 	
-	@Override
-	public Double[][] getData() {
-		Double[][] copyOfData = new Double[this.height][this.width];
-		
-		for (int r = 0; r < this.height; r++) {
-			for (int c = 0; c < this.width; c++) {
-				copyOfData[r][c] = this.getValue(r, c);
-			}
-		}
-		
-		return copyOfData;
-	}
-	
 	/**
 	 * Converts this matrix to an imaginary matrix.
 	 *

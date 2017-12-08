@@ -177,6 +177,16 @@ public class BinaryInteger implements Cloneable {
 		
 		return new BinaryInteger(newBits);
 	}
+
+	/**
+	 * Adds a binary integer with a long value.
+	 *
+	 * @param l - the long
+	 * @return the sum of the binary integer and long
+	 */
+	public BinaryInteger add(long l) {
+		return this.add(new BinaryInteger(l));
+	}
 	
 	/**
 	 * Clones a BinaryInteger through {@link #BinaryInteger(BinaryInteger)}.

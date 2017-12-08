@@ -1,24 +1,55 @@
 package pv3199.util;
 
+/**
+ * Elements are stored in a double linked list structure. Provides methods
+ * defined in the {@link DataStructure} interface.
+ *
+ * @param <E> the generic type of the elements to store.
+ */
 public class LinkedList<E> implements DataStructure<E> {
-	private Link root;
-	private Link end;
+	/**
+	 * Head of the list.
+	 */
+	private Link head;
+	
+	/**
+	 * Tail of the list.
+	 */
+	private Link tail;
+	
+	/**
+	 * Size of the list.
+	 */
 	private int size;
+	
+	/**
+	 * Current link in the list. Used for efficient traversal.
+	 */
 	private Link currLink;
 	
+	/**
+	 * Constructs a LinkedList from a set of elements, if any. If null is provided
+	 * as the arbitrary amount of elements, then it is ignored (this constructor is
+	 * nullable).
+	 *
+	 * @param elements the initial set of elements.
+	 */
 	public LinkedList(E... elements) {
-		for (E element : elements) {
-			this.add(element);
+		if (elements != null) {
+			for (E element : elements) {
+				this.add(element);
+			}
 		}
 	}
 	
 	@Override
 	public void add(E element) {
-		if (this.root == null) {
+		if (this.head == null) {
 			this.set(this.size, element);
 		} else {
-			this.end = this.end.next = new Link(element, this.end, null);
+			this.tail = this.tail.next = new Link(element, this.tail, null);
 		}
+		
 		this.size++;
 	}
 	
@@ -33,7 +64,8 @@ public class LinkedList<E> implements DataStructure<E> {
 	}
 	
 	private Link get0(final int index) {
-		this.currLink = root;
+		this.currLink = head;
+		
 		for (int i = 0; i < this.size; i++, this.currLink = this.currLink.next) {
 			if (i == index) {
 				return this.currLink;
@@ -47,14 +79,10 @@ public class LinkedList<E> implements DataStructure<E> {
 	public void set(final int index, E newValue) {
 		if (index < 0 || index > this.size) {
 			throw new IndexOutOfBoundsException();
-		}
-		
-		if (this.root == null) {
-			this.end = this.root = new Link(newValue, null, null);
+		} else if (this.head == null) {
+			this.tail = this.head = new Link(newValue, null, null);
 			return;
-		}
-		
-		if (index == this.size) {
+		} else if (index == this.size) {
 			this.add(newValue);
 			return;
 		}
@@ -66,7 +94,7 @@ public class LinkedList<E> implements DataStructure<E> {
 	
 	@Override
 	public void clear() {
-		this.root = this.end = null;
+		this.head = this.tail = null;
 		this.size = 0;
 	}
 	
@@ -90,7 +118,7 @@ public class LinkedList<E> implements DataStructure<E> {
 		}
 		
 		if (index == 0) {
-			root = dlNext;
+			head = dlNext;
 		}
 		
 		this.size--;
@@ -111,7 +139,7 @@ public class LinkedList<E> implements DataStructure<E> {
 	
 	@Override
 	public int indexOf(E element) {
-		Link dl = root;
+		Link dl = head;
 		
 		for (int i = 0; i < this.size; i++, dl = dl.next) {
 			if (dl.value.equals(element) || dl.value == element) {
@@ -171,8 +199,8 @@ public class LinkedList<E> implements DataStructure<E> {
 			return false;
 		}
 		
-		Link thisLink = this.root;
-		Link dllLink = dll.root;
+		Link thisLink = this.head;
+		Link dllLink = dll.head;
 		for (int i = 0; i < this.size; i++, thisLink = thisLink.next, dllLink = dllLink.next) {
 			if (!thisLink.value.equals(dllLink.value)) {
 				return false;
@@ -186,7 +214,7 @@ public class LinkedList<E> implements DataStructure<E> {
 	public String toString() {
 		StringBuilder s = new StringBuilder();
 		
-		Link dl = root;
+		Link dl = head;
 		
 		while (dl != null) {
 			s.append(dl.value).append(" ");
@@ -196,17 +224,42 @@ public class LinkedList<E> implements DataStructure<E> {
 		return s.toString().trim();
 	}
 	
+	/**
+	 * Doubly linked list node.
+	 */
 	private class Link {
+		/**
+		 * Value of node.
+		 */
 		private E value;
+		
+		/**
+		 * Previous link.
+		 */
 		private Link prev;
+		
+		/**
+		 * Next link.
+		 */
 		private Link next;
 		
+		/**
+		 * Constructs a Link given a value and its previous and next
+		 * link references.
+		 * @param value the value.
+		 * @param prev the previous link.
+		 * @param next the next link.
+		 */
 		Link(E value, Link prev, Link next) {
 			this.value = value;
 			this.prev = prev;
 			this.next = next;
 		}
 		
+		/**
+		 * @return previous link's value pointing to this value pointing to
+		 * next link's value.
+		 */
 		@Override
 		public String toString() {
 			String s = "";

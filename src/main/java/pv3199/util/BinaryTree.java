@@ -359,9 +359,9 @@ public class BinaryTree<E extends Comparable<E>> extends Tree<E> {
 			
 			if (parent != null) {
 				if (parent.right == node) {
-					parent.right = null;
+					parent.right = child;
 				} else {
-					parent.left = null;
+					parent.left = child;
 				}
 			} else {
 				BinaryTree.this.root = child;

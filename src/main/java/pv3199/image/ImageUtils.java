@@ -4,7 +4,7 @@ import java.awt.image.BufferedImage;
 import java.util.function.IntFunction;
 
 public final class ImageUtils {
-	/**
+	/**		
 	 * Grayscale method enumerations.
 	 */
 	public enum GrayscaleMethod {
@@ -130,13 +130,8 @@ public final class ImageUtils {
 	 * @param rgb the rgb color.
 	 * @param method the grayscaling method.
 	 * @return the grayscale conversion of the rgb color.
-	 * @throws NullPointerException if the conversion method is null
 	 */
-	public static int rgbToGrayscale(int rgb, GrayscaleMethod method) throws NullPointerException {
-		if (method == null) {
-			throw new NullPointerException();
-		}
-
+	public static int rgbToGrayscale(int rgb, GrayscaleMethod method) {
 		return method.grayscale(rgb);
 	}
 
@@ -155,11 +150,7 @@ public final class ImageUtils {
 	 * @param method the grayscaling method
 	 * @return the grayscaled image.
 	 */
-	public static BufferedImage imgToGrayscale(BufferedImage image, GrayscaleMethod method) throws NullPointerException {
-		if (method == null) {
-			throw new NullPointerException();
-		}
-
+	public static BufferedImage imgToGrayscale(BufferedImage image, GrayscaleMethod method) {
 		BufferedImage grayscaled = new BufferedImage(image.getWidth(), image.getHeight(), image.getType());
 
 		for (int y = 0; y < image.getHeight(); y++) {

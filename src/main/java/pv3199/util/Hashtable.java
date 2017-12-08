@@ -1,5 +1,9 @@
 package pv3199.util;
 
+import java.util.Iterator;
+import java.util.LinkedHashSet;
+import java.util.NoSuchElementException;
+import java.util.Set;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
@@ -42,6 +46,7 @@ public class Hashtable<E> {
 	/**
 	 * Constructs a hashtable with the {@link #DEFAULT_HASH_FUNCTION default hashing function}
 	 * and a set initial capacity.
+	 *
 	 * @param initSize the initial capacity of the table.
 	 * @throws IllegalArgumentException if the initial size is not positive
 	 */
@@ -49,8 +54,9 @@ public class Hashtable<E> {
 		if (initSize == 0) {
 			throw new IllegalArgumentException("initial table capacity must be positive");
 		}
+		
 		this.hashFunction = DEFAULT_HASH_FUNCTION;
-		table = new Object[initSize];
+		table = new Object[(int) (Math.log(initSize) / Math.log(2))];
 	}
 
 	/**
@@ -58,6 +64,7 @@ public class Hashtable<E> {
 	 * as the parameter and returns an integer. Unless the default hashing function is utilized, two objects
 	 * that are considered equal (through instance or property equality) should return the same table value.
 	 * As for two objects that do not return the same table value
+	 *
 	 * @param hashFunction the hashing function for this hashtable.
 	 */
 	public Hashtable(Function<E, Integer> hashFunction) {
@@ -69,6 +76,7 @@ public class Hashtable<E> {
 	 * as the parameter and returns an integer. Unless the default hashing function is utilized, two objects
 	 * that are considered equal (through instance or property equality) should return the same table value.
 	 * As for two objects that do not return the same table value
+	 *
 	 * @param hashFunction the hashing function for this hashtable.
 	 * @param initSize the initial capacity of the table.
 	 * @throws IllegalArgumentException if the initial size is not positive
@@ -77,17 +85,19 @@ public class Hashtable<E> {
 		if (initSize == 0) {
 			throw new IllegalArgumentException("initial table capacity must be positive");
 		}
+		
 		this.hashFunction = (Function<Object, Integer>) hashFunction;
-		table = new Object[initSize];
+		table = new Object[(int) (Math.log(initSize) / Math.log(2))];
 	}
 
 	/**
 	 * Adds a non-null element to the hash table.
+	 *
 	 * @param element the element to add.
 	 */
 	public void add(E element) {
 		if (element == null) {
-			return;
+			throw new NullPointerException();
 		} else if (this.count == this.table.length) {
 			resizeTable();
 		}
@@ -98,13 +108,14 @@ public class Hashtable<E> {
 
 	/**
 	 * Hashes an object into a table given a hashing function.
+	 *
 	 * @param o the object to hash.
 	 * @param table the hash table.
 	 * @param hashFunction the hashing function.
 	 */
 	private static void hash(Object o, Object[] table, Function<Object, Integer> hashFunction) {
 		int hash = hashFunction.apply(o);
-		int index = hash % table.length;
+		int index = Math.abs(hash) % table.length;
 
 		if (table[index] != null) {
 			// handle collision with quadratic probing
@@ -117,18 +128,23 @@ public class Hashtable<E> {
 	/**
 	 * Handles hashing collisions for a table by quadratically probing the table. This can loop forever
 	 * if the table is already full.
+	 *
 	 * @param o the object to hash.
 	 * @param table the hash table.
 	 * @param originalIndex the index that the object was to be hashed to.
 	 */
 	private static void handleCollision(Object o, Object[] table, int originalIndex) {
 		for (int x = 1; ; x++) {
-			int i = (originalIndex + x * x) % table.length;
+			int i = (int) (originalIndex + quadProbe(x)) % table.length;
 			if (table[i] == null) {
 				table[i] = o;
 				break;
 			}
 		}
+	}
+
+	private static int quadProbe(int i) {
+		return (int) (.5 * i + .5 * i * i);
 	}
 
 	/**
@@ -147,7 +163,10 @@ public class Hashtable<E> {
 		}
 		this.table = newTable;
 	}
-
+	
+	/**
+	 * Resizes the size of the hash table array and rehashes all elements into the new bigger table.
+	 */
 	private void rehash() {
 		Object[] newTable = new Object[this.table.length];
 		for (Object o : this.table) {
@@ -161,6 +180,7 @@ public class Hashtable<E> {
 
 	/**
 	 * Checks if this hashtable has an element.
+	 *
 	 * @param element the element to check for.
 	 * @return true if the element was found.
 	 */
@@ -170,6 +190,7 @@ public class Hashtable<E> {
 
 	/**
 	 * Gets the index of an element in the hash table.
+	 *
 	 * @param element the element to look for.
 	 * @return -1 if the element was not found; otherwise a non-negative index
 	 */
@@ -178,15 +199,15 @@ public class Hashtable<E> {
 			return -1;
 		}
 
+		Set<Integer> checked = new LinkedHashSet<>();
 		int hash = this.hashFunction.apply(element);
-		int index = this.table.length % hash;
+		int index = Math.abs(hash) % this.table.length;
 
-		if (this.table[index] == element || this.table[index].equals(element)) {
-			return index;
-		}
+		for (int x = 0; checked.size() < this.table.length; x++) {
+			int i = (index + quadProbe(x)) % this.table.length;
+			checked.add(i);
 
-		for (int x = 1, i; this.table[(i = index + x * x)] != null; x++) {
-			if (this.table[i].equals(element)) {
+			if (this.table[i] != null && this.table[i].equals(element)) {
 				return i;
 			}
 		}
@@ -197,6 +218,7 @@ public class Hashtable<E> {
 	/**
 	 * Removes an element from the hashtable if it exists. Table is rehashed to account for
 	 * hash collisions.
+	 *
 	 * @param element the element to remove.
 	 * @return true if the element was removed
 	 */
@@ -207,7 +229,6 @@ public class Hashtable<E> {
 		}
 
 		this.table[index] = null;
-		rehash();
 		this.count--;
 		return true;
 	}
@@ -244,5 +265,13 @@ public class Hashtable<E> {
 
 			action.accept((E) o);
 		}
+	}
+
+	public final E[] data() {
+		E[] data = (E[]) new Object[this.table.length];
+
+		System.arraycopy(this.table, 0, data, 0, data.length);
+
+		return data;
 	}
 }

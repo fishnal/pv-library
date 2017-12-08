@@ -17,7 +17,6 @@ pv3199\util\Tree.class
 pv3199\util\AbstractStructure.class
 pv3199\util\SortedLinkedList.class
 pv3199\util\UndirectedGraph$UndirectedVertex.class
-pv3199\util\ForEachHolder.class
 pv3199\math\structures\IllegalVectorException.class
 pv3199\math\structures\NumberMatrix.class
 pv3199\util\Hashtable.class
@@ -25,7 +24,6 @@ pv3199\util\SortMethod.class
 pv3199\util\BinaryTree.class
 pv3199\math\PolarCoordinate.class
 pv3199\util\LinkedList.class
-pv3199\math\BinaryInteger.class
 pv3199\util\Tree$Node.class
 pv3199\math\structures\Vector.class
 pv3199\image\ImageUtils.class
@@ -34,7 +32,6 @@ pv3199\util\Property.class
 pv3199\image\ImageUtils$GrayscaleMethod.class
 pv3199\math\ComplexNumber.class
 pv3199\util\UniqueHashtable.class
-pv3199\util\ConsumerHolder.class
 pv3199\util\Graph$Vertex.class
 pv3199\util\Classes.class
 pv3199\util\UndirectedGraph.class
